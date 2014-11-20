@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # First puppet setup instructions
-# Make sure you are in the project root (prisma-puppet)
+# Make sure you are in the project root (prisma)
 # Ubuntu Precise 12.04
 # 19/11/2014 - Alberto Di Savia Puglisi
 
@@ -15,4 +15,8 @@ sudo apt-get -y install git
 git init
 git config --global user.name "Alberto Di Savia Puglisi"
 git config --global user.email "disalberto@gmail.com"
+git remote add origin git@github.com:alberto88a/prisma.git
+git pull
 
+# To remove the templatedir warning
+sed -i '/templatedir*/d' /etc/puppet/puppet.conf
