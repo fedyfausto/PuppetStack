@@ -15,8 +15,15 @@ sudo apt-get -y install git
 git init
 git config --global user.name "Alberto Di Savia Puglisi"
 git config --global user.email "disalberto@gmail.com"
-git remote add origin git@github.com:alberto88a/prisma.git
-git pull
+# git remote add origin git@github.com:alberto88a/prisma.git
+# git clone git@github.com:alberto88a/prisma.git
+git clone https://github.com/alberto88a/prisma
+# git pull
 
 # To remove the templatedir warning
 sed -i '/templatedir*/d' /etc/puppet/puppet.conf
+
+
+# Primo Setup PUPPET # PRISMA
+cd prisma
+puppet apply --modulepath ~/prisma/modules ~/prisma/manifests
