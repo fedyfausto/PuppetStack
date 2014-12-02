@@ -7,7 +7,7 @@ include user::sysadmins
 
 node galera-master, default { 
   exec { "copy ssh keys":
-    command => "cp /root/prisma/modules/ssh/files/id_rsa* /root/.ssh",
+    command => "cp /root/prisma/modules/ssh/files/* /root/.ssh",
     path    => "/usr/local/bin/:/bin/",
   }
 }
