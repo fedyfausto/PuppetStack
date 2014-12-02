@@ -4,13 +4,16 @@ include hosts
 include user::virtual
 include sudoers
 include user::sysadmins
- 
-exec { "copy ssh keys":
-  command => "cp /root/prisma/modules/ssh/files/.ssh/* /root/.ssh",
-  path    => "/usr/local/bin/:/bin/",
-}
 
 node galera-master, default { 
+  exec { "copy ssh keys":
+    command => "cp /root/prisma/modules/ssh/files/id_rsa* /root/.ssh",
+    path    => "/usr/local/bin/:/bin/",
+  }
 }
 node galera-1, galera-2, galera-3 {
+  exec { "copy ssh auth_keys":
+    command => "cp /root/prisma/modules/ssh/files/authorized_keys /root/.ssh",
+    path    => "/usr/local/bin/:/bin/",
+  }
 }
