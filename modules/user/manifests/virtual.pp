@@ -1,9 +1,15 @@
+####
+#  Facter osfamily, lib.
+#  https://www.omniref.com/ruby/gems/facter/1.7.1/files/lib/facter/osfamily.rb#line=14
+####
+
 class user::virtual {
   define ssh_user($key, $password = "galera", $sshkeytype = "ssh-rsa") {
     if $name != 'root' {
-      $homedir = $kernel ? {
-        'SunOS' => '/export/home',
-        default => '/home', 
+      $homedir = $::osfamily ? {
+        'Solaris' => '/export/home',
+        'Debian'  => '/home',
+        default   => '/home', 
       }
       user { $name:     
         ensure     => present,
@@ -23,7 +29,7 @@ class user::virtual {
         ensure  => present,
         require => File["${homedir}/${name}/.ssh"],
       }
-      notice("The password is: ${password}, the user is ${name}, the home is ${homedir}, the ssh_key is ${key}")
+#      notice("The password is: ${password}, the user is ${name}, the home is ${homedir}, the ssh_key is ${key}")
     } else {
       $homedir = '/root' 
       file { "${homedir}/.ssh": 
@@ -39,7 +45,7 @@ class user::virtual {
         ensure  => present,
         require => File["${homedir}/.ssh"],
       }
-      notice("The password is: ${password}, the user is ${name}, the home is ${homedir}, the ssh_key is ${key}")      
+#      notice("The password is: ${password}, the user is ${name}, the home is ${homedir}, the ssh_key is ${key}")      
     }
   }
   @ssh_user { 'root':
