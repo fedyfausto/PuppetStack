@@ -5,10 +5,6 @@ include user::virtual
 include sudoers
 include user::sysadmins
 include stdlib
-include apt
-
-#include galera::dependencies
-#include galera::clusterconfig
 
 include galera
 

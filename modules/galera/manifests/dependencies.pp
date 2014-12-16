@@ -1,5 +1,5 @@
 class galera::dependencies {
-    
+      
   package { 'python-software-properties':
     ensure => installed,
   }

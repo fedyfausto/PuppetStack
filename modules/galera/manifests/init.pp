@@ -1,4 +1,6 @@
 class galera {
+
+  include apt
   
   anchor { 'galera::begin': }                      ->
     class { 'galera::dependencies': }              -> 
