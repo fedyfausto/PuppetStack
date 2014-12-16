@@ -1,10 +1,11 @@
 class galera {
-  include stdlib
-  include apt 
-  include galera::dependencies
-  include galera::clusterconfig
   
-      notice ('Sono dentro galera')
+  anchor { 'galera::begin': }                      ->
+    class { 'galera::dependencies': }              -> 
+    class { 'galera::clusterconfig': }             -> 
+  anchor { 'galera::end': }  
+      
+notice ('Sono dentro galera')
     
 }
 

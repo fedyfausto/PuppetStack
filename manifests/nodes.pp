@@ -4,12 +4,13 @@ include hosts
 include user::virtual
 include sudoers
 include user::sysadmins
-
 include stdlib
 include apt
 
-include galera::dependencies
-include galera::clusterconfig
+#include galera::dependencies
+#include galera::clusterconfig
+
+include galera
 
 node galera-master, default { 
   exec { "copy ssh keys":
