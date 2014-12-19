@@ -1,3 +1,4 @@
 #!/bin/sh
 PUPPETDIR=~/prisma
-sudo /usr/bin/puppet apply --modulepath ${PUPPETDIR}/modules ${PUPPETDIR}/manifests/* $*
+MAINDIR=/etc/puppet
+sudo /usr/bin/puppet apply --modulepath ${PUPPETDIR}/modules:${MAINDIR}/modules ${PUPPETDIR}/manifests/* $*
