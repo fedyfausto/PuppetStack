@@ -5,7 +5,7 @@
   include sudoers
   include user::sysadmins
   include stdlib
-  include apt
+#  include apt
   include galera
 
 node galera-master, default { 

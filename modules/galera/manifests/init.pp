@@ -1,5 +1,7 @@
 class galera {
 
+  contain apt
+
   anchor { 'galera::begin': }                      ->
     class { 'galera::dependencies': }              -> 
     class { 'galera::clusterconfig': }             -> 
