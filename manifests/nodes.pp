@@ -5,7 +5,6 @@
   include sudoers
   include user::sysadmins
   include stdlib
-#  include apt
 
   include galera
 
