@@ -1,4 +1,6 @@
 class galera::dependencies {
+
+  include apt
       
   package { 'python-software-properties':
     ensure => installed,

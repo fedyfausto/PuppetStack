@@ -1,12 +1,22 @@
-  include puppet
-  include ssh
-  include hosts
-  include user::virtual
-  include sudoers
-  include user::sysadmins
-  include stdlib
-  include apt
-  include galera
+include puppet
+include ssh
+include hosts
+include user::virtual
+include sudoers
+include user::sysadmins
+include stdlib
+# include apt
+# include galera
+
+stage {'pre':
+  before => Stage["main"],
+}
+
+class {'galera::dependencies':
+  stage => 'pre',
+}
+
+include galera::clusterconfig
 
 node galera-master, default { 
   exec { "copy ssh keys":
