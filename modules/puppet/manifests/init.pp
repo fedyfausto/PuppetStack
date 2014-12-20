@@ -4,6 +4,15 @@ class puppet {
     mode => '0755',
   }
 
+  file { '/etc/puppet/puppet.conf':
+    path => '/etc/puppet/puppet.conf',
+    ensure => present,
+    owner => 'root',
+    group => 'root',
+    mode => '0644',
+    content => template('puppet/puppet.conf'),
+  }
+
   service { 'puppet':
     ensure => running,
   }

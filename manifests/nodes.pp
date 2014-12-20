@@ -1,11 +1,11 @@
-  include ssh
   include puppet
+  include ssh
   include hosts
   include user::virtual
   include sudoers
   include user::sysadmins
   include stdlib
-
+  include apt
   include galera
 
 node galera-master, default { 
