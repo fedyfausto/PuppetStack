@@ -5,14 +5,12 @@ include user::virtual
 include sudoers
 include user::sysadmins
 include stdlib
-# include apt
-# include galera
 
 #stage {'pre':
 #  before => Stage["main"],
 #}
 
-#class {'galera::dependencies':
+#class {'':
 #  stage => 'pre',
 #}
 
@@ -23,20 +21,10 @@ node galera-master, default {
     command => "cp /root/prisma/modules/ssh/files/* /root/.ssh",
     path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
   }
-
-#  exec { "start galera cluster":
-#    command => "service mysql start --wsrep-new-cluster",
-#    path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
-#  }  
 }
 node galera-1, galera-2, galera-3 {
   exec { "copy ssh auth_keys":
     command => "cp /root/prisma/modules/ssh/files/authorized_keys /root/.ssh",
     path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
   }
-
-#  exec { "start galera cluster":
-#    command => "service mysql start",
-#    path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
-#  }  
 }
