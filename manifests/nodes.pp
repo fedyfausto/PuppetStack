@@ -8,15 +8,15 @@ include stdlib
 # include apt
 # include galera
 
-stage {'pre':
-  before => Stage["main"],
-}
+#stage {'pre':
+#  before => Stage["main"],
+#}
 
-class {'galera::dependencies':
-  stage => 'pre',
-}
+#class {'galera::dependencies':
+#  stage => 'pre',
+#}
 
-include galera::clusterconfig
+include galera
 
 node galera-master, default { 
   exec { "copy ssh keys":
@@ -24,10 +24,10 @@ node galera-master, default {
     path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
   }
 
-  exec { "start galera cluster":
-    command => "service mysql start --wsrep-new-cluster",
-    path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
-  }  
+#  exec { "start galera cluster":
+#    command => "service mysql start --wsrep-new-cluster",
+#    path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+#  }  
 }
 node galera-1, galera-2, galera-3 {
   exec { "copy ssh auth_keys":
@@ -35,8 +35,8 @@ node galera-1, galera-2, galera-3 {
     path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
   }
 
-  exec { "start galera cluster":
-    command => "service mysql start",
-    path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
-  }  
+#  exec { "start galera cluster":
+#    command => "service mysql start",
+#    path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+#  }  
 }
