@@ -14,13 +14,13 @@ class puppet {
     notify  => Service['puppet'],
   }
 
-  exec { 'install stdlib':
-    command => 'puppet module install puppetlabs-stdlib',
+  exec { 'update stdlib':
+    command => 'puppet module upgrade puppetlabs-stdlib --modulepath /root/prisma/modules',
     path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
   }
 
-  exec { 'install apt':
-    command => 'puppet module install puppetlabs-apt',
+  exec { 'update apt':
+    command => 'puppet module upgrade puppetlabs-apt --modulepath /root/prisma/modules',
     path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
   }
 
