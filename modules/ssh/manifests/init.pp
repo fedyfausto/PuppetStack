@@ -1,10 +1,12 @@
 class ssh {
+
+  $sshd_config = hiera('sshd_config')
   
   package { 'openssh-server':
     ensure => installed,
   }
 
-  file { '/etc/ssh/sshd_config':
+  file { $sshd_config:
     content => template('ssh/sshd_config'),
     require => Package["openssh-server"],
     notify  => Service["ssh"],
@@ -21,3 +23,5 @@ class ssh {
   }
 
 }
+
+include ssh

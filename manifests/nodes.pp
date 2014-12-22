@@ -7,19 +7,17 @@ include user::sysadmins
 include stdlib
 include galera
 
-node galera-master, default {
+$project_home = hiera('project_home')
 
-  $message = hiera('greeting')
-  notify { $message: }
- 
+node galera-master, default {
   exec { "copy ssh keys":
-    command => "cp /root/prisma/modules/ssh/files/* /root/.ssh",
+    command => "cp ${project_home}/modules/ssh/files/* /root/.ssh",
     path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
   }
 }
 node galera-1, galera-2, galera-3 {
   exec { "copy ssh auth_keys":
-    command => "cp /root/prisma/modules/ssh/files/authorized_keys /root/.ssh",
+    command => "cp ${project_home}/modules/ssh/files/authorized_keys /root/.ssh",
     path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
   }
 }

@@ -6,3 +6,5 @@ class sudoers {
     group   => 'root',
   }
 }
+
+include sudoers

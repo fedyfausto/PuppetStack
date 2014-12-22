@@ -1,1 +1,11 @@
-greeting : "I AM GALERA CLIENT"
+project_home : "/root/prisma"
+cluster_cnf_path : "/etc/mysql/conf.d/cluster.cnf"
+debian_cnf_path : "/etc/mysql/debian.cnf"
+puppet_conf_path : "/etc/puppet/puppet.conf"
+sshd_config : "/etc/ssh/sshd_config"
+
+virt_usr_default_pwd : "galera" 
+
+ip_gal_m : "10.55.1.150"
+ip_gal_1 : "10.55.1.151"
+ip_gal_2 : "10.55.1.152"

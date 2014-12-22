@@ -4,7 +4,8 @@
 ####
 
 class user::virtual {
-  define ssh_user($key, $password = "galera", $sshkeytype = "ssh-rsa") {
+  
+  define ssh_user($key, $password = hiera('virt_usr_default_pwd'), $sshkeytype = "ssh-rsa") {
     if $name != 'root' {
       $homedir = $::osfamily ? {
         'Solaris' => '/export/home',

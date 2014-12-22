@@ -1,7 +1,7 @@
 class galera::clusterconfig
-  ($ip1 = '10.55.1.150',
-  $ip2 = '10.55.1.151',
-  $ip3 = '10.55.1.152',) {
+  ($ip1 = hiera('ip_gal_m'),
+  $ip2 = hiera('ip_gal_1'),
+  $ip3 = hiera('ip_gal_2')) {
   
   service { 'mysql':
     enable  => true,
@@ -9,7 +9,7 @@ class galera::clusterconfig
   }
 
   file { 'cluster.cnf':
-    path    => '/etc/mysql/conf.d/cluster.cnf',
+    path    => hiera('cluster_cnf_path'),
     ensure  => present,
     owner   => 'root',
     group   => 'root',
@@ -18,7 +18,7 @@ class galera::clusterconfig
   }
 
   file { 'debian.cnf':
-    path    => '/etc/mysql/debian.cnf',
+    path    => hiera('debian_cnf_path'),
     ensure  => present,
     owner   => 'root',
     group   => 'root',
