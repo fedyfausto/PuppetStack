@@ -5,18 +5,13 @@ include user::virtual
 include sudoers
 include user::sysadmins
 include stdlib
-
-#stage {'pre':
-#  before => Stage["main"],
-#}
-
-#class {'':
-#  stage => 'pre',
-#}
-
 include galera
 
-node galera-master, default { 
+node galera-master, default {
+
+  $message = hiera('greeting')
+  notify { $message: }
+ 
   exec { "copy ssh keys":
     command => "cp /root/prisma/modules/ssh/files/* /root/.ssh",
     path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
