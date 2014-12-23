@@ -1,27 +1,11 @@
 class ssh {
 
-  $sshd_config = hiera('sshd_config')
+  anchor { 'ssh::begin': }              ->
+    class { 'ssh::install': }           -> 
+    class { 'ssh::exec': }              -> 
+  anchor { 'ssh::end': }  
   
-  package { 'openssh-server':
-    ensure => installed,
-  }
-
-  file { $sshd_config:
-    content => template('ssh/sshd_config'),
-    require => Package["openssh-server"],
-    notify  => Service["ssh"],
-    owner   => 'root',
-    group   => 'root',
-  }
-
-  service { 'ssh':
-    ensure    => running,
-    enable    => true,
-    require   => Package["openssh-server"],
-    hasstatus => false,
-    status    => '/etc/init.d/ssh status|grep running',
-  }
-
+  notice ( 'ssh init...complete!' )          
 }
 
 include ssh
