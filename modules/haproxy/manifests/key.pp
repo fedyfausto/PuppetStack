@@ -1,5 +1,4 @@
 class haproxy::key {
-  include apt
       
   apt::source { 'mariadb':
     location    => 'http://mirror.jmu.edu/pub/mariadb/repo/5.5/ubuntu',

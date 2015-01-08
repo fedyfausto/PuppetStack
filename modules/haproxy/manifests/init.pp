@@ -1,27 +1,12 @@
 class haproxy {
-  include haproxy::key
 
-  package { 'mariadb-client': ensure => installed }
+  include apt
 
-  package { 'haproxy': 
-    ensure  => installed ,
-    require => Package["mariadb-client"],
-  }
-
-  file { '/etc/default/haproxy':
-    content => "ENABLED=1\n",
-    require => Package['haproxy'],
-  }
-
-  service { 'haproxy':
-    ensure  => running,
-    enable  => true,
-    require => Package['haproxy'],
-  }
-
-  file { '/etc/haproxy/haproxy.cfg':
-    source  => 'puppet:///modules/haproxy/haproxy.cfg',
-    require => Package['haproxy'],
-    notify  => Service['haproxy'],
-  }
+  anchor { 'haproxy::begin': }                      ->
+    class { 'haproxy::key': }                       -> 
+    class { 'haproxy::install': }                   -> 
+  anchor { 'haproxy::end': }  
+          
 }
+
+include haproxy
