@@ -12,7 +12,7 @@ class galera::exec {
        }
  
        exec { "clear haproxy users":
-         command => "mysql -u root -e \"delete from mysql.user where (User = \'haproxy_root\' or User = \'haproxy_check\');\" ",
+         command => "mysql -u root -e \"use mysql; delete from mysql.user where (User = \'haproxy_root\' or User = \'haproxy_check\');\" ",
          path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
        }
        
