@@ -22,6 +22,7 @@ class galera::exec {
       exec { "clear haproxy users":
          command => "mysql -u root -e \"USE mysql; DELETE FROM mysql.user WHERE (User = \'haproxy_root\' OR User = \'haproxy_check\');\" ",
          path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+         require => Exec["participate galera cluster"],
       }
        
       exec { "user haproxy_check_hap_1":
