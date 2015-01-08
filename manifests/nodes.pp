@@ -10,6 +10,10 @@ include stdlib
 node galera-master, galera-1, galera-2 {
   include galera
 }
-node default {
 
+node haproxy-1, haproxy-2 {
+  include haproxy
+}
+
+node default {
 }

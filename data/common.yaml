@@ -9,3 +9,8 @@ virt_usr_default_pwd : "galera"
 ip_gal_m : "10.55.1.150"
 ip_gal_1 : "10.55.1.151"
 ip_gal_2 : "10.55.1.152"
+ip_hap_1 : "10.55.1.153"
+ip_hap_2 : "10.55.1.154"
+ip_hap_v : "10.55.1.155"
+
+
