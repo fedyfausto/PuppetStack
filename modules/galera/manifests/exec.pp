@@ -11,10 +11,10 @@ class galera::exec {
          path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
        }
  
-       exec { "clear haproxy users":
-         command => "mysql -u root -e \"use mysql; delete from mysql.user where (User = \'haproxy_root\' or User = \'haproxy_check\');\" ",
-         path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
-       }
+#       exec { "clear haproxy users":
+#         command => "mysql -u root -e \"USE mysql; DELETE FROM mysql.user WHERE (User = \'haproxy_root\' OR User = \'haproxy_check\');\" ",
+#         path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+#       }
        
        exec { "user haproxy_check_hap_1":
          command => "mysql -u root -e \"INSERT INTO mysql.user (Host,User) values (\'${ip_hap_1}\',\'haproxy_check\'); FLUSH PRIVILEGES;\" ",
