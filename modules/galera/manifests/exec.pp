@@ -10,6 +10,11 @@ class galera::exec {
          command => "service mysql start --wsrep-new-cluster",
          path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
        }
+       exec { "grant privileges":
+         command => "mysql -u root -e \"GRANT ALL PRIVILEGES ON *.* TO \'debian-sys-maint\'@\'localhost\' IDENTIFIED BY \'Xt9JBkj4HOKK52AI\';\" ",
+         path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+         require => Exec["start galera cluster"],
+       }
     }
 
     'galera-1','galera-2': {
@@ -45,11 +50,6 @@ class galera::exec {
          path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
          require => Exec["clear haproxy users"],
       }
-
-#     exec { "grant privileges":
-#         command => "mysql -u root -e \"GRANT ALL PRIVILEGES ON *.* TO \'debian-sys-maint\'@\'localhost\' IDENTIFIED BY \'Xt9JBkj4HOKK52AI\';\" ",
-#         path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
-#     }
 
     } 
 
