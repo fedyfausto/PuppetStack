@@ -1,6 +1,6 @@
-include haproxy::key
-
 class haproxy {
+  include haproxy::key
+
   package { 'mariadb-client': ensure => installed }
 
   package { 'haproxy': 
