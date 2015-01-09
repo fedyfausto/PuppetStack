@@ -3,7 +3,7 @@ class keepalived
   $notification_email = hiera('notification_email'),
   $smtp_server = hiera('smtp_server'),
   $ka_password = hiera('ka_password'),
-  $ip_hop_v = hiera('ip_hop_v'),
+  $ip_hap_v = hiera('ip_hap_v'),
   $vip_interface = hiera('vip_interface')
 ){
 
