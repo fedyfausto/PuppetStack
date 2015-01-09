@@ -38,11 +38,11 @@ class keepalived
     notify  => Service['keepalived'],
   }
 
-  exec { "restorecon":
-    command => "restorecon -v -F ${keepalived_cnf_path}",
-    path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
-    require => File['keepalived.cfg'],
-  }
+  #exec { "restorecon":
+  #  command => "restorecon -v -F ${keepalived_cnf_path}",
+  #  path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+  #  require => File['keepalived.cfg'],
+  #}
 
 }
 
