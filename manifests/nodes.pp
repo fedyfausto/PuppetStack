@@ -13,6 +13,7 @@ node galera-master, galera-1, galera-2 {
 
 node haproxy-1, haproxy-2 {
   include haproxy
+  include keepalived
 }
 
 node default {
