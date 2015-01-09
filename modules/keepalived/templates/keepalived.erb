@@ -1,0 +1,33 @@
+global_defs {
+	notification_email {
+		<%=@notification_email%>
+	}
+	notification_email_from <%=@notification_email_from%>
+	smtp_server <%=@smtp_server%>
+	smtp_connect_timeout 30
+	router_id <%=@hostname%>
+}
+vrrp_script haproxy {
+	script "killall -0 haproxy"
+	interval 2
+	weight 2
+}
+vrrp_instance VI_1 {
+	state MASTER
+	interface <%=@vip_interface%>
+	smtp_alert
+	virtual_router_id 10
+	priority 100
+	advert_int 1
+	authentication {
+		auth_type PASS
+		auth_pass <%=@ka_password%>
+	}
+	virtual_ipaddress {
+		<%=@ip_hap_v%>
+	}
+	track_script {
+		haproxy
+	}
+}
+EOF
