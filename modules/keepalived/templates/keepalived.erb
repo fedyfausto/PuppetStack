@@ -17,7 +17,7 @@ vrrp_instance VI_1 {
 	interface <%=@vip_interface%>
 	smtp_alert
 	virtual_router_id 10
-	priority 100
+	priority <%=@priority%>
 	advert_int 1
 	authentication {
 		auth_type PASS
@@ -30,4 +30,3 @@ vrrp_instance VI_1 {
 		haproxy
 	}
 }
-EOF

@@ -8,6 +8,17 @@ class keepalived
 ){
 
   $keepalived_cnf_path = hiera('keepalived_cnf_path')  
+  $hst_hap_1 = hiera('hst_hap_1')
+  $hst_hap_2 = hiera('hst_hap_2')
+
+  case $hostname {
+    $hst_hap_1: {
+      $priority = 100
+    }
+    $hst_hap_2: {
+      $priority = 101
+    }
+  }
 
   package { 'keepalived': 
     ensure  => installed ,

@@ -18,6 +18,8 @@ ip_hap_v : "10.55.1.155"
 hst_gal_m : "galera-master"
 hst_gal_1 : "galera-1"
 hst_gal_2 : "galera-2"
+hst_hap_1 : "haproxy-1"
+hst_hap_2 : "haproxy-2"
 
 #keepalived section
 
