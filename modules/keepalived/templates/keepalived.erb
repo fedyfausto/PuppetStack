@@ -12,11 +12,11 @@ vrrp_script haproxy {
 	interval 2
 	weight 2
 }
-vrrp_instance VI_1 {
+vrrp_instance VIP_1 {
 	state MASTER
 	interface <%=@vip_interface%>
 	smtp_alert
-	virtual_router_id 10
+	virtual_router_id 50
 	priority <%=@priority%>
 	advert_int 1
 	authentication {
@@ -24,7 +24,7 @@ vrrp_instance VI_1 {
 		auth_pass <%=@ka_password%>
 	}
 	virtual_ipaddress {
-		<%=@ip_hap_v%>
+		<%=@ip_hap_v%> dev <%=@vip_interface%>
 	}
 	track_script {
 		haproxy
