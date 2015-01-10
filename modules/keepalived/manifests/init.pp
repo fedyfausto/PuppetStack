@@ -3,7 +3,7 @@ class keepalived
   $notification_email = hiera('notification_email'),
   $smtp_server = hiera('smtp_server'),
   $ka_password = hiera('ka_password'),
-  $ip_hop_v = hiera('ip_hop_v'),
+  $ip_hap_v = hiera('ip_hap_v'),
   $vip_interface = hiera('vip_interface')
 ){
 
@@ -49,11 +49,11 @@ class keepalived
     notify  => Service['keepalived'],
   }
 
-  exec { "restorecon":
-    command => "restorecon -v -F ${keepalived_cnf_path}",
-    path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
-    require => File['keepalived.cfg'],
-  }
+  #exec { "restorecon":
+  #  command => "restorecon -v -F ${keepalived_cnf_path}",
+  #  path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+  #  require => File['keepalived.cfg'],
+  #}
 
 }
 
