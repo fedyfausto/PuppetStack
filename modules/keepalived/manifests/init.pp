@@ -1,3 +1,5 @@
+# To test the vip assignation: sudo ip a | grep eth0
+
 class keepalived 
   ($notification_email_from = hiera('notification_email_from'),
   $notification_email = hiera('notification_email'),
@@ -48,12 +50,6 @@ class keepalived
     require => Package['keepalived'],
     notify  => Service['keepalived'],
   }
-
-  #exec { "restorecon":
-  #  command => "restorecon -v -F ${keepalived_cnf_path}",
-  #  path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
-  #  require => File['keepalived.cfg'],
-  #}
 
 }
 
