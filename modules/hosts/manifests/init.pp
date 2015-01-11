@@ -5,12 +5,12 @@ class hosts {
   $ip_gal_2 = hiera('ip_gal_2')
   $ip_hap_1 = hiera('ip_hap_1')
   $ip_hap_2 = hiera('ip_hap_2')
-  $ip_pup_m = hiera('ip_pup_m')
   
-  host { 'puppet':
-    ip => $ip_pup_m,
-    host_aliases => 'puppet',
-  }
+  #$ip_pup_m = hiera('ip_pup_m')
+  #host { 'puppet':
+  #  ip => $ip_pup_m,
+  #  host_aliases => 'puppet',
+  #}
   
   host { 'galera-master':
     ip => $ip_gal_m,
