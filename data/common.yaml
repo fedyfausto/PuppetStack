@@ -1,32 +1,36 @@
+### Configuration Files Paths
 project_home : "/root/prisma"
 cluster_cnf_path : "/etc/mysql/conf.d/cluster.cnf"
 debian_cnf_path : "/etc/mysql/debian.cnf"
 puppet_conf_path : "/etc/puppet/puppet.conf"
 sshd_config : "/etc/ssh/sshd_config"
-haproxy_cnf_path : "/etc/haproxy/haproxy.cfg"
 
+### Users Configuration
 virt_usr_default_pwd : "galera" 
-haproxy_stat_pwd : "password"
 
+### Galera Configuration
 ip_gal_m : "10.55.1.150"
 ip_gal_1 : "10.55.1.151"
 ip_gal_2 : "10.55.1.152"
-ip_hap_1 : "10.55.1.153"
-ip_hap_2 : "10.55.1.154"
-ip_hap_v : "10.55.1.155"
-ip_pup_m : "10.55.1.156"
-
 hst_gal_m : "galera-master"
 hst_gal_1 : "galera-1"
 hst_gal_2 : "galera-2"
+
+### Haproxy Configuration
+haproxy_cnf_path : "/etc/haproxy/haproxy.cfg"
+haproxy_stat_pwd : "password"
+ip_hap_1 : "10.55.1.153"
+ip_hap_2 : "10.55.1.154"
+ip_hap_v : "10.55.1.155"
 hst_hap_1 : "haproxy-1"
 hst_hap_2 : "haproxy-2"
 
 #keepalived section
-
 ka_password : "password"
 smtp_server : "smtp.ct.infn.it"
 notification_email : "alberto.disavia@ct.infn.it"
 notification_email_from : "haproxy-noreply@ct.infn.it"
 keepalived_cnf_path : "/etc/keepalived/keepalived.conf"
 vip_interface : "eth0"
+
+#ip_pup_m : "10.55.1.156"
