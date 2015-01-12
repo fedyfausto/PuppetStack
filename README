@@ -21,7 +21,7 @@ HOWTO
   1) Modify the /data/common.yaml file according to your needs.
   
   2) Edit the /manifests/nodes.pp to choose:
-    > The number of hosts the haproxy lb should consider. 3 is the default value.
+    > The number of hosts the haproxy lb should consider (3, 4 or 5). 3 is the default value.
     > The priority of each load balancer. 100 and 101 are default values and should be ok.
   Remember that if you choose a different value for the hosts number,
   a coherent editing of the /data/common.yaml is needed!!!
