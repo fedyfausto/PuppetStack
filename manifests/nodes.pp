@@ -15,14 +15,18 @@ node galera-1, galera-2 {
 }
 
 node haproxy-1 {
-  include haproxy
+  class { 'haproxy':
+    nodes_n  => '3',
+  }
   class { 'keepalived':
     priority => '100',
   }  
 }
 
 node haproxy-2 {
-  include haproxy
+  class { 'haproxy':
+    nodes_n  => '3',
+  }
   class { 'keepalived':
     priority => '101',
   }

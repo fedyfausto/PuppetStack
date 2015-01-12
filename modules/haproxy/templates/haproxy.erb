@@ -29,12 +29,9 @@ listen galera_cluster 0.0.0.0:3306
         balance roundrobin
         option tcpka
         option mysql-check user haproxy_check
-        server galera-master 10.55.1.150:3306 check weight 1
-        server galera-1 10.55.1.151:3306 check weight 1
-        server galera-2 10.55.1.152:3306 check weight 1
-
-#        server galera-1 10.55.1.151:3306 check weight 1 backup
-#        server galera-2 10.55.1.152:3306 check weight 1 backup
+        server <%=@hst_gal_m%> <%=@ip_gal_m%>:3306 check weight 1
+        server <%=@hst_gal_1%> <%=@ip_gal_1%>:3306 check weight 1
+        server <%=@hst_gal_2%> <%=@ip_gal_2%>:3306 check weight 1
         
 listen stats :8080
     stats uri /

@@ -16,6 +16,11 @@ hst_gal_m : "galera-master"
 hst_gal_1 : "galera-1"
 hst_gal_2 : "galera-2"
 
+ip_gal_3 : ""
+hst_gal_3 : ""
+ip_gal_4 : ""
+hst_gal_4 : ""
+
 ### Haproxy Configuration
 haproxy_cnf_path : "/etc/haproxy/haproxy.cfg"
 haproxy_stat_pwd : "password"

@@ -1,4 +1,29 @@
-class haproxy::install {
+class haproxy::install ( $nodes_n ) {
+  
+  case $nodes_n {
+    '3': {
+      $hap_tem = 'haproxy.erb'
+      $ip_gal_m = hiera('ip_gal_m')
+      $ip_gal_1 = hiera('ip_gal_1')
+      $ip_gal_2 = hiera('ip_gal_2')
+      $hst_gal_m = hiera('hst_gal_m')
+      $hst_gal_1 = hiera('hst_gal_1')
+      $hst_gal_2 = hiera('hst_gal_2')
+    }
+    '5': {
+      $hap_tem = 'haproxy5.erb'
+      $ip_gal_m = hiera('ip_gal_m')
+      $ip_gal_1 = hiera('ip_gal_1')
+      $ip_gal_2 = hiera('ip_gal_2')
+      $ip_gal_3 = hiera('ip_gal_3')
+      $ip_gal_4 = hiera('ip_gal_4')
+      $hst_gal_m = hiera('hst_gal_m')
+      $hst_gal_1 = hiera('hst_gal_1')
+      $hst_gal_2 = hiera('hst_gal_2')
+      $hst_gal_3 = hiera('hst_gal_3')
+      $hst_gal_4 = hiera('hst_gal_4')
+    }
+  }
 
   package { 'mariadb-client': ensure => installed }
 
@@ -17,9 +42,11 @@ class haproxy::install {
     enable  => true,
     require => Package['haproxy'],
   }
-
+  
   file { '/etc/haproxy/haproxy.cfg':
-    source  => 'puppet:///modules/haproxy/haproxy.cfg',
+    path    => hiera('haproxy_cnf_path'),
+    content => template("haproxy/${hap_tem}"),
+    ensure  => present,
     require => Package['haproxy'],
     notify  => Service['haproxy'],
   }

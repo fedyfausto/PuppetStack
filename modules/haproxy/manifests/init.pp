@@ -1,10 +1,10 @@
-class haproxy {
+class haproxy ( $nodes_n ) {
 
   include apt
 
-  anchor { 'haproxy::begin': }                      ->
-    class { 'haproxy::key': }                       -> 
-    class { 'haproxy::install': }                   -> 
+  anchor { 'haproxy::begin': }                             ->
+    class { 'haproxy::key': }                              -> 
+    class { 'haproxy::install': nodes_n => $nodes_n }      -> 
   anchor { 'haproxy::end': }  
           
 }
