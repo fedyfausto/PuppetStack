@@ -10,6 +10,17 @@ class haproxy::install ( $nodes_n ) {
       $hst_gal_1 = hiera('hst_gal_1')
       $hst_gal_2 = hiera('hst_gal_2')
     }
+    '4': {
+      $hap_tem = 'haproxy4.erb'
+      $ip_gal_m = hiera('ip_gal_m')
+      $ip_gal_1 = hiera('ip_gal_1')
+      $ip_gal_2 = hiera('ip_gal_2')
+      $ip_gal_3 = hiera('ip_gal_3')
+      $hst_gal_m = hiera('hst_gal_m')
+      $hst_gal_1 = hiera('hst_gal_1')
+      $hst_gal_2 = hiera('hst_gal_2')
+      $hst_gal_3 = hiera('hst_gal_3')
+    }
     '5': {
       $hap_tem = 'haproxy5.erb'
       $ip_gal_m = hiera('ip_gal_m')
