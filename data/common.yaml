@@ -16,8 +16,8 @@ hst_gal_m : "galera-master"
 hst_gal_1 : "galera-1"
 hst_gal_2 : "galera-2"
 
-ip_gal_3 : ""
-hst_gal_3 : ""
+ip_gal_3 : "10.55.1.156"
+hst_gal_3 : "galera-3"
 ip_gal_4 : ""
 hst_gal_4 : ""
 

@@ -1,12 +1,12 @@
-class galera::master {
+class galera::master ( $nodes_n ) {
 
   include apt
 
-  anchor { 'galera::begin': }                      ->
-    class { 'galera::key': }                       -> 
-    class { 'galera::dependencies': }              -> 
-    class { 'galera::clusterconfig': }             -> 
-    class { 'galera::exec::master': }              -> 
+  anchor { 'galera::begin': }                			        ->
+    class { 'galera::key': }                       			-> 
+    class { 'galera::dependencies': }             		        -> 
+    class { 'galera::clusterconfig': nodes_n => $nodes_n }              -> 
+    class { 'galera::exec::master': }              			-> 
   anchor { 'galera::end': }  
           
 }

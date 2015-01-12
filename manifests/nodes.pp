@@ -6,17 +6,23 @@ include sudoers
 include user::sysadmins
 include stdlib
 
+$galera_nodes = '4'
+
 node galera-master {
-  include galera::master
+  class { 'galera::master':
+    nodes_n => $galera_nodes,
+  }
 }
 
-node galera-1, galera-2 {
-  include galera::slave
+node /(galera-)+[0-9]/ {
+  class { 'galera::slave':
+    nodes_n => $galera_nodes,
+  }
 }
 
 node haproxy-1 {
   class { 'haproxy':
-    nodes_n  => '3',
+    nodes_n  => $galera_nodes,
   }
   class { 'keepalived':
     priority => '100',
@@ -25,7 +31,7 @@ node haproxy-1 {
 
 node haproxy-2 {
   class { 'haproxy':
-    nodes_n  => '3',
+    nodes_n  => $galera_nodes,
   }
   class { 'keepalived':
     priority => '101',
