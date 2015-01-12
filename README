@@ -21,8 +21,8 @@ HOWTO
   1) Modify the /data/common.yaml file according to your needs.
   
   2) Edit the /manifests/nodes.pp to choose:
-    > The number of hosts the haproxy lb should consider (3, 4 or 5). 3 is the default value.
-    > The priority of each load balancer. 100 and 101 are default values and should be ok.
+    > $galera_nodes -> the number of hosts the haproxy lb should consider (3, 4 or 5). 3 is the default value.
+    > priority (haproxy-X) -> the priority of each load balancer. 100 and 101 are default values and should be ok.
   Remember that if you choose a different value for the hosts number,
   a coherent editing of the /data/common.yaml is needed!!!
   
@@ -32,4 +32,5 @@ HOWTO
   4) Next time you wish to apply the manifest simply use the 'papply' command.
   
 If you have any question or suggestion, please feel free to contact me at alberto.disavia@ct.infn.it
-THAT'S ALL FOLKS...FOR NOW
+
+                                               THAT'S ALL FOLKS
