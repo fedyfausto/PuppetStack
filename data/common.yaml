@@ -25,12 +25,19 @@ ip_hap_v : "10.55.1.155"
 hst_hap_1 : "haproxy-1"
 hst_hap_2 : "haproxy-2"
 
-#keepalived section
+### Keepalived Configuration
 ka_password : "password"
 smtp_server : "smtp.ct.infn.it"
 notification_email : "alberto.disavia@ct.infn.it"
 notification_email_from : "haproxy-noreply@ct.infn.it"
 keepalived_cnf_path : "/etc/keepalived/keepalived.conf"
 vip_interface : "eth0"
+
+### Database Configuration
+my_cnf_path : "/etc/mysql/my.cnf"
+collation_server : "utf8_general_ci"
+init_connect : "SET NAMES utf8"
+character_set_server : "utf8"
+openstack_db_pwd : "OpenStack"
 
 #ip_pup_m : "10.55.1.156"

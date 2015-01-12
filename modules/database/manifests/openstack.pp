@@ -1,5 +1,35 @@
 class database::openstack {
 
+  $openstack_db_pwd = hiera('openstack_db_pwd')
+
+  exec { "clear openstack users":
+    command => "mysql -u root -e \"USE mysql; DELETE FROM mysql.user WHERE (User = \'nova\' OR User = \'keystone\' OR User = \'glance\' OR User = \'quantum\' OR User = \'cinder\');\" ",
+    path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+  }
+
+  exec { "drop openstack dbs":
+    command => "mysql -u root -e \"USE mysql; DROP DATABASE IF EXISTS nova; DROP DATABASE IF EXISTS keystone; DROP DATABASE IF EXISTS glance; DROP DATABASE IF EXISTS quantum; DROP DATABASE IF EXISTS cinder;\" ",
+    path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+  }    
+
+  exec { "user nova":
+    command => "mysql -u root -e \"INSERT INTO mysql.user (Host,User) values (\'%\',\'nova\'); FLUSH PRIVILEGES;\" ",  
+    path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+    require => Exec["clear openstack users"],
+  }
+
+  exec { "db nova":
+    command => "mysql -u root -e \"CREATE DATABASE nova;\" ",
+    path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+    require => Exec["drop openstack dbs"],
+  }
+    
+  exec { "nova privileges":
+    command => "mysql -u root -e \"GRANT ALL PRIVILEGES ON nova.* TO \'nova\'@\'%\' IDENTIFIED BY \'${openstack_db_pwd}\' WITH GRANT OPTION; FLUSH PRIVILEGES;\" ",
+    path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+    require => [ Exec["user nova"], Exec["db nova"] ],
+  }
+    
 }
 
 include database::openstack
