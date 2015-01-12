@@ -1,1 +1,35 @@
-Prisma Puppet #10/11/2014 #Alberto Di Savia Puglisi
+Prisma Puppet Project - Beginning Date: 10/11/2014
+@Author: Alberto Di Savia Puglisi
+
+This project's aim is to deploy a working openstack environment in one shot.
+Of course it's a WORK IN PROGRESS and I really hope it will come to an end!
+
+What does work:
+  > Basic puppet settings
+  > Galera cluster of MariaDB database servers
+  > 2 Haproxy load balancers for the Galera cluster
+  > HA of these load balancers through Keepalived
+  > Openstack Users, DBs and Privileges entries
+  
+What should work better:
+  > Galera module should let the user choose the number of cluster members
+  
+Next steps:
+--
+
+HOWTO
+  1) Modify the /data/common.yaml file according to your needs.
+  
+  2) Edit the /manifests/nodes.pp to choose:
+    > The number of hosts the haproxy lb should consider. 3 is the default value.
+    > The priority of each load balancer. 100 and 101 are default values and should be ok.
+  Remember that if you choose a different value for the hosts number,
+  a coherent editing of the /data/common.yaml is needed!!!
+  
+  3) After you've completed the previous stages, run the following command in order to apply your manifest:
+    sh prisma/modules/puppet/files/papply.sh
+  
+  4) Next time you wish to apply the manifest simply use the 'papply' command.
+  
+If you have any question or suggestion, please feel free to contact me at alberto.disavia@ct.infn.it
+THAT'S ALL FOLKS...FOR NOW
