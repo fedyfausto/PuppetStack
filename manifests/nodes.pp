@@ -6,15 +6,24 @@ include sudoers
 include user::sysadmins
 include stdlib
 
-
-node galera-master, galera-1, galera-2 {
-  include galera
+node galera-master {
+  include galera::master
 }
 
-node haproxy-1, haproxy-2 {
+node galera-1, galera-2 {
+  include galera::slave
+}
+
+node haproxy-1 {
   include haproxy
-  include keepalived
+  class { 'keepalived':
+    priority => '100',
+  }  
 }
 
-node default {
+node haproxy-2 {
+  include haproxy
+  class { 'keepalived':
+    priority => '101',
+  }
 }

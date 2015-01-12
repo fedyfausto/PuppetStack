@@ -1,4 +1,4 @@
-class galera {
+class galera::slave {
 
   include apt
 
@@ -6,9 +6,9 @@ class galera {
     class { 'galera::key': }                       -> 
     class { 'galera::dependencies': }              -> 
     class { 'galera::clusterconfig': }             -> 
-    class { 'galera::exec': }                      -> 
+    class { 'galera::exec::slave': }               -> 
   anchor { 'galera::end': }  
           
 }
 
-include galera
+include galera::slave
