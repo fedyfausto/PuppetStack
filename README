@@ -20,27 +20,33 @@ Next steps:
   > Rabbitmq cluster
   > GlusterFS cluster
 
-HOWTO
+HOW-TO:
+
   1) Modify the /data/common.yaml file according to your needs.
   
   2) Edit the /manifests/nodes.pp to choose:
-    > $galera_nodes -> the number of hosts the haproxy lb and the galera module itself should consider (3, 4 or 5). 
-      3 is the default value.
-    > priority (haproxy-X) -> the priority of each load balancer. 100 and 101 are default values and should be ok.
-  Remember that if you choose a different value for the hosts number,
-  a coherent editing of the /data/common.yaml is needed!!!
+    
+    > $galera_nodes -> the number of hosts the haproxy lb and the galera module 
+    itself should consider (3, 4 or 5). 3 is the default value.
+    
+    > priority (haproxy-X) -> the priority of each load balancer. 
+    100 and 101 are default values and should be ok.
   
-  3) After you've completed the previous stages, run the following command in order to apply your manifest:
-    sh prisma/scripts/first_papply.sh
+    Remember that if you choose a different value for the hosts number,
+    a coherent editing of the /data/common.yaml is needed!!!
   
-  This will download and install puppet, ruby and librarian-puppet and execute
-  the custom puppet apply script. This script needs to be run just once.
+  3) After you've completed the previous stages, run the following command 
+    in order to apply your manifest: sh prisma/scripts/first_papply.sh
   
-  Please ignore the red warning (Warning: Setting templatedir is deprecated...). It is an Ubuntu matter. It appears just once and 
-  then it is fixed by puppet. 
+    This will download and install puppet, ruby and librarian-puppet and execute
+    the custom puppet apply script. This script needs to be run just once.
+  
+    Please ignore the red warning (Warning: Setting templatedir is deprecated...). 
+    It is an Ubuntu matter. It appears just once and then it is fixed by puppet. 
 
   4) Next time you wish to apply the manifest simply use the 'papply' command.
   
-If you have any question or suggestion, please feel free to contact me at alberto.disavia@ct.infn.it
+If you have any question or suggestion, 
+please feel free to contact me at alberto.disavia@ct.infn.it
 
-                                     THAT'S ALL FOLKS
+                                      THAT'S ALL FOLKS
