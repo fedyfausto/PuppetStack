@@ -36,8 +36,8 @@ HOWTO
   This will download and install puppet, ruby and librarian-puppet and execute
   the custom puppet apply script. This script needs to be run just once.
   
-  Please ignore the red Warning. It is an Ubuntu matter. It appear just once and 
-  then is fixed. 
+  Please ignore the red Warning. It is an Ubuntu matter. It appears just once and 
+  then it is fixed by puppet. 
 
   4) Next time you wish to apply the manifest simply use the 'papply' command.
   
