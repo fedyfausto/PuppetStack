@@ -27,16 +27,6 @@ class puppet {
     notify  => Service['puppet'],
   }
 
-  exec { 'update stdlib':
-    command => "puppet module upgrade puppetlabs-stdlib --modulepath ${project_home}/modules",
-    path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
-  }
-
-  exec { 'update apt':
-    command => "puppet module upgrade puppetlabs-apt --modulepath ${project_home}/modules",
-    path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
-  }
-
 }
 
 include puppet

@@ -37,3 +37,8 @@ node haproxy-2 {
     priority => '101',
   }
 }
+
+
+node rabbit-1 {
+  
+}
