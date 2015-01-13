@@ -6,6 +6,7 @@ Of course it's a WORK IN PROGRESS and I really hope it will come to an end!
 
 What does work:
   > Basic puppet settings
+  > Hiera and librarian-puppet
   > Galera cluster of MariaDB database servers
   > 2 Haproxy load balancers for the Galera cluster
   > HA of these load balancers through Keepalived
@@ -15,7 +16,8 @@ What should work better:
   > 
   
 Next steps:
-  >
+  > Rabbitmq cluster
+  > GlusterFS cluster
 
 HOWTO
   1) Modify the /data/common.yaml file according to your needs.
@@ -34,4 +36,4 @@ HOWTO
   
 If you have any question or suggestion, please feel free to contact me at alberto.disavia@ct.infn.it
 
-                      THAT'S ALL FOLKS
+                          THAT'S ALL FOLKS
