@@ -21,14 +21,10 @@ class rabbit {
     cluster_node_type        => 'disk', #ram
     erlang_cookie            => 'A_SECRET_COOKIE_STRING',
     wipe_db_on_cookie_change => true,
-    environment_variables    => {
-      'RABBITMQ_NODENAME'    => $hostname,
-       'RABBITMQ_SERVICENAME' => 'RabbitMQ',
-    },
     port                     => '5672',
-#    default_user             => 'root',
-#    default_pass             => hiera('rab_def_pwd'),
-#    delete_guest_user        => true,
+    default_user             => 'root',
+    default_pass             => hiera('rab_def_pwd'),
+    delete_guest_user        => true,
     tcp_keepalive	     => true,
     require	             => Exec['clean'],
   }
