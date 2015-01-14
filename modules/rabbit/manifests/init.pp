@@ -18,13 +18,13 @@ class rabbit {
   class { 'rabbitmq':
     config_cluster           => true,
     cluster_nodes            => [$hst_rab_1, $hst_rab_2, $hst_rab_3],
-    cluster_node_type        => 'ram', #disk
+    cluster_node_type        => 'disk', #ram
     erlang_cookie            => 'A_SECRET_COOKIE_STRING',
     wipe_db_on_cookie_change => true,
-#    environment_variables    => {
-#      'RABBITMQ_NODENAME'    => $hostname,
-#       'RABBITMQ_SERVICENAME' => 'RabbitMQ',
-#    },
+    environment_variables    => {
+      'RABBITMQ_NODENAME'    => $hostname,
+       'RABBITMQ_SERVICENAME' => 'RabbitMQ',
+    },
     port                     => '5672',
 #    default_user             => 'root',
 #    default_pass             => hiera('rab_def_pwd'),
