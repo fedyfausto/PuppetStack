@@ -25,9 +25,6 @@ class rabbit {
     erlang_cookie            => 'A_SECRET_COOKIE_STRING',
     wipe_db_on_cookie_change => true,
     port                     => '5672',
-#    default_user             => 'root',
-#    default_pass             => hiera('rab_def_pwd'),
-#    delete_guest_user        => true,
     tcp_keepalive	     => true,
     require	             => Exec['clean'],
   }

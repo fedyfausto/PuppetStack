@@ -4,6 +4,8 @@ Prisma Puppet Project - Beginning Date: 10/11/2014
 This project's aim is to deploy a working openstack environment in one shot.
 Of course it's a WORK IN PROGRESS and I really hope it will come to an end!
 
+_______________________________________________________________________________
+
 What does work:
   > Basic puppet settings
   > Hiera and librarian-puppet
@@ -11,14 +13,17 @@ What does work:
   > 2 Haproxy load balancers for the Galera cluster
   > HA of these load balancers through Keepalived
   > Openstack Users, DBs and Privileges entries
+  > Rabbitmq cluster of 3 nodes
   
 What should work better:
   > ssh exec.pp should give the ssh id_rsa to a puppetmaster or 
-  something similar and the id_rsa.pub to other nodes 
-  
+    something similar and the id_rsa.pub to other nodes 
+  > you tell me..  
+
 Next steps:
-  > Rabbitmq cluster
   > GlusterFS cluster
+
+_______________________________________________________________________________
 
 HOW-TO:
 
@@ -27,10 +32,10 @@ HOW-TO:
   2) Edit the /manifests/nodes.pp to choose:
     
     > $galera_nodes -> the number of hosts the haproxy lb and the galera module 
-    itself should consider (3, 4 or 5). 3 is the default value.
+      itself should consider (3, 4 or 5). 3 is the default value.
     
     > priority (haproxy-X) -> the priority of each load balancer. 
-    100 and 101 are default values and should be ok.
+      100 and 101 are default values and should be ok.
   
     Remember that if you choose a different value for the hosts number,
     a coherent editing of the /data/common.yaml is needed!!!
@@ -45,8 +50,18 @@ HOW-TO:
     It is an Ubuntu matter. It appears just once and then it is fixed by puppet. 
 
   4) Next time you wish to apply the manifest simply use the 'papply' command.
-  
+
+_______________________________________________________________________________
+
+TROUBLESHOOTING:
+
+  RabbitMQ cluster:
+    > If, for any reason, you need to apply manifest of a rabbitmq node
+      a second time, please exec the following command: killall -u rabbitmq
+    > To verify the status of your cluster: rabbitmqctl cluster_status
+_______________________________________________________________________________
+
 If you have any question or suggestion, 
 please feel free to contact me at alberto.disavia@ct.infn.it
 
-                                      THAT'S ALL FOLKS
+                                     THAT'S ALL FOLKS
