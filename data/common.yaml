@@ -15,7 +15,6 @@ ip_gal_2 : "10.55.1.152"
 hst_gal_m : "galera-master"
 hst_gal_1 : "galera-1"
 hst_gal_2 : "galera-2"
-
 ip_gal_3 : "10.55.1.156"
 hst_gal_3 : "galera-3"
 ip_gal_4 : ""
@@ -44,5 +43,14 @@ collation_server : "utf8_general_ci"
 init_connect : "SET NAMES utf8"
 character_set_server : "utf8"
 openstack_db_pwd : "OpenStack"
+
+### RabbitMQ Configuration
+ip_rab_1 : "10.55.1.157"
+ip_rab_2 : "10.55.1.158"
+ip_rab_3 : "10.55.1.159"
+hst_rab_1 : "rabbit-1"
+hst_rab_2 : "rabbit-2"
+hst_rab_3 : "rabbit-3"
+rab_def_pwd : "password"
 
 #ip_pup_m : "10.55.1.156"

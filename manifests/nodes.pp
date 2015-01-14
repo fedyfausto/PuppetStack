@@ -40,5 +40,5 @@ node haproxy-2 {
 
 
 node rabbit-1 {
-  
+  include rabbit    
 }
