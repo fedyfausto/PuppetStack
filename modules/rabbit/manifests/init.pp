@@ -1,3 +1,6 @@
+# To run twice, execute this before: killall -u rabbitmq
+# To verify the claster status : rabbitmqctl cluster_status
+
 class rabbit {
 
   include erlang
@@ -9,7 +12,7 @@ class rabbit {
   package { 'erlang-base':
     ensure => latest,
   }
-
+  
   exec { 'clean':
     command => 'rm -rf /var/lib/rabbitmq/mnesia/*',
     path    => '/usr/local/bin/:/bin/:/sbin/:/usr/bin/',
@@ -24,7 +27,7 @@ class rabbit {
     port                     => '5672',
     default_user             => 'root',
     default_pass             => hiera('rab_def_pwd'),
-    delete_guest_user        => true,
+#    delete_guest_user        => true,
     tcp_keepalive	     => true,
     require	             => Exec['clean'],
   }
