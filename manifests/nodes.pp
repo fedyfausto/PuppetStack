@@ -38,7 +38,6 @@ node haproxy-2 {
   }
 }
 
-
-node rabbit-1 {
+node /(rabbit-)+[0-9]/ {
   include rabbit    
 }

@@ -11,7 +11,7 @@ class rabbit {
   }
 
   exec { 'clean':
-    command => 'killall -u rabbitmq && rm -rf /var/lib/rabbitmq/mnesia/*',
+    command => 'rm -rf /var/lib/rabbitmq/mnesia/*',
     path    => '/usr/local/bin/:/bin/:/sbin/:/usr/bin/',
   }
 
