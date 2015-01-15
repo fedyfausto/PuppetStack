@@ -10,7 +10,6 @@ class keepalived ($haproxy_nodes) {
   $vip_interface = hiera('vip_interface')
   $keepalived_cnf_path = hiera('keepalived_cnf_path')  
 
-  notice ("HAPROXY NODES: $haproxy_nodes")  
   case $haproxy_nodes {
     '2': {
       case $hostname {

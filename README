@@ -9,18 +9,18 @@ _______________________________________________________________________________
 What does work:
   > Basic puppet settings
   > Hiera and librarian-puppet
-  > Galera cluster of MariaDB database servers
-  > 2 Haproxy load balancers for the Galera cluster
+  > Galera cluster of MariaDB database servers (3 to 5 nodes)
+  > (2 or 3) Haproxy load balancers for the Galera cluster
   > HA of these load balancers through Keepalived
   > Openstack Users, DBs and Privileges entries
-  > Rabbitmq cluster of 3 nodes
+  > Rabbitmq cluster (3 to 5 nodes)
   
 What should work better:
   > ssh exec.pp should give the ssh id_rsa to a puppetmaster or 
     something similar and the id_rsa.pub to other nodes 
   > hosts module should fit the hiera.yaml requirement
-  > even haproxy hosts should be variable in number at least between 3 and 5
-  > you tell me..  
+  > hiera variables are all in one single file
+  > you tell me...  
 
 Next steps:
   > GlusterFS cluster
@@ -30,14 +30,30 @@ _______________________________________________________________________________
 HOW-TO:
 
   1) Modify the /data/common.yaml file according to your needs.
-  Here are some parameter to which you should pay attention:    
+  Here are some parameter to which you should pay attention:
+    
     > galera_nodes -> the number of hosts the haproxy lb and the galera module 
       itself should consider (3, 4 or 5). 4 is the default value.
+
     > rabbit_nodes -> the number of hosts will form the rabbitmq cluster (3, 4 or 5). 
       3 is the default value.
-    > hap1_priority, hap2_priority -> the priority of each load balancer. 
-      100 and 101 are default values and should be ok.
+
+    > haproxy_nodes -> the number of haproxy nodes. Choose between 2 and 3.
+
+    > hap1_priority, hap2_priority, hap3_priority -> the priority of each 
+      load balancer. 100, 101 and 102 are default values and should be ok.
   
+    Keepalived decision about what server should take the virtual ip is taken
+    considering the sum between two factors: the priority and the weight of
+    each server. The weight is equal (by default) for each node but the
+    priority is incremental (100 to 102 if there are 3 load balancers).
+    Assuming they are only two, the server who gains the ip is the one that has
+    the sum of 103 (priority 101 + weight 2) against the other that has sum 102
+    (100+2). If the server earning the vip goes down, its weight becomes 0 thus
+    his sum becomes 101 (101 + 0) and the less important load balancer (sum 102) takes
+    the vip. When the maior server comes back to life, his weight is 103 and 
+    it gains the vip again.
+    
     Remember that if you change the number of hosts (galera_nodes, rabbit_nodes,..),
     you should provide at least an equivalent number of relative hostnames and ips!!!
   
