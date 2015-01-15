@@ -5,9 +5,28 @@ class rabbit {
 
   include erlang
 
-  $hst_rab_1 = hiera('hst_rab_1')
-  $hst_rab_2 = hiera('hst_rab_2')
-  $hst_rab_3 = hiera('hst_rab_3')  
+  $rabbit_nodes = hiera('rabbit_nodes')
+
+  case $rabbit_nodes {
+    '3': {
+      $hst_rab_1 = hiera('hst_rab_1')
+      $hst_rab_2 = hiera('hst_rab_2')
+      $hst_rab_3 = hiera('hst_rab_3')  
+    }
+    '4': {
+      $hst_rab_3 = hiera('hst_rab_1')  
+      $hst_rab_3 = hiera('hst_rab_2')  
+      $hst_rab_3 = hiera('hst_rab_3')  
+      $hst_rab_3 = hiera('hst_rab_4')  
+    }
+    '5': {
+      $hst_rab_3 = hiera('hst_rab_1')  
+      $hst_rab_3 = hiera('hst_rab_2')  
+      $hst_rab_3 = hiera('hst_rab_3')  
+      $hst_rab_3 = hiera('hst_rab_4')  
+      $hst_rab_3 = hiera('hst_rab_5')  
+    }
+  }
 
   package { 'erlang-base':
     ensure => latest,
@@ -20,8 +39,14 @@ class rabbit {
 
   class { 'rabbitmq':
     config_cluster           => true,
-    cluster_nodes            => [$hst_rab_1, $hst_rab_2, $hst_rab_3],
-#    cluster_node_type        => 'disk', #ram
+
+    case $rabbit_nodes {
+      '3': { cluster_nodes   => [$hst_rab_1, $hst_rab_2, $hst_rab_3], }
+      '4': { cluster_nodes   => [$hst_rab_1, $hst_rab_2, $hst_rab_3, $hst_rab_4], }
+      '5': { cluster_nodes   => [$hst_rab_1, $hst_rab_2, $hst_rab_3, $hst_rab_4, $hst_rab_5], }
+    }
+
+      #    cluster_node_type        => 'disk', #ram
     erlang_cookie            => 'A_SECRET_COOKIE_STRING',
     wipe_db_on_cookie_change => true,
     port                     => '5672',
