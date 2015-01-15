@@ -6,7 +6,9 @@ include sudoers
 include user::sysadmins
 include stdlib
 
-$galera_nodes = '4'
+$galera_nodes = hiera('galera_nodes')
+$hap1_priority = hiera('hap1_priority')
+$hap2_priority = hiera('hap2_priority')
 
 node galera-master {
   class { 'galera::master':
@@ -25,7 +27,7 @@ node haproxy-1 {
     nodes_n  => $galera_nodes,
   }
   class { 'keepalived':
-    priority => '100',
+    priority => $hap1_priority,
   }  
 }
 
@@ -34,7 +36,7 @@ node haproxy-2 {
     nodes_n  => $galera_nodes,
   }
   class { 'keepalived':
-    priority => '101',
+    priority => $hap2_priority,
   }
 }
 
