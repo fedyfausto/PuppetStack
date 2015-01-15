@@ -86,9 +86,9 @@ class hosts::galera {
         host_aliases => $hst_gal_3,
       }
       
-      host { $hst_gal_3:
-        ip => $ip_gal_3,
-        host_aliases => $hst_gal_3,
+      host { $hst_gal_4:
+        ip => $ip_gal_4,
+        host_aliases => $hst_gal_4,
       }
     }
   }  
