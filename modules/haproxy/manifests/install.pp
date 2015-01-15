@@ -1,3 +1,5 @@
+# nodes_n -> number of galera nodes
+
 class haproxy::install ( $nodes_n ) {
   
   case $nodes_n {

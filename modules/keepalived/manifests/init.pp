@@ -1,6 +1,6 @@
 # To test the vip assignation: sudo ip a | grep eth0
 
-class keepalived ($priority) {
+class keepalived ($haproxy_nodes) {
  
   $notification_email_from = hiera('notification_email_from')
   $notification_email = hiera('notification_email')
@@ -10,16 +10,32 @@ class keepalived ($priority) {
   $vip_interface = hiera('vip_interface')
   $keepalived_cnf_path = hiera('keepalived_cnf_path')  
 
-#  $hst_hap_1 = hiera('hst_hap_1')
-#  $hst_hap_2 = hiera('hst_hap_2')
-#  case $hostname {
-#    $hst_hap_1: {
-#      $priority = 100
-#    }
-#    $hst_hap_2: {
-#      $priority = 101
-#    }
-#  }
+  notice ("HAPROXY NODES: $haproxy_nodes")  
+  case $haproxy_nodes {
+    '2': {
+      case $hostname {
+        hiera('hst_hap_1'): {
+          $priority = hiera('hap1_priority')
+        }
+        hiera('hst_hap_2'): {
+          $priority = hiera('hap2_priority')
+        }
+      }
+    }
+    '3': {
+      case $hostname {
+        hiera('hst_hap_1'): {
+          $priority = hiera('hap1_priority')
+        }
+        hiera('hst_hap_2'): {
+          $priority = hiera('hap2_priority')
+        }
+        hiera('hst_hap_3'): {
+          $priority = hiera('hap3_priority')
+        }
+      }  
+    }
+  }
 
   package { 'keepalived': 
     ensure  => installed ,

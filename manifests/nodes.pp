@@ -18,23 +18,15 @@ node /(galera-)+[0-9]/ {
   }
 }
 
-node haproxy-1 {
+node /(haproxy-)+[0-9]/ {
   class { 'haproxy':
     nodes_n  => hiera('galera_nodes'),
   }
   class { 'keepalived':
-    priority => hiera('hap1_priority'),
+    haproxy_nodes => hiera('haproxy_nodes'),
   }  
 }
 
-node haproxy-2 {
-  class { 'haproxy':
-    nodes_n  => hiera('galera_nodes'),
-  }
-  class { 'keepalived':
-    priority => hiera('hap2_priority'),
-  }
-}
 
 node /(rabbit-)+[0-9]/ {
   include rabbit    

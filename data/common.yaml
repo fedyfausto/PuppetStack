@@ -22,15 +22,19 @@ ip_gal_4 : ""
 hst_gal_4 : ""
 
 ### Haproxy Configuration
+haproxy_nodes : "3"
 haproxy_cnf_path : "/etc/haproxy/haproxy.cfg"
 haproxy_stat_pwd : "password"
 ip_hap_1 : "10.55.1.153"
 ip_hap_2 : "10.55.1.154"
+ip_hap_3 : "10.55.1.160"
 ip_hap_v : "10.55.1.155"
 hst_hap_1 : "haproxy-1"
 hst_hap_2 : "haproxy-2"
+hst_hap_3 : "haproxy-3"
 hap1_priority : "100"
 hap2_priority : "101"
+hap3_priority : "102"
 
 ### Keepalived Configuration
 ka_password : "password"
