@@ -18,27 +18,31 @@ What does work:
 What should work better:
   > ssh exec.pp should give the ssh id_rsa to a puppetmaster or 
     something similar and the id_rsa.pub to other nodes 
+  > hosts module should fit the hiera.yaml requirement
+  > even haproxy hosts should be variable in number at least between 3 and 5
   > you tell me..  
 
 Next steps:
   > GlusterFS cluster
-
+  > ..
 _______________________________________________________________________________
 
 HOW-TO:
 
   1) Modify the /data/common.yaml file according to your needs.
-  
-  2) Edit the /manifests/nodes.pp to choose:
-    
-    > $galera_nodes -> the number of hosts the haproxy lb and the galera module 
-      itself should consider (3, 4 or 5). 3 is the default value.
-    
-    > priority (haproxy-X) -> the priority of each load balancer. 
+  Here are some parameter to which you should pay attention:    
+    > galera_nodes -> the number of hosts the haproxy lb and the galera module 
+      itself should consider (3, 4 or 5). 4 is the default value.
+    > rabbit_nodes -> the number of hosts will form the rabbitmq cluster (3, 4 or 5). 
+      3 is the default value.
+    > hap1_priority, hap2_priority -> the priority of each load balancer. 
       100 and 101 are default values and should be ok.
   
-    Remember that if you choose a different value for the hosts number,
-    a coherent editing of the /data/common.yaml is needed!!!
+    Remember that if you change the number of hosts (galera_nodes, rabbit_nodes,..),
+    you should provide at least an equivalent number of relative hostnames and ips!!!
+  
+  2) Edit the /manifests/nodes.pp to meet your requirements:
+     > change the hostnames if needed.
   
   3) After you've completed the previous stages, run the following command 
     in order to apply your manifest: sh prisma/scripts/first_papply.sh
