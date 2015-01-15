@@ -9,22 +9,13 @@ class rabbit {
 
   case $rabbit_nodes {
     '3': {
-      $hst_rab_1 = hiera('hst_rab_1')
-      $hst_rab_2 = hiera('hst_rab_2')
-      $hst_rab_3 = hiera('hst_rab_3')  
+      $cluster_nodes = [hiera('hst_rab_1'), hiera('hst_rab_2'), hiera('hst_rab_3')]
     }
     '4': {
-      $hst_rab_3 = hiera('hst_rab_1')  
-      $hst_rab_3 = hiera('hst_rab_2')  
-      $hst_rab_3 = hiera('hst_rab_3')  
-      $hst_rab_3 = hiera('hst_rab_4')  
+      $cluster_nodes = [hiera('hst_rab_1'), hiera('hst_rab_2'), hiera('hst_rab_3'), hiera('hst_rab_4')]
     }
     '5': {
-      $hst_rab_3 = hiera('hst_rab_1')  
-      $hst_rab_3 = hiera('hst_rab_2')  
-      $hst_rab_3 = hiera('hst_rab_3')  
-      $hst_rab_3 = hiera('hst_rab_4')  
-      $hst_rab_3 = hiera('hst_rab_5')  
+      $cluster_nodes = [hiera('hst_rab_1'), hiera('hst_rab_2'), hiera('hst_rab_3'), hiera('hst_rab_4'), hiera('hst_rab_5')]
     }
   }
 
@@ -39,14 +30,8 @@ class rabbit {
 
   class { 'rabbitmq':
     config_cluster           => true,
-
-    case $rabbit_nodes {
-      '3': { cluster_nodes   => [$hst_rab_1, $hst_rab_2, $hst_rab_3], }
-      '4': { cluster_nodes   => [$hst_rab_1, $hst_rab_2, $hst_rab_3, $hst_rab_4], }
-      '5': { cluster_nodes   => [$hst_rab_1, $hst_rab_2, $hst_rab_3, $hst_rab_4, $hst_rab_5], }
-    }
-
-      #    cluster_node_type        => 'disk', #ram
+    cluster_nodes	     => $cluster_nodes,
+#   cluster_node_type        => 'disk', #ram
     erlang_cookie            => 'A_SECRET_COOKIE_STRING',
     wipe_db_on_cookie_change => true,
     port                     => '5672',
