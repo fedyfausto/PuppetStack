@@ -4,7 +4,7 @@ Prisma Puppet Project - Beginning Date: 10/11/2014
 This project's aim is to deploy a working openstack environment in one shot.
 Of course it's a WORK IN PROGRESS and I really hope it will come to an end!
 
-_______________________________________________________________________________
+_____________________________________________________________________________________
 
 What does work:
   > Basic puppet settings
@@ -18,14 +18,13 @@ What does work:
 What should work better:
   > ssh exec.pp should give the ssh id_rsa to a puppetmaster or 
     something similar and the id_rsa.pub to other nodes 
-  > hosts module should fit the hiera.yaml requirement
   > hiera variables are all in one single file
   > you tell me...  
 
 Next steps:
   > GlusterFS cluster
   > ..
-_______________________________________________________________________________
+_____________________________________________________________________________________
 
 HOW-TO:
 
@@ -35,8 +34,8 @@ HOW-TO:
     > galera_nodes -> the number of hosts the haproxy lb and the galera module 
       itself should consider (3, 4 or 5). 4 is the default value.
 
-    > rabbit_nodes -> the number of hosts will form the rabbitmq cluster (3, 4 or 5). 
-      3 is the default value.
+    > rabbit_nodes -> the number of hosts will form the rabbitmq cluster 
+    (3, 4 or 5). 3 is the default value.
 
     > haproxy_nodes -> the number of haproxy nodes. Choose between 2 and 3.
 
@@ -50,12 +49,12 @@ HOW-TO:
     Assuming they are only two, the server who gains the ip is the one that has
     the sum of 103 (priority 101 + weight 2) against the other that has sum 102
     (100+2). If the server earning the vip goes down, its weight becomes 0 thus
-    his sum becomes 101 (101 + 0) and the less important load balancer (sum 102) takes
-    the vip. When the maior server comes back to life, his weight is 103 and 
-    it gains the vip again.
+    his sum becomes 101 (101 + 0) and the less important load balancer (sum 102) 
+    takes the vip. When the maior server comes back to life, his weight is 103 
+    and it gains the vip again.
     
     Remember that if you change the number of hosts (galera_nodes, rabbit_nodes,..),
-    you should provide at least an equivalent number of relative hostnames and ips!!!
+    you should provide at least an equivalent number of relative hostnames and IPs!
   
   2) Edit the /manifests/nodes.pp to meet your requirements:
      > change the hostnames if needed.
@@ -71,7 +70,7 @@ HOW-TO:
 
   4) Next time you wish to apply the manifest simply use the 'papply' command.
 
-_______________________________________________________________________________
+_____________________________________________________________________________________
 
 TROUBLESHOOTING:
 
@@ -79,9 +78,9 @@ TROUBLESHOOTING:
     > If, for any reason, you need to apply manifest of a rabbitmq node
       a second time, please exec the following command: killall -u rabbitmq
     > To verify the status of your cluster: rabbitmqctl cluster_status
-_______________________________________________________________________________
+_____________________________________________________________________________________
 
 If you have any question or suggestion, 
 please feel free to contact me at alberto.disavia@ct.infn.it
 
-                                     THAT'S ALL FOLKS
+                                    THAT'S ALL FOLKS
