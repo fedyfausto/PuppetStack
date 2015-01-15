@@ -5,7 +5,6 @@ class ssh {
     class { 'ssh::exec': }              -> 
   anchor { 'ssh::end': }  
   
-  notice ( 'ssh init...complete!' )          
 }
 
 include ssh

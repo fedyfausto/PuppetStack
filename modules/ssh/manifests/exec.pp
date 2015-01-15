@@ -1,6 +1,6 @@
 class ssh::exec {
 
-include ssh::params
+  $project_home = hiera('project_home')
 
 #  case $hostname {
  
