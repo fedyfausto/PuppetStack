@@ -53,7 +53,8 @@ class hosts::galera {
         ip => $ip_gal_3,
         host_aliases => $hst_gal_3,
       }
-    }'5': {
+    }
+    '5': {
       $ip_gal_m = hiera('ip_gal_m')
       $ip_gal_1 = hiera('ip_gal_1')
       $ip_gal_2 = hiera('ip_gal_2')
