@@ -39,7 +39,8 @@ class hosts::haproxy {
         ip => $ip_hap_3,
         host_aliases => $hst_hap_3,
       }
-    
+    }
+  }
 }
 
 include hosts::haproxy
