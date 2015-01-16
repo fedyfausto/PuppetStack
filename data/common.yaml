@@ -64,3 +64,13 @@ hst_rab_3 : "rabbit-3"
 hst_rab_4 : "rabbit-4"
 hst_rab_5 : "rabbit-5"
 rab_def_pwd : "password"
+
+### GlusterFS Configuration
+disk : "/dev/xvdb"
+mount_point : "/mnt/dat1"
+ip_glu_1 : "10.55.1.161"
+ip_glu_2 : "10.55.1.162"
+ip_glu_3 : "10.55.1.163"
+hst_glu_1 : "gluster-1"
+hst_glu_2 : "gluster-2"
+hst_glu_3 : "gluster-3"

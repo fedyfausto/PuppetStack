@@ -31,3 +31,11 @@ node /(haproxy-)+[0-9]/ {
 node /(rabbit-)+[0-9]/ {
   include rabbit    
 }
+
+node gluster-1 {
+  include gluster::server
+}
+
+node /(gluster-)+[2-9]/ {
+  include gluster::client
+}
