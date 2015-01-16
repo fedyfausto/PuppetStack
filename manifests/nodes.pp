@@ -33,9 +33,9 @@ node /(rabbit-)+[0-9]/ {
 }
 
 node gluster-1 {
-  include gluster::server
+  include glusterfs::server
 }
 
 node /(gluster-)+[2-9]/ {
-  include gluster::client
+  include glusterfs::client
 }

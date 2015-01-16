@@ -1,4 +1,4 @@
-class gluster::disk {
+class glusterfs::disk {
 
   $disk = hiera('disk')
   $mount_point = hiera('mount_point')
@@ -33,4 +33,4 @@ class gluster::disk {
 
 }
 
-include gluster::disk
+include glusterfs::disk
