@@ -7,6 +7,7 @@ class glusterfs::server {
   $ip_glu_3 = hiera('ip_glu_3')
   $ip_glu_4 = hiera('ip_glu_4')
   $ip_glu_5 = hiera('ip_glu_5')
+  
   $mount_point = hiera('mount_point')
   $gluster_file = hiera('gluster_file')  
   $gluster_nodes = hiera('gluster_nodes')
