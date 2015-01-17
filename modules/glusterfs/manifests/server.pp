@@ -31,6 +31,10 @@ class glusterfs::server {
   package { 'glusterfs-server': 
     ensure => installed, 
   }
+  package { 'python-software-properties': 
+    ensure => installed, 
+  }
+  
 
   service { 'glusterfs-server': 
     ensure    => running,
