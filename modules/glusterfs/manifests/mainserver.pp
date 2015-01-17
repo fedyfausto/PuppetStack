@@ -13,25 +13,6 @@ class glusterfs::mainserver {
   $gluster_nodes = hiera('gluster_nodes')
   $brick = "${mount_point}/brick/"
 
-  case $gluster_nodes {
-    '2': {
-      $peer_probe = "gluster peer probe ${ip_glu_2}"
-      $vol_create_opt = "replica 3 transport tcp ${ip_glu_1}:${brick} ${ip_glu_2}:${brick} force" 
-    }
-    '3': {
-      $peer_probe = "gluster peer probe ${ip_glu_2} | gluster peer probe ${ip_glu_3}"
-      $vol_create_opt = "replica 3 transport tcp ${ip_glu_1}:${brick} ${ip_glu_2}:${brick} ${ip_glu_3}:${brick} force" 
-    }
-    '4': {
-      $peer_probe = "gluster peer probe ${ip_glu_2} | gluster peer probe ${ip_glu_3} | gluster peer probe ${ip_glu_4}"  
-      $vol_create_opt = "replica 3 transport tcp ${ip_glu_1}:${brick} ${ip_glu_2}:${brick} ${ip_glu_3}:${brick} ${ip_glu_4}:${brick} force" 
-    }
-    '5': {
-      $peer_probe = "gluster peer probe ${ip_glu_2} | gluster peer probe ${ip_glu_3} | gluster peer probe ${ip_glu_4} | gluster peer probe ${ip_glu_5}"  
-      $vol_create_opt = "replica 3 transport tcp ${ip_glu_1}:${brick} ${ip_glu_2}:${brick} ${ip_glu_3}:${brick} ${ip_glu_4}:${brick} ${ip_glu_5}:${brick} force" 
-    }
-  }
-  
   class { 'apt':
     always_apt_update => true,
   }
@@ -48,17 +29,96 @@ class glusterfs::mainserver {
     hasstatus => true,
     require   => Package['glusterfs-server','glusterfs-client','glusterfs-common'],
   }
-
-  exec { "gluster peer probe":
-    command => $peer_probe,
-    path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/:/usr/sbin/",  
-    require => Service["glusterfs-server"],
+  
+  case $gluster_nodes {
+    '2': {
+      $peer_probe = "gluster peer probe ${ip_glu_2}"
+      $vol_create_opt = "replica 3 transport tcp ${ip_glu_1}:${brick} ${ip_glu_2}:${brick} force"
+      
+      exec { "gluster peer probe":
+        command => $peer_probe,
+        path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/:/usr/sbin/",  
+        require => Service["glusterfs-server"],
+      }
+    }
+    '3': {
+      $peer_probe1 = "gluster peer probe ${ip_glu_2}"
+      $peer_probe2 = "gluster peer probe ${ip_glu_3}"
+      $vol_create_opt = "replica 3 transport tcp ${ip_glu_1}:${brick} ${ip_glu_2}:${brick} ${ip_glu_3}:${brick} force" 
+      
+      exec { "gluster peer probe 1":
+        command => $peer_probe1,
+        path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/:/usr/sbin/",  
+        require => Service["glusterfs-server"],
+      }
+      
+      exec { "gluster peer probe 2":
+        command => $peer_probe2,
+        path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/:/usr/sbin/",  
+        require => Service["glusterfs-server"],
+      }
+    }
+    '4': {
+      $peer_probe1 = "gluster peer probe ${ip_glu_2}"
+      $peer_probe2 = "gluster peer probe ${ip_glu_3}"
+      $peer_probe3 = "gluster peer probe ${ip_glu_4}"  
+      $vol_create_opt = "replica 3 transport tcp ${ip_glu_1}:${brick} ${ip_glu_2}:${brick} ${ip_glu_3}:${brick} ${ip_glu_4}:${brick} force" 
+      
+      exec { "gluster peer probe 1":
+        command => $peer_probe1,
+        path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/:/usr/sbin/",  
+        require => Service["glusterfs-server"],
+      }
+      
+      exec { "gluster peer probe 2":
+        command => $peer_probe2,
+        path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/:/usr/sbin/",  
+        require => Service["glusterfs-server"],
+      }
+    
+      exec { "gluster peer probe 3":
+        command => $peer_probe3,
+        path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/:/usr/sbin/",  
+        require => Service["glusterfs-server"],
+      }
+    }
+    '5': {
+      $peer_probe1 = "gluster peer probe ${ip_glu_2}"
+      $peer_probe2 = "gluster peer probe ${ip_glu_3}"
+      $peer_probe3 = "gluster peer probe ${ip_glu_4}"
+      $peer_probe4 = "gluster peer probe ${ip_glu_5}"  
+      $vol_create_opt = "replica 3 transport tcp ${ip_glu_1}:${brick} ${ip_glu_2}:${brick} ${ip_glu_3}:${brick} ${ip_glu_4}:${brick} ${ip_glu_5}:${brick} force" 
+    
+      exec { "gluster peer probe 1":
+        command => $peer_probe1,
+        path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/:/usr/sbin/",  
+        require => Service["glusterfs-server"],
+      }
+      
+      exec { "gluster peer probe 2":
+        command => $peer_probe2,
+        path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/:/usr/sbin/",  
+        require => Service["glusterfs-server"],
+      }
+    
+      exec { "gluster peer probe 3":
+        command => $peer_probe3,
+        path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/:/usr/sbin/",  
+        require => Service["glusterfs-server"],
+      }
+      
+      exec { "gluster peer probe 4":
+        command => $peer_probe4,
+        path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/:/usr/sbin/",  
+        require => Service["glusterfs-server"],
+      }
+    }
   }
-
+  ->
   exec { "gluster volume create":
     command => "gluster volume create ${gluster_file} ${vol_create_opt}",
     path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/:/usr/sbin/",  
-    require => Exec["gluster peer probe"],
+    #require => Exec["gluster peer probe"],
   }   
   
   exec { "gluster volume start":
