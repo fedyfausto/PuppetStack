@@ -18,9 +18,13 @@ class glusterfs::disk {
     require => [ Package['xfsprogs'], Exec['create the partition'] ],
   }
 
-  # mount point
+  file { $mount_point:
+    ensure  => directory,
+  }
+  
   file { "${mount_point}/brick":
-    ensure => directory,
+    ensure  => directory,
+    require => File[$mount_point],
   }
 
   mount { $mount_point:
@@ -31,10 +35,10 @@ class glusterfs::disk {
     require => [ File["${mount_point}/brick"], Exec["create the XFS file system"] ],
   }
 
-  file_line { 'fstab rule':
-    path => '/etc/fstab',
-    line => "${disk} ${mount_point} xfs defaults 0 0",
-  }
+#  file_line { 'fstab rule':
+#    path => '/etc/fstab',
+#    line => "${disk} ${mount_point} xfs defaults 0 0",
+#  }
 
 }
 

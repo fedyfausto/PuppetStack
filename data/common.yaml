@@ -67,7 +67,7 @@ rab_def_pwd : "password"
 
 ### GlusterFS Configuration
 disk : "/dev/xvdb"
-mount_point : "/gluster-disks/xvdb1"
+mount_point : "/mnt/gluster-disk"
 ip_glu_1 : "10.55.1.161"
 ip_glu_2 : "10.55.1.162"
 ip_glu_3 : "10.55.1.163"
