@@ -19,15 +19,15 @@ class glusterfs::mainserver {
       $vol_create_opt = "replica 3 transport tcp ${ip_glu_1}:${brick} ${ip_glu_2}:${brick} force" 
     }
     '3': {
-      $peer_probe = "gluster peer probe ${ip_glu_2} && gluster peer probe ${ip_glu_3}"
+      $peer_probe = "gluster peer probe ${ip_glu_2} | gluster peer probe ${ip_glu_3}"
       $vol_create_opt = "replica 3 transport tcp ${ip_glu_1}:${brick} ${ip_glu_2}:${brick} ${ip_glu_3}:${brick} force" 
     }
     '4': {
-      $peer_probe = "gluster peer probe ${ip_glu_2} && gluster peer probe ${ip_glu_3} && gluster peer probe ${ip_glu_4}"  
+      $peer_probe = "gluster peer probe ${ip_glu_2} | gluster peer probe ${ip_glu_3} | gluster peer probe ${ip_glu_4}"  
       $vol_create_opt = "replica 3 transport tcp ${ip_glu_1}:${brick} ${ip_glu_2}:${brick} ${ip_glu_3}:${brick} ${ip_glu_4}:${brick} force" 
     }
     '5': {
-      $peer_probe = "gluster peer probe ${ip_glu_2} && gluster peer probe ${ip_glu_3} && gluster peer probe ${ip_glu_4} && gluster peer probe ${ip_glu_5}"  
+      $peer_probe = "gluster peer probe ${ip_glu_2} | gluster peer probe ${ip_glu_3} | gluster peer probe ${ip_glu_4} | gluster peer probe ${ip_glu_5}"  
       $vol_create_opt = "replica 3 transport tcp ${ip_glu_1}:${brick} ${ip_glu_2}:${brick} ${ip_glu_3}:${brick} ${ip_glu_4}:${brick} ${ip_glu_5}:${brick} force" 
     }
   }
