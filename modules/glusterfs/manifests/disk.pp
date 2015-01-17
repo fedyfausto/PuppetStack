@@ -22,19 +22,19 @@ class glusterfs::disk {
     ensure  => directory,
   }
   
-  file { "${mount_point}/brick":
-    ensure  => directory,
-    require => File[$mount_point],
-  }
-
   mount { $mount_point:
     device  => "${disk}1",
     fstype  => 'xfs',
     options => 'defaults',
     ensure  => mounted,
-    require => [ File["${mount_point}/brick"], Exec["create the XFS file system"] ],
+    require => [ File[$mount_point], Exec["create the XFS file system"] ],
   }
-
+  
+  file { "${mount_point}/brick":
+    ensure  => directory,
+    require => Mount[$mount_point],
+  }
+  
 #  file_line { 'fstab rule':
 #    path => '/etc/fstab',
 #    line => "${disk} ${mount_point} xfs defaults 0 0",
