@@ -14,17 +14,14 @@ class glusterfs::server {
   
   service { 'glusterfs stop': 
     name      => 'glusterfs-server',
-    ensure    => stopped,
+    ensure    => running,
     enable    => true,
     hasstatus => true,
+    restart   => true,
     require   => Package['glusterfs-server','glusterfs-client','glusterfs-common'],
   }
   
-  service { 'glusterfs start': 
-    name    => 'glusterfs-server',
-    ensure  => running,
-    require => Service['glusterfs stop'],  
-  }
+  
 }
 
 include glusterfs::server
