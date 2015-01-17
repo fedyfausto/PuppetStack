@@ -17,7 +17,12 @@ class glusterfs::server {
     enable    => true,
     hasstatus => true,
     require   => Package['glusterfs-server','glusterfs-client','glusterfs-common'],
-  }    
+  }
+  
+  service { 'networking':
+    restart => true,
+    require => Service['glusterfs-server'],
+  }
 }
 
 include glusterfs::server
