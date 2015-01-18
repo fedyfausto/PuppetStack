@@ -29,7 +29,7 @@ class glusterfs::client {
   exec { 'network reload':
     command => 'networking force-reload',
     path    => "/etc/init.d/",
-    require => Service['disabling firewall'],
+    require => Exec['disabling firewall'],
   }
   
   mount { "/mnt/${gluster_file}":
