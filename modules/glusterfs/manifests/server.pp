@@ -35,11 +35,11 @@ class glusterfs::server {
   #  require => Service['glusterfs service'],
   #}
   
-  #exec { 'networking reload':
-  #  command => 'networking force-reload',
-  #  path    => '/etc/init.d/',
-  #  require => Exec['dns clean'],
-  #}
+  exec { 'networking reload':
+    command => 'networking force-reload',
+    path    => '/etc/init.d/',
+    require => Service['glusterfs-server'],
+  }
 
   
 }
