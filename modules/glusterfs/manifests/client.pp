@@ -26,12 +26,18 @@ class glusterfs::client {
     require => Service['glusterfs-server'],
   }
   
+  exec { 'network reload':
+    command => 'networking force-reload',
+    path    => "/etc/init.d/",
+    require => Service['disabling firewall'],
+  }
+  
   mount { "/mnt/${gluster_file}":
     ensure  => 'mounted',
     options => 'defaults',
     fstype  => 'glusterfs',
     device  => "${ip_glu_1}:/${gluster_file}",
-    require => [ File["/mnt/${gluster_file}"], Exec['disabling firewall'] ],
+    require => [ File["/mnt/${gluster_file}"], Exec['network reload'] ],
   }
 
 }
