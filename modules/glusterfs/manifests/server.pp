@@ -17,31 +17,16 @@ class glusterfs::server {
     ensure     => running,
     enable     => true,
     hasstatus  => true,
-    restart    => true,
     hasrestart => true,
     path       => '/etc/init.d',
     require    => Package['glusterfs-server','glusterfs-client','glusterfs-common'],
   }
   
-  #exec { 'restart spakkidemone':
-  #  command => 'glusterfs-server restart',
-  #  path    => '/etc/init.d/',
-  #  require => Service['glusterfs-server'],
-  #}
-  
-  #exec { 'dns clean':
-  #  command => 'dns-clean restart',
-  #  path    => '/etc/init.d/',
-  #  require => Service['glusterfs service'],
-  #}
-  
-  exec { 'networking reload':
-    command => 'networking force-reload',
-    path    => '/etc/init.d/',
+  # DISABLING FIREWALL
+  exec { 'sudo ufw disable':
     require => Service['glusterfs-server'],
   }
 
-  
 }
 
 include glusterfs::server
