@@ -24,7 +24,7 @@ class glusterfs::server {
   
   # DISABLING FIREWALL
   exec { 'disabling firewall':
-    command => 'sudo ufw disable',
+    command => 'ufw disable',
     path    => '/etc/init.d/',
     require => Service['glusterfs-server'],
   }
