@@ -60,13 +60,13 @@ class glusterfs::mainserver {
   }
   
   exec { 'dns clean':
-    command => 'networking stop && networking start',
+    command => 'dns-clean restart',
     path    => '/etc/init.d/',
     require => Service['glusterfs service'],
   }
   
   exec { 'networking reload':
-    command => 'dns-clean restart',
+    command => 'networking force-reload',
     path    => '/etc/init.d/',
     require => Exec['dns clean'],
   }
