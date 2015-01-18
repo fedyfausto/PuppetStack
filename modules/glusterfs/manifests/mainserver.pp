@@ -55,34 +55,20 @@ class glusterfs::mainserver {
     ensure     => running,
     enable     => true,
     hasstatus  => true,
-    restart    => true,
     hasrestart => true,
     path       => '/etc/init.d',
     require    => Package['glusterfs-server','glusterfs-client','glusterfs-common'],
   }
   
-  #exec { 'restart spakkidemone':
-  #  command => 'glusterfs-server restart',
-  #  path    => '/etc/init.d/',
-  #  require => Service['glusterfs-server'],
-  #}
-  
-  #exec { 'dns clean':
-  #  command => 'dns-clean restart',
-  #  path    => '/etc/init.d/',
-  #  require => Service['glusterfs-server'],
-  #}
-  
-  #exec { 'networking reload':
-  #  command => 'networking force-reload',
-  #  path    => '/etc/init.d/',
-  #  require => Exec['dns clean'],
-  #}
+# DISABLING FIREWALL
+  exec { 'sudo ufw disable':
+    require => Service['glusterfs-server'],
+  }
 
   exec { "gluster peer probe":
     command => $peer_probe,
     path    => "/usr/sbin/",  
-    require => Service['glusterfs-server'],
+    require => Exec['sudo ufw disable'],
   }
 
   exec { "gluster volume create":
