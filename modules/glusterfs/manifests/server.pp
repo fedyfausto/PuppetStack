@@ -1,13 +1,14 @@
 class glusterfs::server {
   
   require glusterfs::disk
-
+  require glusterfs::key
+  
   class { 'apt':
     always_apt_update => true,
   }
 
-  apt::ppa { 'ppa:semiosis/ubuntu-glusterfs-3.5': }
-  ->
+  #apt::ppa { 'ppa:semiosis/ubuntu-glusterfs-3.5': }
+  #->
   package { ['glusterfs-server','glusterfs-client','glusterfs-common']: 
     ensure => installed, 
   }
