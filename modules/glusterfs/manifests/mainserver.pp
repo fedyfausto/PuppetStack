@@ -57,11 +57,23 @@ class glusterfs::mainserver {
     restart   => true,
     require   => Package['glusterfs-server','glusterfs-client','glusterfs-common'],
   }
+  
+  exec { 'dns clean':
+    command => 'networking stop && networking start',
+    path    => '/etc/init.d/',
+    require => Service['glusterfs service'],
+  }
+  
+  exec { 'networking reload':
+    command => 'dns-clean restart',
+    path    => '/etc/init.d/',
+    require => Exec['dns clean'],
+  }
 
   exec { "gluster peer probe":
     command => $peer_probe,
     path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/:/usr/sbin/",  
-    require => Service["glusterfs-server"],
+    require => Exec['networking reload'],
   }
 
   exec { "gluster volume create":
