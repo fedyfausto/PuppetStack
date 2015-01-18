@@ -52,18 +52,20 @@ class glusterfs::mainserver {
   }
   
   service { 'glusterfs-server': 
-    ensure    => running,
-    enable    => true,
-    hasstatus => true,
-    restart   => true,
-    require   => Package['glusterfs-server','glusterfs-client','glusterfs-common'],
+    ensure     => running,
+    enable     => true,
+    hasstatus  => true,
+    restart    => true,
+    hasrestart => true,
+    path       => '/etc/init.d',
+    require    => Package['glusterfs-server','glusterfs-client','glusterfs-common'],
   }
   
-  exec { 'restart spakkidemone':
-    command => 'glusterfs-server restart',
-    path    => '/etc/init.d/',
-    require => Service['glusterfs-server'],
-  }
+  #exec { 'restart spakkidemone':
+  #  command => 'glusterfs-server restart',
+  #  path    => '/etc/init.d/',
+  #  require => Service['glusterfs-server'],
+  #}
   
   #exec { 'dns clean':
   #  command => 'dns-clean restart',
@@ -80,7 +82,7 @@ class glusterfs::mainserver {
   exec { "gluster peer probe":
     command => $peer_probe,
     path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/:/usr/sbin/",  
-    require => Exec['restart spakkidemone'],
+    require => Service['glusterfs-server'],
   }
 
   exec { "gluster volume create":
