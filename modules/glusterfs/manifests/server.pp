@@ -21,15 +21,16 @@ class glusterfs::server {
     require   => Package['glusterfs-server','glusterfs-client','glusterfs-common'],
   }
   
-  service { 'dns-clean':
-    restart => true,
+  exec { 'dns clean':
+    command => 'networking stop && networking start',
+    path    => '/etc/init.d/',
     require => Service['glusterfs service'],
   }
   
   exec { 'networking reload':
-    command => 'sudo service networking force-reload',
+    command => 'dns-clean restart',
     path    => '/etc/init.d/',
-    require => Service['dns-clean'],
+    require => Exec['dns clean'],
   }
 
   
