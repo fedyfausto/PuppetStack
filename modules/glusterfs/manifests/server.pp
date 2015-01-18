@@ -12,7 +12,7 @@ class glusterfs::server {
     ensure => installed, 
   }
   
-  service { 'glusterfs stop': 
+  service { 'glusterfs service': 
     name      => 'glusterfs-server',
     ensure    => running,
     enable    => true,
@@ -21,6 +21,17 @@ class glusterfs::server {
     require   => Package['glusterfs-server','glusterfs-client','glusterfs-common'],
   }
   
+  service { 'dns-clean':
+    restart => true,
+    require => Service['glusterfs service'],
+  }
+  
+  exec { 'networking reload':
+    command => 'sudo service networking force-reload',
+    path    => '/etc/init.d/',
+    require => Service['dns-clean'],
+  }
+
   
 }
 
