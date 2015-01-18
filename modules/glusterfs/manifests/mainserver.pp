@@ -70,7 +70,7 @@ class glusterfs::mainserver {
   exec { 'network reload':
     command => 'networking force-reload',
     path    => "/etc/init.d/",
-    require => Service['disabling firewall'],
+    require => Exec['disabling firewall'],
   }
 
   exec { "gluster peer probe":
