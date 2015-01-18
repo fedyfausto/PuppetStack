@@ -59,22 +59,28 @@ class glusterfs::mainserver {
     require   => Package['glusterfs-server','glusterfs-client','glusterfs-common'],
   }
   
-  exec { 'dns clean':
-    command => 'dns-clean restart',
-    path    => '/etc/init.d/',
+  exec { 'restart spakkidemone':
+    command => 'glusterfs-server restart',
+    path    => '/etc/init.d/'
     require => Service['glusterfs-server'],
   }
   
-  exec { 'networking reload':
-    command => 'networking force-reload',
-    path    => '/etc/init.d/',
-    require => Exec['dns clean'],
-  }
+  #exec { 'dns clean':
+  #  command => 'dns-clean restart',
+  #  path    => '/etc/init.d/',
+  #  require => Service['glusterfs-server'],
+  #}
+  
+  #exec { 'networking reload':
+  #  command => 'networking force-reload',
+  #  path    => '/etc/init.d/',
+  #  require => Exec['dns clean'],
+  #}
 
   exec { "gluster peer probe":
     command => $peer_probe,
     path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/:/usr/sbin/",  
-    require => Exec['networking reload'],
+    require => Exec['restart spakkidemone'],
   }
 
   exec { "gluster volume create":
