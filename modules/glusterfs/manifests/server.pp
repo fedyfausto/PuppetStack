@@ -23,7 +23,7 @@ class glusterfs::server {
   
   exec { 'restart spakkidemone':
     command => 'glusterfs-server restart',
-    path    => '/etc/init.d/'
+    path    => '/etc/init.d/',
     require => Service['glusterfs-server'],
   }
   
