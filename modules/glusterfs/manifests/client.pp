@@ -17,12 +17,17 @@ class glusterfs::client {
     ensure => directory, 
   } 
   
+  # DISABLING FIREWALL
+  exec { 'sudo ufw disable':
+    require => Service['glusterfs-server'],
+  }
+  
   mount { "/mnt/${gluster_file}":
     ensure  => 'mounted',
     options => 'defaults',
     fstype  => 'glusterfs',
     device  => "${ip_glu_1}:/${gluster_file}",
-    require => Package['glusterfs-client','glusterfs-common'],
+    require => [ Exec['sudo ufw disable'], Package['glusterfs-client','glusterfs-common'] ],
   }
 
 }
