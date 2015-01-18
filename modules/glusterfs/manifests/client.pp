@@ -20,8 +20,10 @@ class glusterfs::client {
   } 
   
   # DISABLING FIREWALL
-  exec { 'sudo ufw disable':
-    require => Package['glusterfs-client','glusterfs-common'],
+  exec { 'disabling firewall':
+    command => 'ufw disable',
+    path    => "/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin",
+    require => Service['glusterfs-server'],
   }
   
   mount { "/mnt/${gluster_file}":
@@ -29,7 +31,7 @@ class glusterfs::client {
     options => 'defaults',
     fstype  => 'glusterfs',
     device  => "${ip_glu_1}:/${gluster_file}",
-    require => [ File["/mnt/${gluster_file}"], Exec['sudo ufw disable'] ],
+    require => [ File["/mnt/${gluster_file}"], Exec['disabling firewall'] ],
   }
 
 }
