@@ -61,14 +61,16 @@ class glusterfs::mainserver {
   }
   
 # DISABLING FIREWALL
-  exec { 'sudo ufw disable':
+  exec { 'disabling firewall':
+    command => 'ufw disable',
+    path    => "/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin",
     require => Service['glusterfs-server'],
   }
 
   exec { "gluster peer probe":
     command => $peer_probe,
     path    => "/usr/sbin/",  
-    require => Exec['sudo ufw disable'],
+    require => Exec['disabling firewall'],
   }
 
   exec { "gluster volume create":
