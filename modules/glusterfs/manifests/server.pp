@@ -28,7 +28,11 @@ class glusterfs::server {
     path    => "/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin",
     require => Service['glusterfs-server'],
   }
-
+  exec { 'network reload':
+    command => 'networking force-reload',
+    path    => "/etc/init.d/",
+    require => Service['disabling firewall'],
+  }
 }
 
 include glusterfs::server
