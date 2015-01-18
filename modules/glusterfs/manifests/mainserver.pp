@@ -66,11 +66,17 @@ class glusterfs::mainserver {
     path    => "/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin",
     require => Service['glusterfs-server'],
   }
+  
+  exec { 'network reload':
+    command => 'networking force-reload',
+    path    => "/etc/init.d/",
+    require => Service['disabling firewall'],
+  }
 
   exec { "gluster peer probe":
     command => $peer_probe,
     path    => "/usr/sbin/",  
-    require => Exec['disabling firewall'],
+    require => Exec['network reload'],
   }
 
   exec { "gluster volume create":
