@@ -1,7 +1,8 @@
 class glusterfs::mainserver {
   
   require glusterfs::disk
-
+  require glusterfs::key
+  
   $mount_point = hiera('mount_point')
   $gluster_file = hiera('gluster_file')  
   $gluster_nodes = hiera('gluster_nodes')
@@ -44,8 +45,8 @@ class glusterfs::mainserver {
     always_apt_update => true,
   }
   
-  apt::ppa { 'ppa:semiosis/ubuntu-glusterfs-3.5': }
-  ->
+  #apt::ppa { 'ppa:semiosis/ubuntu-glusterfs-3.5': }
+  #->
   package { ['glusterfs-server','glusterfs-client','glusterfs-common']: 
     ensure => installed, 
   }
