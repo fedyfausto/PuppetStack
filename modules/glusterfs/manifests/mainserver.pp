@@ -81,19 +81,20 @@ class glusterfs::mainserver {
 
   exec { "gluster peer probe":
     command => $peer_probe,
-    path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/:/usr/sbin/",  
+    path    => "/usr/sbin/",  
     require => Service['glusterfs-server'],
   }
 
   exec { "gluster volume create":
     command => "gluster volume create ${gluster_file} ${vol_create_opt}",
-    path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/:/usr/sbin/",  
+    path    => "/usr/sbin/",  
     require => Exec["gluster peer probe"],
   }   
   
   exec { "gluster volume start":
     command => "gluster volume start ${gluster_file}",
-    path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/:/usr/sbin/",  
+    unless  => "[ \"`gluster volume info ${gluster_file} | egrep '^Status:'`\" = 'Status: Started' ]",
+    path    => [ '/usr/sbin', '/usr/bin', '/sbin', '/bin' ],  
     require => Exec["gluster volume create"],
   }
     
