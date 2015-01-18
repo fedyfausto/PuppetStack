@@ -6,7 +6,7 @@ class glusterfs::client {
   class { 'apt':
     always_apt_update => true,
   }
-  ->
+  
   apt::ppa { 'ppa:semiosis/ubuntu-glusterfs-3.5': }
   ->
   package { ['glusterfs-client','glusterfs-common']: 

@@ -18,7 +18,7 @@ class glusterfs::mainserver {
       $ip_glu_1 = hiera('ip_glu_1')
       $ip_glu_2 = hiera('ip_glu_2')
       $ip_glu_3 = hiera('ip_glu_3')
-      $peer_probe = "gluster peer probe ${ip_glu_3} | gluster peer probe ${ip_glu_2}"
+      $peer_probe = "gluster peer probe ${ip_glu_2} | gluster peer probe ${ip_glu_3}"
       $vol_create_opt = "replica 3 transport tcp ${ip_glu_1}:${brick} ${ip_glu_2}:${brick} ${ip_glu_3}:${brick} force" 
     }
     '4': {
@@ -43,7 +43,7 @@ class glusterfs::mainserver {
   class { 'apt':
     always_apt_update => true,
   }
-  ->
+  
   apt::ppa { 'ppa:semiosis/ubuntu-glusterfs-3.5': }
   ->
   package { ['glusterfs-server','glusterfs-client','glusterfs-common']: 
