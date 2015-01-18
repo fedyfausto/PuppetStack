@@ -1,20 +1,17 @@
 class glusterfs::client {
 
-  require glusterfs::disk
-
   $ip_glu_1 = hiera('ip_glu_1')
   $mount_point = hiera('mount_point')
 
-  package { 'glusterfs-common': 
+  class { 'apt':
+    always_apt_update => true,
+  }
+  ->
+  apt::ppa { 'ppa:semiosis/ubuntu-glusterfs-3.5': }
+  ->
+  package { ['glusterfs-client','glusterfs-common']: 
     ensure => installed, 
   }
-  package { 'glusterfs-client': 
-    ensure => installed, 
-  }
-  package { 'python-software-properties': 
-    ensure => installed, 
-  }
-  
 
   file { "/mnt/${gluster_file}": 
     ensure => directory, 
@@ -25,7 +22,7 @@ class glusterfs::client {
     options => 'defaults',
     fstype  => 'glusterfs',
     device  => "${ip_glu_1}:/${gluster_file}",
-    require => [ Package['glusterfs-client'], Package['glusterfs-common'], File["/mnt/${gluster_file}"] ],
+    require => Package['glusterfs-client','glusterfs-common'],
   }
 
 }
