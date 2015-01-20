@@ -39,3 +39,7 @@ node gluster-1 {
 node /(gluster-)+[2-9]/ {
   include glusterfs::server
 }
+
+node gluster-client {
+  include glusterfs::client
+}
