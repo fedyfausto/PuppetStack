@@ -61,22 +61,22 @@ class glusterfs::mainserver {
   }
   
 # DISABLING FIREWALL
-  exec { 'disabling firewall':
-    command => 'ufw disable',
-    path    => "/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin",
-    require => Service['glusterfs-server'],
-  }
+#  exec { 'disabling firewall':
+#    command => 'ufw disable',
+#    path    => "/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin",
+#    require => Service['glusterfs-server'],
+#  }
   
-  exec { 'network reload':
-    command => 'networking force-reload',
-    path    => "/etc/init.d/",
-    require => Exec['disabling firewall'],
-  }
+#  exec { 'network reload':
+#    command => 'networking force-reload',
+#    path    => "/etc/init.d/",
+#    require => Exec['disabling firewall'],
+#  }
 
   exec { "gluster peer probe":
     command => $peer_probe,
     path    => "/usr/sbin/",  
-    require => Exec['network reload'],
+    require => Service['glusterfs-server'],
   }
 
   exec { "gluster volume create":
