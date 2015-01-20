@@ -23,16 +23,16 @@ class glusterfs::server {
   }
   
   # DISABLING FIREWALL
-  exec { 'disabling firewall':
-    command => 'ufw disable',
-    path    => "/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin",
-    require => Service['glusterfs-server'],
-  }
-  exec { 'network reload':
-    command => 'networking force-reload',
-    path    => "/etc/init.d/",
-    require => Exec['disabling firewall'],
-  }
+  #exec { 'disabling firewall':
+  #  command => 'ufw disable',
+  #  path    => "/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin",
+  #  require => Service['glusterfs-server'],
+  #}
+  #exec { 'network reload':
+  #  command => 'networking force-reload',
+  #  path    => "/etc/init.d/",
+  #  require => Exec['disabling firewall'],
+  #}
 }
 
 include glusterfs::server
