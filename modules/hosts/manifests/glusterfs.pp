@@ -10,7 +10,7 @@ class hosts::glusterfs {
 
       host { "${hst_glu_1}.${dns}":
         ip => $ip_glu_1,
-        host_aliases => $hst_rab_1,
+        host_aliases => $hst_glu_1,
       }
 
       host { "${hst_glu_2}.${dns}":
@@ -28,7 +28,7 @@ class hosts::glusterfs {
   
       host { "${hst_glu_1}.${dns}":
         ip => $ip_glu_1,
-        host_aliases => $hst_rab_1,
+        host_aliases => $hst_glu_1,
       }
 
       host { "${hst_glu_2}.${dns}":
