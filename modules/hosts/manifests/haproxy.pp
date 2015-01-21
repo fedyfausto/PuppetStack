@@ -1,4 +1,5 @@
 class hosts::haproxy {
+  $dns = hiera('dns')
   
   case hiera('haproxy_nodes') {
     '2': {
@@ -7,12 +8,12 @@ class hosts::haproxy {
       $hst_hap_1 = hiera('hst_hap_1')  
       $hst_hap_2 = hiera('hst_hap_2')  
   
-      host { $hst_hap_1:
+      host { "${hst_hap_1}.${dns}":
         ip => $ip_hap_1,
         host_aliases => $hst_hap_1,
       }
 
-      host { $hst_hap_2:
+      host { "${hst_hap_2}.${dns}":
         ip => $ip_hap_2,
         host_aliases => $hst_hap_2,
       }
@@ -25,17 +26,17 @@ class hosts::haproxy {
       $hst_hap_2 = hiera('hst_hap_2')  
       $hst_hap_3 = hiera('hst_hap_3')  
 
-      host { $hst_hap_1:
+      host { "${hst_hap_1}.${dns}":
         ip => $ip_hap_1,
         host_aliases => $hst_hap_1,
       }
 
-      host { $hst_hap_2:
+      host { "${hst_hap_2}.${dns}":
         ip => $ip_hap_2,
         host_aliases => $hst_hap_2,
       }
 
-      host { $hst_hap_3:
+      host { "${hst_hap_3}.${dns}":
         ip => $ip_hap_3,
         host_aliases => $hst_hap_3,
       }
