@@ -8,12 +8,12 @@ class hosts::glusterfs {
       $hst_glu_1 = hiera('hst_glu_1')  
       $hst_glu_2 = hiera('hst_glu_2')  
 
-      host { $hst_glu_1$dns:
+      host { "${hst_glu_1}${dns}":
         ip => $ip_glu_1,
         host_aliases => $hst_rab_1,
       }
 
-      host { $hst_glu_2$dns:
+      host { "${hst_glu_2}${dns}":
         ip => $ip_glu_2,
         host_aliases => $hst_glu_2,
       }
@@ -26,17 +26,17 @@ class hosts::glusterfs {
       $hst_glu_2 = hiera('hst_glu_2')  
       $hst_glu_3 = hiera('hst_glu_3')  
   
-      host { $hst_glu_1$dns:
+      host { "${hst_glu_1}${dns}":
         ip => $ip_glu_1,
         host_aliases => $hst_rab_1,
       }
 
-      host { $hst_glu_2$dns:
+      host { "${hst_glu_2}${dns}":
         ip => $ip_glu_2,
         host_aliases => $hst_glu_2,
       }
 
-      host { $hst_glu_3$dns:
+      host { "${hst_glu_3}${dns}":
         ip => $ip_glu_3,
         host_aliases => $hst_glu_3,
       }
@@ -51,22 +51,22 @@ class hosts::glusterfs {
       $hst_glu_3 = hiera('hst_glu_3')  
       $hst_glu_4 = hiera('hst_glu_4')
       
-      host { $hst_glu_1$dns:
+      host { "${hst_glu_1}${dns}":
         ip => $ip_glu_1,
         host_aliases => $hst_glu_1,
       }
 
-      host { $hst_glu_2$dns:
+      host { "${hst_glu_2}${dns}":
         ip => $ip_glu_2,
         host_aliases => $hst_glu_2,
       }
 
-      host { $hst_glu_3$dns:
+      host { "${hst_glu_3}${dns}":
         ip => $ip_glu_3,
         host_aliases => $hst_glu_3,
       }
       
-      host { $hst_glu_4$dns:
+      host { "${hst_glu_4}${dns}":
         ip => $ip_glu_4,
         host_aliases => $hst_glu_4,
       }
@@ -83,27 +83,27 @@ class hosts::glusterfs {
       $hst_glu_4 = hiera('hst_glu_4')
       $hst_glu_5 = hiera('hst_glu_5')
   
-      host { $hst_glu_1$dns:
+      host { "${hst_glu_1}${dns}":
         ip => $ip_glu_1,
         host_aliases => $hst_glu_1,
       }
 
-      host { $hst_glu_2$dns:
+      host { "${hst_glu_2}${dns}":
         ip => $ip_glu_2,
         host_aliases => $hst_glu_2,
       }
 
-      host { $hst_glu_3$dns:
+      host { "${hst_glu_3}${dns}":
         ip => $ip_glu_3,
         host_aliases => $hst_glu_3,
       }
       
-      host { $hst_glu_4$dns:
+      host { "${hst_glu_4}${dns}":
         ip => $ip_glu_4,
         host_aliases => $hst_glu_4,
       }
       
-      host { $hst_glu_5$dns:
+      host { "${hst_glu_5}${dns}":
         ip => $ip_glu_5,
         host_aliases => $hst_glu_5,
       }
