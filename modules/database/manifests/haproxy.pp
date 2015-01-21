@@ -68,7 +68,7 @@ class database::haproxy {
         require => Exec["clear haproxy users"],
       }
     }
-
+  }
 }
 
 include database::haproxy
