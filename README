@@ -1,10 +1,12 @@
+_____________________________________________________________________________________
+
 Prisma Puppet Project - Beginning Date: 10/11/2014
 @Author: Alberto Di Savia Puglisi
 
 This project's aim is to deploy a working openstack environment in one shot.
 Of course it's a WORK IN PROGRESS and I really hope it will come to an end!
-
 _____________________________________________________________________________________
+
 DISCLAIMER:
 I am using Ubuntu Server 12.04 LTS Precise. Modules should work even 
 on other debian-based distros but I am absolutely not sure and I cannot guarantee.
@@ -58,7 +60,7 @@ HOW-TO:
      > change the hostnames if needed.
   
   3) After you've completed the previous stages, run the following command 
-    in order to apply your manifest: sh prisma/scripts/first_papply.sh
+    in order to apply your manifest: sh prisma/scripts/first_apply.sh
   
     This will download and install puppet, ruby and librarian-puppet and execute
     the custom puppet apply script. This script needs to be run just once.
@@ -100,7 +102,7 @@ TROUBLESHOOTING:
   RabbitMQ cluster:
     > If, for any reason, you need to apply manifest of a rabbitmq node
       a second time, please exec the following command: killall -u rabbitmq
-    > To verify the status of your cluster: rabbitmqctl cluster_status
+    > To verify the status of your cluster: 'rabbitmqctl cluster_status'
   
   GlusterFS cluster:
     > If the apply action of your mainserver fails you probably have a network issue.
@@ -117,6 +119,7 @@ TROUBLESHOOTING:
    iptables -A INPUT -m state --state NEW -m udp -p udp --dport 111 -j ACCEPT 
    iptables -A INPUT -m state --state NEW -m tcp -p tcp --dport 38465:38467 -j ACCEPT
    ----------------------------------------------------------------------------------
+      To verify the status of your cluster: 'gluster volume status' from any node
    
    
 _____________________________________________________________________________________
