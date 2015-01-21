@@ -1,9 +1,23 @@
 class hosts {
 
-  include hosts::galera
-  include hosts::haproxy
-  include hosts::rabbit
-  include hosts::glusterfs  
+  $dns = hiera('dns')
+
+  class {'hosts::galera':
+    dns => $dns,
+  }
+
+  class {'hosts::haproxy':
+    dns => $dns,
+  }
+
+  class {'hosts::rabbit':
+    dns => $dns,
+  }
+
+  class {'hosts::glusterfs':
+    dns => $dns,
+  }
+
 }
 
 include hosts

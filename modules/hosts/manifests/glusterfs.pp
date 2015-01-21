@@ -1,5 +1,4 @@
-class hosts::glusterfs {
-  $dns = hiera('dns')
+class hosts::glusterfs ( $dns ) {
   
   case hiera('gluster_nodes') {
     '2': {

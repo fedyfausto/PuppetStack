@@ -1,5 +1,4 @@
-class hosts::haproxy {
-  $dns = hiera('dns')
+class hosts::haproxy ( $dns ) {
   
   case hiera('haproxy_nodes') {
     '2': {

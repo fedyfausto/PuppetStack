@@ -1,5 +1,4 @@
-class hosts::rabbit {
-  $dns = hiera('dns')
+class hosts::rabbit ( $dns ) {
   
   case hiera('rabbit_nodes') {
     '3': {

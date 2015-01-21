@@ -1,6 +1,5 @@
-class hosts::galera {
-  $dns = hiera('dns')
-  
+class hosts::galera ( $dns ) {
+
   case hiera('galera_nodes') {
     '3': {
       $ip_gal_m = hiera('ip_gal_m')
