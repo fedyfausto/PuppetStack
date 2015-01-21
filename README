@@ -98,7 +98,15 @@ HOW IT WORKS:
 _____________________________________________________________________________________
 
 TROUBLESHOOTING:
-
+  
+  HAProxy & Keepalived:
+    > To try the VIP functionality in addition to the load balancing one, use this:
+      mysql -uhaproxy_root -ppassword -h 10.55.1.155 -e "show variables like
+      'wsrep_node_name';"
+      Remember to change the ip address in the command with your VIP.
+    > You can run 2 or 3 HAProxy load balancers but remember to change the 
+      haproxy_nodes value in prisma/data/common.yaml 
+      
   RabbitMQ cluster:
     > If, for any reason, you need to apply manifest of a rabbitmq node
       a second time, please exec the following command: killall -u rabbitmq
