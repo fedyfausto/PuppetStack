@@ -4,6 +4,7 @@ cluster_cnf_path : "/etc/mysql/conf.d/cluster.cnf"
 debian_cnf_path : "/etc/mysql/debian.cnf"
 puppet_conf_path : "/etc/puppet/puppet.conf"
 sshd_config : "/etc/ssh/sshd_config"
+dns : "ct.infn.it"
 
 ### Users Configuration
 virt_usr_default_pwd : "galera" 
