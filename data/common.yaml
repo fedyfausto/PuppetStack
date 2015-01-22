@@ -5,6 +5,7 @@ debian_cnf_path : "/etc/mysql/debian.cnf"
 puppet_conf_path : "/etc/puppet/puppet.conf"
 sshd_config : "/etc/ssh/sshd_config"
 dns : "ct.infn.it"
+wildcard : "10.55.1.%"
 
 ### Users Configuration
 virt_usr_default_pwd : "galera" 
