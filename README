@@ -104,6 +104,7 @@ TROUBLESHOOTING:
       mysql -uhaproxy_root -ppassword -h 10.55.1.155 -e "show variables like
       'wsrep_node_name';"
       Remember to change the ip address in the command with your VIP.
+    > To understand which Haproxy server keeps the VIP: ip a | grep eth0
     > You can run 2 or 3 HAProxy load balancers but remember to change the 
       haproxy_nodes value in prisma/data/common.yaml 
       
