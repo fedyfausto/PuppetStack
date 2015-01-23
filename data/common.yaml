@@ -7,6 +7,10 @@ sshd_config : "/etc/ssh/sshd_config"
 dns : "ct.infn.it"
 wildcard : "10.55.1.%"
 
+### Puppet Master
+hst_puppet : "puppet"
+ip_puppet : "10.55.1.168"
+
 ### Users Configuration
 virt_usr_default_pwd : "galera" 
 
