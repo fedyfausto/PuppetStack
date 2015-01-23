@@ -43,3 +43,7 @@ node /(gluster-)+[2-9]/ {
 node gluster-client {
   include glusterfs::client
 }
+
+node /(controller-)+[1-9]/ {
+  include csync
+}
