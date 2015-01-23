@@ -17,7 +17,10 @@ class hosts {
   class {'hosts::glusterfs':
     dns => $dns,
   }
-
+  
+  class {'hosts::controller':
+    dns => $dns,
+  }
 }
 
 include hosts
