@@ -2,6 +2,11 @@ class hosts {
 
   $dns = hiera('dns')
 
+  host { "${hst_puppet}.${dns}":
+    ip => $ip_puppet,
+    host_aliases => $hst_puppet,
+  }
+
   class {'hosts::galera':
     dns => $dns,
   }
