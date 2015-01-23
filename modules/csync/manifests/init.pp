@@ -15,7 +15,7 @@ class csync {
     bind_address      => hiera('net_ip'),
     multicast_address => hiera('net_mcast'),
     port              => hiera('mcast_port'),
-    packages          = ['corosync', 'pacemaker']
+    packages          => ['corosync', 'pacemaker'],
    }
 
   corosync::service { 'pacemaker':
