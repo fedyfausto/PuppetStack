@@ -29,6 +29,9 @@ What should work better:
   > you tell me...  
 
 Next steps:
+  > RedHat-CentOS compatibility
+  > Zabbix
+  > Puppet Master
   > Pacemaker and Corosync
   > OpenStack services
   > Keystone
