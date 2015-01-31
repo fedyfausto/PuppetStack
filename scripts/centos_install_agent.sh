@@ -9,11 +9,7 @@ yum -y update && yum -y install puppet
 yum -y install gcc-c++ patch readline readline-devel zlib zlib-devel
 yum -y install libyaml-devel libffi-devel openssl-devel make
 yum -y install bzip2 autoconf automake libtool bison iconv-devel
-curl -L get.rvm.io | bash -s stable
-source /etc/profile.d/rvm.sh
-gpg2 --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
-rvm install 1.9.3
-rvm use 1.9.3 --default
+yum -y install ruby
 gem install librarian-puppet --no-ri --no-rdoc
 
 # Puppet apply custom script
