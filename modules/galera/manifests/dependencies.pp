@@ -17,7 +17,7 @@ class galera::dependencies {
         ensure => installed,
       }
     }
-    'RedHat':
+    'RedHat': {
       package { 'MariaDB-Galera-server':
         ensure        => installed,
         allow_virtual => false,

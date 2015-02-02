@@ -14,7 +14,7 @@ class galera::exec::master {
         command => "mysql bootstrap",
         path    => "/etc/init.d",
       }
-      class { "database':
+      class { 'database':
         require => Exec["start galera cluster"],
       }
     }
