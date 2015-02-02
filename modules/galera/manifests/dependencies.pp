@@ -19,20 +19,25 @@ class galera::dependencies {
     }
     'RedHat':
       package { 'MariaDB-Galera-server':
-        ensure => installed,
+        ensure        => installed,
+        allow_virtual => false,
       }
       
       package { 'MariaDB-client':
-        ensure => installed,
+        ensure        => installed,
+        allow_virtual => false,
       }
 
       package { 'galera':
-        ensure => installed,
+        ensure        => installed,
+        allow_virtual => false,
       }
       
       package { 'rsync':
-        ensure => installed,
+        ensure        => installed,
+        allow_virtual => false,
       }
+
     }
   }
 }

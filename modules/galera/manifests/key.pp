@@ -3,6 +3,7 @@ class galera::key {
   case $operatingsystem {
     
     /^(Debian|Ubuntu)$/ : {
+      include apt
       apt::source { 'mariadb':
         location    => 'http://mirror.jmu.edu/pub/mariadb/repo/5.5/ubuntu',
         release     => 'precise',
@@ -18,15 +19,17 @@ class galera::key {
       case $architecture {
         'x86_64': {
           yumrepo { 'mariadb':
-            baseurl => 'http://yum.mariadb.org/5.5/centos7-amd64',
-            gpgkey  => 'https://yum.mariadb.org/RPR-GPG-KEY-MariaDB',
+            name     => 'MariaDB',
+            baseurl  => 'http://yum.mariadb.org/5.5/centos7-amd64',
+            gpgkey   => 'https://yum.mariadb.org/RPM-GPG-KEY-MariaDB',
             gpgcheck => true,
           }
         }
         'i686': {
           yumrepo { 'mariadb':
-            baseurl => 'http://yum.mariadb.org/5.5/centos7-x86',
-            gpgkey  => 'https://yum.mariadb.org/RPR-GPG-KEY-MariaDB',
+            name     => 'MariaDB',
+            baseurl  => 'http://yum.mariadb.org/5.5/centos7-x86',
+            gpgkey   => 'https://yum.mariadb.org/RPM-GPG-KEY-MariaDB',
             gpgcheck => true,
           }
         }

@@ -12,4 +12,4 @@ yum -y install bzip2 autoconf automake libtool bison iconv-devel
 gem install librarian-puppet --no-ri --no-rdoc
 
 # Puppet apply custom script
-#sh ~/prisma/modules/puppet/files/papply.sh
+sh ~/prisma/modules/puppet/files/papply.sh

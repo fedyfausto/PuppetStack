@@ -1,7 +1,5 @@
 class galera::slave ( $nodes_n ) {
 
-  include apt
-
   anchor { 'galera::begin': }                      			->
     class { 'galera::key': }                       			-> 
     class { 'galera::dependencies': }              			-> 
