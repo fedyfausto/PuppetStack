@@ -1,6 +1,7 @@
 ### Configuration Files Paths
 project_home : "/root/prisma"
-cluster_cnf_path : "/etc/mysql/conf.d/cluster.cnf"
+cluster_cnf_path : "/etc/mysql/conf.d/cluster.cnf"    #Debian
+cluster_cnf_path2 : "/etc/my.cnf.d/server.cnf"        #RedHat
 debian_cnf_path : "/etc/mysql/debian.cnf"
 puppet_conf_path : "/etc/puppet/puppet.conf"
 sshd_config : "/etc/ssh/sshd_config"
