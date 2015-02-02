@@ -37,7 +37,7 @@ class galera::clusterconfig ( $nodes_n ) {
         owner   => 'root',
         group   => 'root',
         mode    => '0644',
-        content => template("galera/cluster.erb"),
+        content => template("galera/deb_cluster.erb"),
       }
       file { 'debian.cnf':
         path    => hiera('debian_cnf_path'),
@@ -55,7 +55,7 @@ class galera::clusterconfig ( $nodes_n ) {
         owner   => 'root',
         group   => 'root',
         mode    => '0644',
-        content => template("galera/cluster.erb"),
+        content => template("galera/red_cluster.erb"),
       }      
     }
   
