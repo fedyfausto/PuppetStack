@@ -49,6 +49,11 @@ class galera::clusterconfig ( $nodes_n ) {
       }
     }
     'RedHat': {
+      if $architecture == "x86_64" {
+        $if64 = "64"
+      } else {
+        $if64 = ""
+      }
       file { 'server.cnf':
         path    => hiera('cluster_cnf_path2'),
         ensure  => present,
