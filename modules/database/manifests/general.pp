@@ -1,8 +1,8 @@
 class database::general {
 
-  $collation_server = hiera('collation_server')
-  $init_connect = hiera('collation_server')
-  $character_set_server = hiera('character_set_server')
+  #$collation_server = hiera('collation_server')
+  #$init_connect = hiera('collation_server')
+  #$character_set_server = hiera('character_set_server')
   
   case $osfamily {
     'Debian': {
@@ -19,11 +19,11 @@ class database::general {
     }
   }
   
-  file { 'my.cnf':
-    path    => hiera('my_cnf_path'),
-    content => template('database/my.erb'),
-    ensure  => present,
-  }
+  #file { 'my.cnf':
+  #  path    => hiera('my_cnf_path'),
+  #  content => template('database/my.erb'),
+  #  ensure  => present,
+  #}
 
 }
 
