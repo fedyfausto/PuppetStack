@@ -1,5 +1,9 @@
 class galera::clusterconfig ( $nodes_n ) {
-
+  
+  $collation_server = hiera('collation_server')
+  $init_connect = hiera('collation_server')
+  $character_set_server = hiera('character_set_server')
+  
   case $nodes_n {
     '3':{
       $ip1 = hiera('ip_gal_m')
@@ -66,5 +70,3 @@ class galera::clusterconfig ( $nodes_n ) {
   
   }
 }
-
-
