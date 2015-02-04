@@ -17,10 +17,15 @@ virt_usr_default_pwd : "galera"
 
 ### Galera Configuration
 galera_nodes : "3"		# 3 to 5
-ip_gal_m : "10.55.1.150"
-ip_gal_1 : "10.55.1.151"
-ip_gal_2 : "10.55.1.152"
-ip_gal_3 : "10.55.1.156"
+#REDHAT - CENTOS
+ip_gal_m : "10.55.1.170"
+ip_gal_1 : "10.55.1.171"
+ip_gal_2 : "10.55.1.172"
+#UBUNTU
+#ip_gal_m : "10.55.1.150"
+#ip_gal_1 : "10.55.1.151"
+#ip_gal_2 : "10.55.1.152"
+#ip_gal_3 : "10.55.1.156"
 hst_gal_m : "galera-master"
 hst_gal_1 : "galera-1"
 hst_gal_2 : "galera-2"
