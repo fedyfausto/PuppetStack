@@ -73,6 +73,7 @@ class haproxy::install ( $nodes_n ) {
       
       package { 'haproxy': 
         ensure  => installed ,
+        allow_virtual => false,
         require => Package["MariaDB-client"],
       }
       
