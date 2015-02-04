@@ -3,7 +3,7 @@ class galera::exec::master {
     exec { "enforcing mode":
       command => "sudo setenforce 0",
       path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
-      notify  => File['iptables'],
+      notify  => Service['firewalld'],
     }
     service { 'firewalld':
       enable  => true,
@@ -44,7 +44,7 @@ class galera::exec::slave {
     exec { "enforcing mode":
       command => "sudo setenforce 0",
       path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
-      notify  => File['iptables'],
+      notify  => Service['firewalld'],
     }
     service { 'firewalld':
       enable  => true,
