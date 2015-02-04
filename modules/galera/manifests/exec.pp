@@ -7,24 +7,19 @@ class galera::exec::master {
     }
     service { 'firewalld':
       enable  => true,
-      ensure  => stopped,
+      ensure  => running,
     }
-    package { 'lokkit':
-      ensure => installed,
-      require => Service['firewalld'],
-    }
-    file { 'ports':
+    file { 'firewall-cmd':
       ensure  => 'file',
-      source  => 'puppet:///modules/galera/lokkit.sh',
-      path    => '/usr/local/bin/lokkit.sh',
+      source  => 'puppet:///modules/galera/firewall-cmd.sh',
+      path    => '/usr/local/bin/firewall-cmd.sh',
       owner   => 'root',
       group   => 'root',
       mode    => '0744',
-      notify  => Exec['run_lokkit'],
-      require => Package['lokkit'],
+      notify  => Exec['firewall-cmd'],
     }
-    exec { 'run_lokkit':
-      command     => '/usr/local/bin/lokkit.sh',
+    exec { 'firewall-cmd':
+      command     => '/usr/local/bin/firewall-cmd.sh',
       refreshonly => true,
     }
   }
@@ -48,24 +43,19 @@ class galera::exec::slave {
     }
     service { 'firewalld':
       enable  => true,
-      ensure  => stopped,
+      ensure  => running,
     }
-    package { 'lokkit':
-      ensure => installed,
-      require => Service['firewalld'],
-    }
-    file { 'ports':
+    file { 'firewall-cmd':
       ensure  => 'file',
-      source  => 'puppet:///modules/galera/lokkit.sh',
-      path    => '/usr/local/bin/lokkit.sh',
+      source  => 'puppet:///modules/galera/firewall-cmd.sh',
+      path    => '/usr/local/bin/firewall-cmd.sh',
       owner   => 'root',
       group   => 'root',
       mode    => '0744',
-      notify  => Exec['run_lokkit'],
-      require => Package['lokkit'],
+      notify  => Exec['firewall-cmd'],
     }
-    exec { 'run_lokkit':
-      command     => '/usr/local/bin/lokkit.sh',
+    exec { 'firewall-cmd':
+      command     => '/usr/local/bin/firewall-cmd.sh',
       refreshonly => true,
     }
   }
