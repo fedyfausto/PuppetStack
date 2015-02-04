@@ -1,0 +1,15 @@
+# This group is read both both by the client and the server
+# use it for options that affect everything
+#
+[client-server]
+
+# ADDED SETTINGS FOR OPENSTACK
+[mysqld]
+collation-server = <%=@collation_server%>
+init-connect = <%=@init_connect%>
+character-set-server = <%=@character_set_server%>
+
+#
+# include all files from the config directory
+#
+!includedir /etc/my.cnf.d
