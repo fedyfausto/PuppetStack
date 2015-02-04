@@ -52,7 +52,8 @@ keepalived_cnf_path : "/etc/keepalived/keepalived.conf"
 vip_interface : "eth0"
 
 ### Database Configuration
-my_cnf_path : "/etc/mysql/my.cnf"
+deb_my_cnf_path : "/etc/mysql/my.cnf"
+red_my_cnf_path : "/etc/my.cnf"
 collation_server : "utf8_general_ci"
 init_connect : "SET NAMES utf8"
 character_set_server : "utf8"
