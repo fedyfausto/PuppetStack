@@ -37,31 +37,65 @@ class haproxy::install ( $nodes_n ) {
       $hst_gal_4 = hiera('hst_gal_4')
     }
   }
+  case $osfamily {
+    'Debian': {
+      package { 'mariadb-client': ensure => installed }
 
-  package { 'mariadb-client': ensure => installed }
+      package { 'haproxy': 
+        ensure  => installed ,
+        require => Package["mariadb-client"],
+      }
 
-  package { 'haproxy': 
-    ensure  => installed ,
-    require => Package["mariadb-client"],
-  }
+      file { '/etc/default/haproxy':
+        content => "ENABLED=1\n",
+        require => Package['haproxy'],
+      }
 
-  file { '/etc/default/haproxy':
-    content => "ENABLED=1\n",
-    require => Package['haproxy'],
-  }
-
-  service { 'haproxy':
-    ensure  => running,
-    enable  => true,
-    require => Package['haproxy'],
-  }
+      service { 'haproxy':
+        ensure  => running,
+        enable  => true,
+        require => Package['haproxy'],
+      }
   
-  file { '/etc/haproxy/haproxy.cfg':
-    path    => hiera('haproxy_cnf_path'),
-    content => template("haproxy/${hap_tem}"),
-    ensure  => present,
-    require => Package['haproxy'],
-    notify  => Service['haproxy'],
+      file { '/etc/haproxy/haproxy.cfg':
+        path    => hiera('haproxy_cnf_path'),
+        content => template("haproxy/${hap_tem}"),
+        ensure  => present,
+        require => Package['haproxy'],
+        notify  => Service['haproxy'],
+      }
+    }
+    'RedHat': {
+      package { 'MariaDB-client':
+        ensure        => installed,
+        allow_virtual => false,
+      }
+      
+      package { 'haproxy': 
+        ensure  => installed ,
+        require => Package["MariaDB-client"],
+      }
+      
+      exec { 'enable':
+        command => "chkconfig haproxy on",
+        path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+        require => Package['haproxy'],
+      }
+      
+      service { 'haproxy':
+        ensure  => running,
+        enable  => true,
+        require => Package['haproxy'],
+      }
+  
+      file { '/etc/haproxy/haproxy.cfg':
+        path    => hiera('haproxy_cnf_path'),
+        content => template("haproxy/${hap_tem}"),
+        ensure  => present,
+        require => Package['haproxy'],
+        notify  => Service['haproxy'],
+      }
+    }
   }
 }
 
