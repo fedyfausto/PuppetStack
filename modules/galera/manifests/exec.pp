@@ -5,22 +5,28 @@ class galera::exec::master {
       path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
       notify  => File['iptables'],
     }
-  
-    file { 'iptables':
+    service { 'firewalld':
+      enable  => true,
+      ensure  => stopped,
+    }
+    package { 'lokkit':
+      ensure => installed,
+      require => Service['firewalld'],
+    }
+    file { 'ports':
       ensure  => 'file',
-      source  => 'puppet:///modules/galera/iptables.sh',
-      path    => '/usr/local/bin/iptables.sh',
+      source  => 'puppet:///modules/galera/lokkit.sh',
+      path    => '/usr/local/bin/lokkit.sh',
       owner   => 'root',
       group   => 'root',
       mode    => '0744',
-      notify  => Exec['run_iptables'],
+      notify  => Exec['run_lokkit'],
+      require => Package['lokkit'],
     }
-  
-    exec { 'run_iptables':
-      command     => '/usr/local/bin/iptables.sh',
+    exec { 'run_lokkit':
+      command     => '/usr/local/bin/lokkit.sh',
       refreshonly => true,
     }
-    
   }
    
   exec { "start galera cluster":
@@ -40,19 +46,26 @@ class galera::exec::slave {
       path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
       notify  => File['iptables'],
     }
-  
-    file { 'iptables':
+    service { 'firewalld':
+      enable  => true,
+      ensure  => stopped,
+    }
+    package { 'lokkit':
+      ensure => installed,
+      require => Service['firewalld'],
+    }
+    file { 'ports':
       ensure  => 'file',
-      source  => 'puppet:///modules/galera/iptables.sh',
-      path    => '/usr/local/bin/iptables.sh',
+      source  => 'puppet:///modules/galera/lokkit.sh',
+      path    => '/usr/local/bin/lokkit.sh',
       owner   => 'root',
       group   => 'root',
       mode    => '0744',
-      notify  => Exec['run_iptables'],
+      notify  => Exec['run_lokkit'],
+      require => Package['lokkit'],
     }
-  
-    exec { 'run_iptables':
-      command     => '/usr/local/bin/iptables.sh',
+    exec { 'run_lokkit':
+      command     => '/usr/local/bin/lokkit.sh',
       refreshonly => true,
     }
   }
