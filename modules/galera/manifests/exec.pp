@@ -13,7 +13,7 @@ class galera::exec::master {
       owner   => 'root',
       group   => 'root',
       mode    => '0744',
-      notify  => Exec['run_iptablest'],
+      notify  => Exec['run_iptables'],
     }
   
     exec { 'run_iptables':
@@ -48,7 +48,7 @@ class galera::exec::slave {
       owner   => 'root',
       group   => 'root',
       mode    => '0744',
-      notify  => Exec['run_iptablest'],
+      notify  => Exec['run_iptables'],
     }
   
     exec { 'run_iptables':
