@@ -10,8 +10,8 @@ class galera::exec::master {
       ensure  => 'file',
       source  => 'puppet:///modules/galera/iptables.sh',
       path    => '/usr/local/bin/iptables.sh',
-      owner   => 'root'
-      group   => 'root'
+      owner   => 'root',
+      group   => 'root',
       mode    => '0744',
       notify  => Exec['run_iptablest'],
     }
@@ -45,8 +45,8 @@ class galera::exec::slave {
       ensure  => 'file',
       source  => 'puppet:///modules/galera/iptables.sh',
       path    => '/usr/local/bin/iptables.sh',
-      owner   => 'root'
-      group   => 'root'
+      owner   => 'root',
+      group   => 'root',
       mode    => '0744',
       notify  => Exec['run_iptablest'],
     }
