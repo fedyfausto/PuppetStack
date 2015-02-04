@@ -1,8 +1,8 @@
 class galera::clusterconfig ( $nodes_n ) {
   
-  $collation_server = hiera('collation_server')
-  $init_connect = hiera('collation_server')
-  $character_set_server = hiera('character_set_server')
+  #$collation_server = hiera('collation_server')
+  #$init_connect = hiera('collation_server')
+  #$character_set_server = hiera('character_set_server')
   
   case $nodes_n {
     '3':{
