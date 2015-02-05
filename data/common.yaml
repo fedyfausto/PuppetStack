@@ -34,13 +34,16 @@ ip_gal_4 : ""
 hst_gal_4 : ""
 
 ### Haproxy Configuration
-haproxy_nodes : "3"   # 2 to 3
+haproxy_nodes : "2"   # 2 to 3
 haproxy_cnf_path : "/etc/haproxy/haproxy.cfg"
 haproxy_stat_pwd : "password"
+#UBUNTU
 #ip_hap_1 : "10.55.1.153"
+#ip_hap_2 : "10.55.1.154"
+#ip_hap_3 : "10.55.1.160"
+#REDHAT
 ip_hap_1 : "10.55.1.173"
-ip_hap_2 : "10.55.1.154"
-ip_hap_3 : "10.55.1.160"
+ip_hap_2 : "10.55.1.174"
 ip_hap_v : "10.55.1.155"
 hst_hap_1 : "haproxy-1"
 hst_hap_2 : "haproxy-2"
