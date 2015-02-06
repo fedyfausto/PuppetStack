@@ -15,27 +15,26 @@ class haproxy::key {
       }
     }
 
-   # 'RedHat','CentOS' : {
-   #   case $architecture {
-   #     'x86_64': {
-   #       yumrepo { 'mariadb':
-   #         name     => 'MariaDB',
-   #         baseurl  => 'http://yum.mariadb.org/5.5/centos7-amd64',
-   #         gpgkey   => 'https://yum.mariadb.org/RPM-GPG-KEY-MariaDB',
-   #         gpgcheck => true,
-   #       }
-   #     }
-   #     'i686': {
-   #       yumrepo { 'mariadb':
-   #         name     => 'MariaDB',
-   #         baseurl  => 'http://yum.mariadb.org/5.5/centos7-x86',
-   #         gpgkey   => 'https://yum.mariadb.org/RPM-GPG-KEY-MariaDB',
-   #         gpgcheck => true,
-   #       }
-   #     }
-   #   }
-    
-   # }
+    'RedHat','CentOS' : {
+      case $architecture {
+        'x86_64': {
+          yumrepo { 'mariadb':
+            name     => 'MariaDB',
+            baseurl  => 'http://yum.mariadb.org/5.5/centos7-amd64',
+            gpgkey   => 'https://yum.mariadb.org/RPM-GPG-KEY-MariaDB',
+            gpgcheck => true,
+          }
+        }
+        'i686': {
+          yumrepo { 'mariadb':
+            name     => 'MariaDB',
+            baseurl  => 'http://yum.mariadb.org/5.5/centos7-x86',
+            gpgkey   => 'https://yum.mariadb.org/RPM-GPG-KEY-MariaDB',
+            gpgcheck => true,
+          }
+        }
+      }
+    }
   }  
 
 }
