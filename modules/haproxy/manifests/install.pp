@@ -78,15 +78,16 @@ class haproxy::install ( $nodes_n ) {
       }
       
       exec { 'enable':
-        command => "chkconfig haproxy on",
+        command => "systemctl enable haproxy.service",
         path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
         require => Package['haproxy'],
       }
       
       service { 'haproxy':
-        ensure  => running,
-        enable  => true,
-        require => Package['haproxy'],
+        ensure   => running,
+        provider => systemd,
+        enable   => true,
+        require  => Package['haproxy'],
       }
   
       file { '/etc/haproxy/haproxy.cfg':
