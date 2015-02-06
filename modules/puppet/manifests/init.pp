@@ -20,11 +20,13 @@ class puppet {
   service { 'puppet':
     ensure => running,
   }
-
-  exec { 'remove-warning':
-    command => "sed -i \'/templatedir*/d\' ${puppet_conf}",
-    path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
-    notify  => Service['puppet'],
+  
+  if $osfamily == "Debian" {
+    exec { 'remove-warning':
+      command => "sed -i \'/templatedir*/d\' ${puppet_conf}",
+      path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+      notify  => Service['puppet'],
+    }
   }
 
 }
