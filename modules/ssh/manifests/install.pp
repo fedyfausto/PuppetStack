@@ -26,7 +26,9 @@ class ssh::install {
       $sshd_config = hiera('sshd_config')
 
       package { 'openssh-server':
-        ensure => installed,
+        ensure        => installed,
+        allow_virtual => false,
+        provider      => yum,
       }
       file { $sshd_config:
         content => template('ssh/sshd_config'),
