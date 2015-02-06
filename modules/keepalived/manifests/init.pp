@@ -54,7 +54,6 @@ class keepalived ($haproxy_nodes) {
   }
 
   service { 'keepalived':
-    
     ensure   => running,
     enable   => true,
     provider => systemd,
@@ -67,6 +66,33 @@ class keepalived ($haproxy_nodes) {
     ensure  => present,
     require => Package['keepalived'],
     notify  => Service['keepalived'],
+  }
+  
+  if $osfamily == "RedHat" {
+    service { 'firewalld':
+      provider => systemd,
+      enable   => true,
+      ensure   => running,
+    }
+    file { 'firewall-cmd':
+      ensure  => 'file',
+      source  => 'puppet:///modules/keepalived/firewall-cmd.sh',
+      path    => '/usr/local/bin/ka_firewall-cmd.sh',
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0744',
+      notify  => Exec['firewall-cmd'],
+    }
+    exec { 'firewall-cmd':
+      command     => '/usr/local/bin/ka_firewall-cmd.sh',
+      refreshonly => true,
+    }
+    exec { 'restart keepalived':
+      command => 'systemctl restart keepalived.service',
+      path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+      require => Exec['firewall-cmd'],
+    }
+    
   }
 
 }
