@@ -31,7 +31,7 @@ class ssh::install {
       file { $sshd_config:
         content => template('ssh/sshd_config'),
         require => Package["openssh-server"],
-        notify  => Service["ssh"],
+        notify  => Service["sshd"],
         owner   => 'root',
         group   => 'root',
       }
