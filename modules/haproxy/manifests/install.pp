@@ -66,7 +66,7 @@ class haproxy::install ( $nodes_n ) {
       }
     }
     'RedHat': {
-      package { ['MariaDB-client','MariaDB-Common']:
+      package { ['MariaDB-client']:
         ensure        => installed,
         allow_virtual => false,
       }
@@ -74,7 +74,7 @@ class haproxy::install ( $nodes_n ) {
       package { 'haproxy': 
         ensure  => installed ,
         allow_virtual => false,
-        require => Package['MariaDB-client','MariaDB-Common'],
+        require => Package['MariaDB-client'],
       }
       
       exec { 'enable':
