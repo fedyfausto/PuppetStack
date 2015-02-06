@@ -66,22 +66,25 @@ class haproxy::install ( $nodes_n ) {
       }
     }
     'RedHat': {
-      package {'postfix':
-        ensure   => absent,
-        provider => yum,
-      }
+    
+### Uncomment if you choose MariaDB v5.5  ###  
+
+#      package {'postfix':
+#        ensure   => absent,
+#        provider => yum,
+#      }
       
-      package {'mariadb-libs':
-        ensure   => absent,
-        provider => yum,
-        require  => Package['postfix'],
-      }
+#      package {'mariadb-libs':
+#        ensure   => absent,
+#        provider => yum,
+#        require  => Package['postfix'],
+#      }
         
       package {'MariaDB-client':
         ensure        => installed,
         allow_virtual => false,
         provider      => yum,
-        require       => Package['mariadb-libs'],
+#        require       => Package['mariadb-libs'],
       }
       
       package { 'haproxy': 
