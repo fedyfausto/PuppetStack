@@ -66,15 +66,23 @@ class haproxy::install ( $nodes_n ) {
       }
     }
     'RedHat': {
-      package { ['MariaDB-client']:
+      package {'mariadb-libs':
+        ensure   => absent,
+        provider => yum,
+      }
+        
+      package {'MariaDB-client':
         ensure        => installed,
         allow_virtual => false,
+        provider      => yum,
+        require       => Package['mariadb-libs'],
       }
       
       package { 'haproxy': 
-        ensure  => installed ,
+        ensure        => installed,
         allow_virtual => false,
-        require => Package['MariaDB-client'],
+        provider      => yum,
+        require       => Package['MariaDB-client'],
       }
       
       exec { 'enable':
@@ -97,6 +105,13 @@ class haproxy::install ( $nodes_n ) {
         require => Package['haproxy'],
         notify  => Service['haproxy'],
       }
+      
+      exec { 'config-file':
+        command => 'haproxy -f /etc/haproxy/haproxy.cfg',
+        path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+        require => File['/etc/haproxy/haproxy.cfg'],
+      }
+      
     }
   }
 }
