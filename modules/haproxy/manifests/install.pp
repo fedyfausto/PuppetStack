@@ -66,7 +66,7 @@ class haproxy::install ( $nodes_n ) {
       }
     }
     'RedHat': {
-      package {'mysql-libs':
+      package {['mysql-libs','postfix']:
         ensure   => absent,
         provider => yum,
       }
@@ -75,7 +75,7 @@ class haproxy::install ( $nodes_n ) {
         ensure        => installed,
         allow_virtual => false,
         provider      => yum,
-        require       => Package['mysql-libs'],
+        require       => Package['mysql-libs','postfix'],
       }
       
       package { 'haproxy': 
