@@ -37,7 +37,9 @@ class keepalived ($haproxy_nodes) {
   }
 
   package { 'keepalived': 
-    ensure  => installed ,
+    ensure        => installed ,
+    allow_virtual => false,
+    provider      => yum,
   }
 
   file { '/etc/sysctl.conf':
@@ -52,9 +54,11 @@ class keepalived ($haproxy_nodes) {
   }
 
   service { 'keepalived':
-    ensure  => running,
-    enable  => true,
-    require => Exec['sysctl'],
+    
+    ensure   => running,
+    enable   => true,
+    provider => systemd,
+    require  => Exec['sysctl'],
   }
 
   file { 'keepalived.cfg':
