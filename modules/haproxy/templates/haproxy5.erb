@@ -20,9 +20,9 @@ defaults
         retries 3
         option redispatch
         maxconn 1024
-        contimeout	4000
-        srvtimeout      30000
-        clitimeout	60000
+        timeout connect	4000
+        timeout server  30000
+        timeout	client  60000
 
 listen galera_cluster 0.0.0.0:3306
         mode tcp
