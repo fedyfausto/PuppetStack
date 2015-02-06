@@ -1,5 +1,5 @@
 include puppet
-#include ssh
+include ssh
 include hosts
 include user::virtual
 include sudoers
