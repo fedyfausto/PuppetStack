@@ -75,7 +75,7 @@ class haproxy::install ( $nodes_n ) {
         ensure        => installed,
         allow_virtual => false,
         provider      => yum,
-        require       => Package['mariadb-libs'],
+        require       => Package['mysql-libs'],
       }
       
       package { 'haproxy': 
