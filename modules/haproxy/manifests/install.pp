@@ -66,7 +66,7 @@ class haproxy::install ( $nodes_n ) {
       }
     }
     'RedHat': {
-      package {'mariadb-libs':
+      package {'mysql-libs':
         ensure   => absent,
         provider => yum,
       }
