@@ -6,8 +6,9 @@ class galera::exec::master {
       notify  => Service['firewalld'],
     }
     service { 'firewalld':
-      enable  => true,
-      ensure  => running,
+      provider => systemd,
+      enable   => true,
+      ensure   => running,
     }
     file { 'firewall-cmd':
       ensure  => 'file',
@@ -42,8 +43,9 @@ class galera::exec::slave {
       notify  => Service['firewalld'],
     }
     service { 'firewalld':
-      enable  => true,
-      ensure  => running,
+      enable   => true,
+      ensure   => running,
+      provider => systemd,
     }
     file { 'firewall-cmd':
       ensure  => 'file',
