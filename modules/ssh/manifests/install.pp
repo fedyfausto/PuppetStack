@@ -13,13 +13,24 @@ class ssh::install {
     owner   => 'root',
     group   => 'root',
   }
-
-  service { 'ssh':
-    ensure    => running,
-    enable    => true,
-    require   => Package["openssh-server"],
-    hasstatus => false,
-    status    => '/etc/init.d/ssh status|grep running',
+  case $osfamily {
+    'Debian': {
+      service { 'ssh':
+        ensure    => running,
+        enable    => true,
+        require   => Package["openssh-server"],
+        hasstatus => false,
+        status    => '/etc/init.d/ssh status|grep running',
+      }
+    }
+    'RedHat': {
+      service { 'sshd':
+        ensure    => running,
+        enable    => true,
+        require   => Package["openssh-server"],
+        hasstatus => false,
+      }
+    }
   }
 
 }
