@@ -22,7 +22,7 @@ class ssh::install {
       file_line { 'PermitRootLogin yes':
         path => $sshd_config,  
         line => 'PermitRootLogin yes',
-        match   => "^*PermitRootLogin*$",
+        match   => "^#PermitRootLogin",
       }
       
       service { 'ssh':
@@ -46,7 +46,7 @@ class ssh::install {
       file_line { 'PermitRootLogin yes':
         path => $sshd_config,  
         line => 'PermitRootLogin yes',
-        match   => "^*PermitRootLogin*$",
+        match   => "^#PermitRootLogin",
       }
     
       service { 'sshd':
