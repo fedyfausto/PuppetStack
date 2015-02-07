@@ -14,7 +14,6 @@ class ssh::install {
   $passwordauthentication = "yes"
   $x11forwarding = "no"
   $printmotd = "no"
-  $logingracetime = "120"
   $maxstartups = "10"
   $maxauthtries = "5" 
 
