@@ -1,33 +1,33 @@
-Port <%=@ port %>
+Port <%= @port %>
 Protocol 2
 HostKey /etc/ssh/ssh_host_rsa_key
 HostKey /etc/ssh/ssh_host_dsa_key
 UsePrivilegeSeparation yes
-KeyRegenerationInterval <%=@ keyregenerationinterval %>
+KeyRegenerationInterval <%= @keyregenerationinterval %>
 ServerKeyBits 768
-SyslogFacility <%=@ syslogfacility %>
-LogLevel <%=@ loglevel %>
-LoginGraceTime <%=@ logingracetime %>
-PermitRootLogin <%=@ permitrootlogin %>
-StrictModes <%=@ strictmodes %>
-RSAAuthentication <%=@ rsaauthentication %>
-PubkeyAuthentication <%=@ pubkeyauthentication %>
+SyslogFacility <%= @syslogfacility %>
+LogLevel <%= @loglevel %>
+LoginGraceTime <%= @logingracetime %>
+PermitRootLogin <%= @permitrootlogin %>
+StrictModes <%= @strictmodes %>
+RSAAuthentication <%= @rsaauthentication %>
+PubkeyAuthentication <%= @pubkeyauthentication %>
 IgnoreRhosts yes
 RhostsRSAAuthentication no
 HostbasedAuthentication no
 PermitEmptyPasswords no
-PasswordAuthentication <%=@ passwordauthentication %>
+PasswordAuthentication <%= @passwordauthentication %>
 ChallengeResponseAuthentication no
-X11Forwarding <%=@ x11forwarding %>
+X11Forwarding <%= @x11forwarding %>
 X11DisplayOffset 10
-PrintMotd <%=@ printmotd %>
+PrintMotd <%= @printmotd %>
 PrintLastLog yes
 TCPKeepAlive yes
 AcceptEnv LANG LC_*
 Subsystem sftp /usr/lib/openssh/sftp-server
 UsePAM yes
-MaxStartups <%=@ maxstartups %>
-MaxAuthTries <%=@ maxauthtries %>
+MaxStartups <%= @maxstartups %>
+MaxAuthTries <%= @maxauthtries %>
 GSSAPIAuthentication yes
 GSSAPICleanupCredentials yes
 AcceptEnv LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES
