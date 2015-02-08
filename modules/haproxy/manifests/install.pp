@@ -104,7 +104,7 @@ class haproxy::install ( $nodes_n ) {
         ensure   => running,
         provider => systemd,
         enable   => true,
-        require  => Package['haproxy'],
+        require  => Exec['enable'],
       }
   
       file { '/etc/haproxy/haproxy.cfg':
@@ -125,6 +125,7 @@ class haproxy::install ( $nodes_n ) {
         command => "/usr/sbin/haproxy -f /etc/haproxy/haproxy.cfg",
         user    => root,
         special => 'reboot',
+        require => Exec['config-file'],
       }
       
       
@@ -138,6 +139,7 @@ class haproxy::install ( $nodes_n ) {
         group   => 'root',
         mode    => '0640',
         notify  => Exec['restorecon'],
+        require => Cron['workaround-haproxy'],
       }
       
       exec { 'restorecon':
