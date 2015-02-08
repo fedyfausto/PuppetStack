@@ -130,34 +130,55 @@ class haproxy::install ( $nodes_n ) {
       
       
       ### Firewalld ###
-      
-      file { 'haproxy.xml':
+
+      file { 'firewall-cmd':
         ensure  => 'file',
-        source  => 'puppet:///modules/haproxy/haproxy.xml',
-        path    => '/etc/firewalld/services/haproxy.xml',
+        source  => 'puppet:///modules/haproxy/firewall-cmd.sh',
+        path    => '/usr/local/bin/ha_firewall-cmd.sh',
         owner   => 'root',
         group   => 'root',
-        mode    => '0640',
-        require => Cron['workaround-haproxy'],
+        mode    => '0744',
+        notify  => Exec['firewall-cmd'],
       }
-      
-      exec { 'restorecon':
-        command => 'restorecon /etc/firewalld/services/haproxy.xml',
-        path    => '/usr/local/bin/:/bin/:/sbin/:/usr/bin/',
-        require => File['haproxy.xml'],
+      exec { 'firewall-cmd':
+        command     => '/usr/local/bin/ha_firewall-cmd.sh',
+        refreshonly => true,
       }
-      
-      exec { 'add service':
-        command => 'firewall-cmd --permanent --zone=public --add-service=haproxy',
+      exec { 'restart haproxy':
+        command => 'systemctl restart haproxy.service',
         path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
-        require => Exec['restorecon'],
+        require => Exec['firewall-cmd'],
       }
+
+
       
-      exec { 'reload firewall':
-        command => 'firewall-cmd --reload',
-        path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
-        require => Exec['add service'],
-      }
+#      file { 'haproxy.xml':
+#        ensure  => 'file',
+#        source  => 'puppet:///modules/haproxy/haproxy.xml',
+#        path    => '/etc/firewalld/services/haproxy.xml',
+#        owner   => 'root',
+#        group   => 'root',
+#        mode    => '0640',
+#        require => Cron['workaround-haproxy'],
+#      }
+      
+#      exec { 'restorecon':
+#        command => 'restorecon /etc/firewalld/services/haproxy.xml',
+#        path    => '/usr/local/bin/:/bin/:/sbin/:/usr/bin/',
+#        require => File['haproxy.xml'],
+#      }
+      
+#      exec { 'add service':
+#        command => 'firewall-cmd --permanent --zone=public --add-service=haproxy',
+#        path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+#        require => Exec['restorecon'],
+#      }
+      
+#      exec { 'reload firewall':
+#        command => 'firewall-cmd --reload',
+#        path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+#        require => Exec['add service'],
+#      }
     }
   }
 }
