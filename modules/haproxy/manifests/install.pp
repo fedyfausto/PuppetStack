@@ -138,13 +138,13 @@ class haproxy::install ( $nodes_n ) {
         owner   => 'root',
         group   => 'root',
         mode    => '0640',
-        notify  => Exec['restorecon'],
         require => Cron['workaround-haproxy'],
       }
       
       exec { 'restorecon':
         command => 'restorecon /etc/firewalld/services/haproxy.xml',
         path    => '/usr/local/bin/:/bin/:/sbin/:/usr/bin/',
+        require => File['haproxy.xml'],
       }
       
       exec { 'add service':
