@@ -121,6 +121,13 @@ class haproxy::install ( $nodes_n ) {
         require => File['/etc/haproxy/haproxy.cfg'],
       }
       
+      cron { 'workaround-haproxy':
+        command => "/usr/sbin/haproxy -f /etc/haproxy/haproxy.cfg",
+        user    => root,
+        special => 'reboot',
+      }
+      
+      
       ### Firewalld ###
       
       file { 'haproxy.xml':
