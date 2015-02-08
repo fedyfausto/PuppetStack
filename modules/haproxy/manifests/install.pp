@@ -121,6 +121,29 @@ class haproxy::install ( $nodes_n ) {
         require => File['/etc/haproxy/haproxy.cfg'],
       }
       
+      ### Firewalld ###
+      
+      file { 'haproxy.xml':
+        ensure  => 'file',
+        source  => 'puppet:///modules/haproxy/haproxy.xml',
+        path    => '/etc/firewalld/services/haproxy.xml',
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0640',
+        notify  => Exec['restorecon'],
+      }
+      
+      exec { 'restorecon':
+        command => 'restorecon haproxy.xml',
+        path    => '/etc/firewalld/services/',
+      }
+      
+      exec { 'add service':
+        command => 'firewall-cmd --zone=internal --permanent --add-service=haproxy && firewall-cmd --reload',
+        path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+        require => Exec['restorecon'],
+      }
+      
     }
   }
 }
