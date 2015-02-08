@@ -131,23 +131,23 @@ class haproxy::install ( $nodes_n ) {
       
       ### Firewalld ###
 
-      file { 'firewall-cmd':
+      file { 'ha-firewall-cmd':
         ensure  => 'file',
         source  => 'puppet:///modules/haproxy/firewall-cmd.sh',
         path    => '/usr/local/bin/ha_firewall-cmd.sh',
         owner   => 'root',
         group   => 'root',
         mode    => '0744',
-        notify  => Exec['firewall-cmd'],
+        notify  => Exec['ha-firewall-cmd'],
       }
-      exec { 'firewall-cmd':
+      exec { 'ha-firewall-cmd':
         command     => '/usr/local/bin/ha_firewall-cmd.sh',
         refreshonly => true,
       }
       exec { 'restart haproxy':
         command => 'systemctl restart haproxy.service',
         path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
-        require => Exec['firewall-cmd'],
+        require => Exec['ha-firewall-cmd'],
       }
 
 
