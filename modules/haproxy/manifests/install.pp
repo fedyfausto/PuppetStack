@@ -134,8 +134,8 @@ class haproxy::install ( $nodes_n ) {
       }
       
       exec { 'restorecon':
-        command => 'restorecon haproxy.xml',
-        path    => '/etc/firewalld/services/',
+        command => 'restorecon /etc/firewalld/services/haproxy.xml',
+        path    => '/usr/local/bin/:/bin/:/sbin/:/usr/bin/',
       }
       
       exec { 'add service':
