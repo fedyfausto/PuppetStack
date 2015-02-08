@@ -139,11 +139,16 @@ class haproxy::install ( $nodes_n ) {
       }
       
       exec { 'add service':
-        command => 'firewall-cmd --zone=public --permanent --add-service=haproxy && firewall-cmd --reload',
+        command => 'firewall-cmd --permanent --zone=public --add-service=haproxy',
         path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
         require => Exec['restorecon'],
       }
       
+      exec { 'reload firewall':
+        command => 'firewall-cmd --reload',
+        path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+        require => Exec['add service'],
+      }
     }
   }
 }
