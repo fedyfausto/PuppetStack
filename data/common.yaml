@@ -45,7 +45,7 @@ haproxy_stat_pwd : "password"
 #REDHAT
 ip_hap_1 : "10.55.1.173"
 ip_hap_2 : "10.55.1.174"
-ip_hap_2 : "10.55.1.176"
+ip_hap_3 : "10.55.1.176"
 ip_hap_v : "10.55.1.155"
 hst_hap_1 : "haproxy-1"
 hst_hap_2 : "haproxy-2"
