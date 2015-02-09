@@ -22,6 +22,14 @@ What does work:
   > Rabbitmq cluster (3 to 5 nodes)
   > GlusterFS cluster (2 to 5 nodes)
   
+What does work both in Ubuntu 12.04 and Centos 7:
+  > Basic puppet settings
+  > Hiera and librarian-puppet
+  > Galera cluster of MariaDB database servers (3 to 5 nodes)
+  > Haproxy load balancers for the Galera cluster (2 to 3 nodes) 
+  > HA of these load balancers through Keepalived
+  > Openstack Users, DBs and Privileges entries
+  
 What should work better:
   > ssh exec.pp should give the ssh id_rsa to a puppetmaster or 
     something similar and the id_rsa.pub to other nodes 
@@ -79,6 +87,13 @@ HOW IT WORKS:
 > Galera: in order to create a galera cluster you must firstly apply the manifest
   of the node you chose to be the galera master. It creates the cluster. Then you
   can apply the manifests of other 'slave' nodes.
+  
+> Haproxy: It seems there is a sort of incompatibility between SystemD and HAProxy.
+  A command that forces the binding with the haproxy.cfg configuration file is
+  needed after the system boot. It is not needed in Ubuntu. I managed to find a
+  solution for this issue, automating (with Puppet of course) the adding of a
+  cronjob to the crontab. It's not wonderful to see but it works. I hope to find
+  a better solution.
   
 > Keepalived: its decision about what server should take the virtual ip is taken
   considering the sum between two factors: the priority and the weight of
