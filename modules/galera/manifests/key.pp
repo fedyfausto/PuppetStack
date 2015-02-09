@@ -20,7 +20,7 @@ class galera::key {
         'x86_64': {
           yumrepo { 'mariadb':
             name     => 'MariaDB',
-            baseurl  => 'http://yum.mariadb.org/5.5/centos7-amd64',
+            baseurl  => 'http://yum.mariadb.org/10.0/centos7-amd64',
             gpgkey   => 'https://yum.mariadb.org/RPM-GPG-KEY-MariaDB',
             gpgcheck => true,
           }
@@ -28,7 +28,7 @@ class galera::key {
         'i686': {
           yumrepo { 'mariadb':
             name     => 'MariaDB',
-            baseurl  => 'http://yum.mariadb.org/5.5/centos7-x86',
+            baseurl  => 'http://yum.mariadb.org/10.0/centos7-x86',
             gpgkey   => 'https://yum.mariadb.org/RPM-GPG-KEY-MariaDB',
             gpgcheck => true,
           }
