@@ -16,11 +16,13 @@ ip_puppet : "10.55.1.168"
 virt_usr_default_pwd : "galera" 
 
 ### Galera Configuration
-galera_nodes : "3"		# 3 to 5
+galera_nodes : "4"		# 3 to 5
 #REDHAT - CENTOS
 ip_gal_m : "10.55.1.170"
 ip_gal_1 : "10.55.1.171"
 ip_gal_2 : "10.55.1.172"
+ip_gal_3 : "10.55.1.175"
+ip_gal_4 : ""
 #UBUNTU
 #ip_gal_m : "10.55.1.150"
 #ip_gal_1 : "10.55.1.151"
@@ -30,11 +32,10 @@ hst_gal_m : "galera-master"
 hst_gal_1 : "galera-1"
 hst_gal_2 : "galera-2"
 hst_gal_3 : "galera-3"
-ip_gal_4 : ""
-hst_gal_4 : ""
+hst_gal_4 : "galera-4"
 
 ### Haproxy Configuration
-haproxy_nodes : "2"   # 2 to 3
+haproxy_nodes : "3"  # 2 to 3
 haproxy_cnf_path : "/etc/haproxy/haproxy.cfg"
 haproxy_stat_pwd : "password"
 #UBUNTU
@@ -44,6 +45,7 @@ haproxy_stat_pwd : "password"
 #REDHAT
 ip_hap_1 : "10.55.1.173"
 ip_hap_2 : "10.55.1.174"
+ip_hap_2 : "10.55.1.176"
 ip_hap_v : "10.55.1.155"
 hst_hap_1 : "haproxy-1"
 hst_hap_2 : "haproxy-2"
