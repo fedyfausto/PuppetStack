@@ -32,7 +32,6 @@ class rabbit {
       }
     }
   }
-  else
   
   exec { 'clean':
     command => 'rm -rf /var/lib/rabbitmq/mnesia/*',
