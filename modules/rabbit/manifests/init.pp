@@ -18,10 +18,21 @@ class rabbit {
       $cluster_nodes = [hiera('hst_rab_1'), hiera('hst_rab_2'), hiera('hst_rab_3'), hiera('hst_rab_4'), hiera('hst_rab_5')]
     }
   }
-
-  package { 'erlang-base':
-    ensure => latest,
+  case $osfamily {
+    'Debian': {
+      package { 'erlang-base':
+        ensure => latest,
+      }
+    }
+    'RedHat': {
+      package { 'erlang':
+        ensure        => latest,
+        provider      => yum,
+        allow_virtual => false,
+      }
+    }
   }
+  else
   
   exec { 'clean':
     command => 'rm -rf /var/lib/rabbitmq/mnesia/*',
