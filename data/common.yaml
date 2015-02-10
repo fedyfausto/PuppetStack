@@ -73,9 +73,14 @@ openstack_db_pwd : "OpenStack"
 
 ### RabbitMQ Configuration
 rabbit_nodes : "3" 		# 3 to 5
-ip_rab_1 : "10.55.1.157"
-ip_rab_2 : "10.55.1.158"
-ip_rab_3 : "10.55.1.159"
+#UBUNTU
+#ip_rab_1 : "10.55.1.157"
+#ip_rab_2 : "10.55.1.158"
+#ip_rab_3 : "10.55.1.159"
+#REDHAT
+ip_rab_1 : "10.55.1.177"
+ip_rab_2 : "10.55.1.178"
+ip_rab_3 : "10.55.1.179"
 ip_rab_4 : ""
 ip_rab_5 : ""
 hst_rab_1 : "rabbit-1"
