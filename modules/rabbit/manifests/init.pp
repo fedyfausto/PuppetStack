@@ -65,6 +65,7 @@ class rabbit {
       exec { 'clean':
         command => 'rm -rf /var/lib/rabbitmq/mnesia/*',
         path    => '/usr/local/bin/:/bin/:/sbin/:/usr/bin/',
+        require => Exec['ra-firewall-cmd'],
       }
     
       class { 'rabbitmq':
@@ -77,7 +78,6 @@ class rabbit {
         tcp_keepalive	           => true,
         require	                 => Exec['clean'],
         package_provider         => 'yum',
-        require                  => Exec['ra-firewall-cmd'],
       }
       
     }
