@@ -3,8 +3,6 @@
 
 class rabbit {
 
-  include erlang
-
   $rabbit_nodes = hiera('rabbit_nodes')
 
   case $rabbit_nodes {
@@ -20,6 +18,7 @@ class rabbit {
   }
   case $osfamily {
     'Debian': {
+      include erlang
       package { 'erlang-base':
         ensure => latest,
       }
