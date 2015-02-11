@@ -1,26 +1,24 @@
-_____________________________________________________________________________________
+________________________________________________________________________________
 
 Prisma Puppet Project - Beginning Date: 10/11/2014
 @Author: Alberto Di Savia Puglisi
 
 This project's aim is to deploy a working openstack environment in one shot.
 Of course it's a WORK IN PROGRESS and I really hope it will come to an end!
-_____________________________________________________________________________________
+________________________________________________________________________________
 
 DISCLAIMER:
-I am using Ubuntu Server 12.04 LTS Precise. Modules should work even 
-on other debian-based distros but I am absolutely not sure and I cannot guarantee.
-_____________________________________________________________________________________
 
-What does work:
-  > Basic puppet settings
-  > Hiera and librarian-puppet
-  > Galera cluster of MariaDB database servers (3 to 5 nodes)
-  > Haproxy load balancers for the Galera cluster (2 to 3 nodes) 
-  > HA of these load balancers through Keepalived
-  > Openstack Users, DBs and Privileges entries
-  > Rabbitmq cluster (3 to 5 nodes)
-  > GlusterFS cluster (2 to 5 nodes)
+[10-02-15]
+I'm not using Ubuntu 12.04 any more. My boss told me to convert the project in 
+order to be used under Centos 7 machines. I'll mantain those modules which 
+have been originary developed for Ubuntu systems but the compatibility of newer  
+modules and functionalities will be guaranteed only for Centos 7.
+--------------------------------------------------------------------------------
+I am using Ubuntu Server 12.04 LTS Precise. Modules should work even 
+on other debian-based distros but I am absolutely not sure and I cannot
+guarantee.
+________________________________________________________________________________
   
 What does work both in Ubuntu 12.04 and Centos 7:
   > Basic puppet settings
@@ -29,7 +27,14 @@ What does work both in Ubuntu 12.04 and Centos 7:
   > Haproxy load balancers for the Galera cluster (2 to 3 nodes) 
   > HA of these load balancers through Keepalived
   > Openstack Users, DBs and Privileges entries
-  
+  > Rabbitmq cluster (3 to 5 nodes)
+
+What still need to be ported to CentOS 7:
+  > GlusterFS cluster (2 to 5 nodes)
+
+What does work only in CentOS 7:
+  > ..
+
 What should work better:
   > ssh exec.pp should give the ssh id_rsa to a puppetmaster or 
     something similar and the id_rsa.pub to other nodes 
@@ -44,7 +49,7 @@ Next steps:
   > OpenStack services
   > Keystone
   > ..
-_____________________________________________________________________________________
+________________________________________________________________________________
 
 HOW-TO:
 
@@ -62,42 +67,40 @@ HOW-TO:
     > hap1_priority, hap2_priority, hap3_priority -> the priority of each 
       load balancer. 100, 101 and 102 are default values and should be ok.
       
-    > gluster_nodes -> the number of glusterfs nodes forming the cluster (2 to 5).
+    > gluster_nodes -> the number of glusterfs nodes forming the cluster 
+      (2 to 5).
   
-    Remember that if you change the number of hosts (galera_nodes, rabbit_nodes,..),
-    you should provide at least an equivalent number of relative hostnames and IPs!
+    Remember that if you change the number of hosts (galera_nodes, 
+    rabbit_nodes,..), you should provide at least an equivalent number of 
+    relative hostnames and IPs!
   
   2) Edit the /manifests/nodes.pp to meet your requirements:
      > change the hostnames if needed.
   
-  3) After you've completed the previous stages, run the following command 
-    in order to apply your manifest: sh prisma/scripts/first_apply.sh
+  3) After you've completed the previous stages, go to the prisma/scripts/ 
+     folder and run the command that fits with your OS in order to apply your 
+     manifest (e.g. sh prisma/scripts/ubuntu_install.sh).
   
-    This will download and install puppet, ruby and librarian-puppet and execute
-    the custom puppet apply script. This script needs to be run just once.
+    This will download and install puppet, ruby and librarian-puppet and 
+    execute the custom puppet apply script. This script needs to be run 
+    just once.
   
-    Please ignore the red warning (Warning: Setting templatedir is deprecated...). 
-    It is an Ubuntu matter. It appears just once and then it is fixed by puppet. 
+    Please ignore the red warning (Warning: Setting templatedir 
+    is deprecated...). It is an Ubuntu matter.
+    It appears just once and then it is fixed by puppet.
 
   4) Next time you wish to apply the manifest simply use the 'papply' command.
-_____________________________________________________________________________________
+________________________________________________________________________________
 
 HOW IT WORKS:
 
-> Galera: in order to create a galera cluster you must firstly apply the manifest
-  of the node you chose to be the galera master. It creates the cluster. Then you
-  can apply the manifests of other 'slave' nodes.
+> Galera: in order to create a galera cluster you must firstly apply the 
+  manifest of the node you chose to be the galera master. It creates the 
+  cluster. Then you can apply the manifests of other 'slave' nodes.
   
-> Haproxy: It seems there is a sort of incompatibility between SystemD and HAProxy.
-  A command that forces the binding with the haproxy.cfg configuration file is
-  needed after the system boot. It is not needed in Ubuntu. I managed to find a
-  solution for this issue, automating (with Puppet of course) the adding of a
-  cronjob to the crontab. It's not wonderful to see but it works. I hope to find
-  a better solution.
-  
-> Keepalived: its decision about what server should take the virtual ip is taken
-  considering the sum between two factors: the priority and the weight of
-  each server. The weight is equal (by default) for each node but the
+> Keepalived: its decision about what server should take the virtual ip is 
+  taken considering the sum between two factors: the priority and the weight 
+  of each server. The weight is equal (by default) for each node but the
   priority is incremental (100 to 102 if there are 3 load balancers).
   Assuming they are only two, the server who gains the ip is the one that has
   the sum of 103 (priority 101 + weight 2) against the other that has sum 102
@@ -113,45 +116,52 @@ HOW IT WORKS:
   to the cluster, create the volume and start it. Use the client module to 
   mount the mount the GlusterFS volume.
   
-_____________________________________________________________________________________
+________________________________________________________________________________
 
 TROUBLESHOOTING:
   
   HAProxy & Keepalived:
-    > To try the VIP functionality in addition to the load balancing one, use this:
-      mysql -uhaproxy_root -ppassword -h 10.55.1.155 -e "show variables like
-      'wsrep_node_name';"
+    > To try the VIP functionality in addition to the load balancing one, use 
+      this: mysql -uhaproxy_root -ppassword -h 10.55.1.155 -e 
+      "show variables like 'wsrep_node_name';"
       Remember to change the ip address in the command with your VIP.
     > To understand which Haproxy server keeps the VIP: ip a | grep eth0
     > You can run 2 or 3 HAProxy load balancers but remember to change the 
       haproxy_nodes value in prisma/data/common.yaml 
+    > It seems there is a sort of incompatibility between SystemD and HAProxy 
+      on CentOS. A command that forces the binding with the haproxy.cfg 
+      configuration file is needed after the system boot. It is not needed 
+      in Ubuntu. I managed to find a solution for this issue, automating 
+      (with Puppet of course) the adding of a cronjob to the crontab. 
+      It's not wonderful to see but it works. I hope to find a better solution.
       
   RabbitMQ cluster:
     > If, for any reason, you need to apply manifest of a rabbitmq node
       a second time, please exec the following command: killall -u rabbitmq
+      (Ubuntu).
     > To verify the status of your cluster: 'rabbitmqctl cluster_status'
+    > I used the official puppetlabs/rabbitmq module, adapting it according
+      to my needs. Please refer to it for more options and configurations
+      (https://forge.puppetlabs.com/puppetlabs/rabbitmq).
   
   GlusterFS cluster:
-    > If the apply action of your mainserver fails you probably have a network issue.
-      You most likely should see the red error over the 'gluster peer probe' command.
-      This command adds a node to the cluster and if it fails, there is a network
-      problem. If you try the command (gluster peer probe NODE_IP) by yourself you 
-      should see something like: "peer probe: failed: Probe returned with unknown 
-      errno 107". Be sure your nodes can communicate to each other and that you have
+    > If the apply action of your mainserver fails you probably have a 
+      network issue. You most likely should see the red error over the 
+      'gluster peer probe' command. This command adds a node to the cluster 
+      and if it fails, there is a network problem. If you try the command 
+      (gluster peer probe NODE_IP) by yourself you should see something like:
+      "peer probe: failed: Probe returned with unknown errno 107". 
+      Be sure your nodes can communicate to each other and that you have
       NOT a firewall blocking the glusterfs ports. 
-      If you are using IPTABLES, please add these:
-   ----------------------------------------------------------------------------------    
-   iptables -A INPUT -m state --state NEW -m tcp -p tcp --dport 24007:24047 -j ACCEPT 
-   iptables -A INPUT -m state --state NEW -m tcp -p tcp --dport 111 -j ACCEPT 
-   iptables -A INPUT -m state --state NEW -m udp -p udp --dport 111 -j ACCEPT 
-   iptables -A INPUT -m state --state NEW -m tcp -p tcp --dport 38465:38467 -j ACCEPT
-   ----------------------------------------------------------------------------------
-      To verify the status of your cluster: 'gluster volume status' from any node
+      If you are using a firewall (iptables or firewalld), please open these
+      ports: TCP (24007:24047 - 111 - 38465:38467) UDP ( 111 ).
+      To verify the status of your cluster: 'gluster volume status' 
+      from any node.
    
    
-_____________________________________________________________________________________
+________________________________________________________________________________
 
 If you have any question or suggestion, 
 please feel free to contact me at alberto.disavia@ct.infn.it
 
-                                    THAT'S ALL FOLKS
+                               THAT'S ALL FOLKS
