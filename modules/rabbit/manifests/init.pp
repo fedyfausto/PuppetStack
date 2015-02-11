@@ -20,7 +20,8 @@ class rabbit {
     'Debian': {
       include erlang
       package { 'erlang-base':
-        ensure => latest,
+        ensure        => latest,
+        allow_virtual => false,
       }
     }
     'RedHat': {
