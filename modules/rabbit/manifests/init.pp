@@ -23,28 +23,48 @@ class rabbit {
         ensure        => latest,
         allow_virtual => false,
       }
+      
+      exec { 'clean':
+        command => 'rm -rf /var/lib/rabbitmq/mnesia/*',
+        path    => '/usr/local/bin/:/bin/:/sbin/:/usr/bin/',
+      }
+    
+      class { 'rabbitmq':
+        config_cluster           => true,
+        cluster_nodes	           => $cluster_nodes,
+    #   cluster_node_type        => 'disk', #ram
+        erlang_cookie            => 'A_SECRET_COOKIE_STRING',
+        wipe_db_on_cookie_change => true,
+        port                     => '5672',
+        tcp_keepalive	           => true,
+        require	                 => Exec['clean'],
+      }
     }
     'RedHat': {
       class { 'erlang': 
         epel_enable => true,
       }
+      
+      exec { 'clean':
+        command => 'rm -rf /var/lib/rabbitmq/mnesia/*',
+        path    => '/usr/local/bin/:/bin/:/sbin/:/usr/bin/',
+      }
+    
+      class { 'rabbitmq':
+        config_cluster           => true,
+        cluster_nodes	           => $cluster_nodes,
+    #   cluster_node_type        => 'disk', #ram
+        erlang_cookie            => 'A_SECRET_COOKIE_STRING',
+        wipe_db_on_cookie_change => true,
+        port                     => '5672',
+        tcp_keepalive	           => true,
+        require	                 => Exec['clean'],
+        package_provider         => 'yum',
+      }
+      
     }
   }
   
-  exec { 'clean':
-    command => 'rm -rf /var/lib/rabbitmq/mnesia/*',
-    path    => '/usr/local/bin/:/bin/:/sbin/:/usr/bin/',
-  }
 
-  class { 'rabbitmq':
-    config_cluster           => true,
-    cluster_nodes	     => $cluster_nodes,
-#   cluster_node_type        => 'disk', #ram
-    erlang_cookie            => 'A_SECRET_COOKIE_STRING',
-    wipe_db_on_cookie_change => true,
-    port                     => '5672',
-    tcp_keepalive	     => true,
-    require	             => Exec['clean'],
-  }
 
 }
