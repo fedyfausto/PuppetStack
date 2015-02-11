@@ -78,6 +78,7 @@ class rabbit {
         tcp_keepalive	           => true,
         require	                 => Exec['clean'],
         package_provider         => 'yum',
+        node_ip_address          => '127.0.0.1',
       }
       
     }
