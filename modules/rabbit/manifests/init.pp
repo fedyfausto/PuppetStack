@@ -41,6 +41,23 @@ class rabbit {
       }
     }
     'RedHat': {
+    
+      ### Firewalld ###
+
+      file { 'ra-firewall-cmd':
+        ensure  => 'file',
+        source  => 'puppet:///modules/rabbit/firewall-cmd.sh',
+        path    => '/usr/local/bin/ra_firewall-cmd.sh',
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0744',
+        notify  => Exec['ra-firewall-cmd'],
+      }
+      exec { 'ra-firewall-cmd':
+        command     => '/usr/local/bin/ra_firewall-cmd.sh',
+        refreshonly => true,
+      }
+    
       class { 'erlang': 
         epel_enable => true,
       }
@@ -60,6 +77,7 @@ class rabbit {
         tcp_keepalive	           => true,
         require	                 => Exec['clean'],
         package_provider         => 'yum',
+        require                  => Exec['ra-firewall-cmd'],
       }
       
     }
