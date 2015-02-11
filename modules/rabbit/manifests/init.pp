@@ -25,10 +25,8 @@ class rabbit {
       }
     }
     'RedHat': {
-      package { 'erlang':
-        ensure        => latest,
-        provider      => yum,
-        allow_virtual => false,
+      class { 'erlang': 
+        epel_enable => true,
       }
     }
   }
