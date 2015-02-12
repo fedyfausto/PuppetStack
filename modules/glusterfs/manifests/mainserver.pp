@@ -82,7 +82,16 @@ class glusterfs::mainserver {
         before     => Exec['gluster peer probe'],
       }
       ### Firewalld ###
-
+      exec { "enforcing mode":
+        command => "sudo setenforce 0",
+        path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+        notify  => Service['firewalld'],
+      }
+      service { 'firewalld':
+        provider => systemd,
+        enable   => true,
+        ensure   => running,
+      }
       file { 'gfs-firewall-cmd':
         ensure  => 'file',
         source  => 'puppet:///modules/glusterfs/firewall-cmd.sh',
@@ -96,6 +105,7 @@ class glusterfs::mainserver {
         command     => '/usr/local/bin/gfs_firewall-cmd.sh',
         refreshonly => true,
         notify      => Service['glusterd'],
+        require     => Service['firewalld'],
       }
     }      
   }
