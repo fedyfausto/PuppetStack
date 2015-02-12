@@ -72,6 +72,31 @@ class glusterfs::mainserver {
         provider => 'yum',
         require  => Wget::Fetch['yum repository'],
       }
+      exec { "enforcing mode":
+        command => "sudo setenforce 0",
+        path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        before => File['gfs-firewall-cmd'],
+      }
+      file { 'gfs-firewall-cmd':
+        ensure  => 'file',
+        source  => 'puppet:///modules/glusterfs/firewall-cmd.sh',
+        path    => '/usr/local/bin/gfs_firewall-cmd.sh',
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0744',
+        before  => Exec['gfs-firewall-cmd'],
+      }
+      exec { 'gfs-firewall-cmd':
+        command     => '/usr/local/bin/gfs_firewall-cmd.sh',
+        refreshonly => true,
+        notify      => Service['firewalld'],
+      }
+      service { 'firewalld':
+        provider => systemd,
+        enable   => true,
+        ensure   => running,
+        notify   => Service['glusterd'],
+      }
       service { 'glusterd': 
         ensure     => running,
         enable     => true,
@@ -81,32 +106,7 @@ class glusterfs::mainserver {
         require    => Package['glusterfs', 'glusterfs-fuse', 'glusterfs-server'],
         before     => Exec['gluster peer probe'],
       }
-      ### Firewalld ###
-      exec { "enforcing mode":
-        command => "sudo setenforce 0",
-        path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
-        notify  => Service['firewalld'],
-      }
-      service { 'firewalld':
-        provider => systemd,
-        enable   => true,
-        ensure   => running,
-      }
-      file { 'gfs-firewall-cmd':
-        ensure  => 'file',
-        source  => 'puppet:///modules/glusterfs/firewall-cmd.sh',
-        path    => '/usr/local/bin/gfs_firewall-cmd.sh',
-        owner   => 'root',
-        group   => 'root',
-        mode    => '0744',
-        notify  => Exec['gfs-firewall-cmd'],
-      }
-      exec { 'gfs-firewall-cmd':
-        command     => '/usr/local/bin/gfs_firewall-cmd.sh',
-        refreshonly => true,
-        notify      => Service['glusterd'],
-        require     => Exec["enforcing mode"],
-      }
+
     }      
   }
 
