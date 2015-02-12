@@ -84,7 +84,7 @@ class glusterfs::mainserver {
       ### Firewalld ###
       exec { "enforcing mode":
         command => "sudo setenforce 0",
-        path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/:/usr/sbin/",
+        path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
         notify  => Service['firewalld'],
       }
       service { 'firewalld':
@@ -112,20 +112,20 @@ class glusterfs::mainserver {
 
   exec { "gluster peer probe":
     command => $peer_probe,
-    path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/:/usr/sbin/",
+    path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
    # require => Service['glusterfs-server'],
   }
 
   exec { "gluster volume create":
     command => "gluster volume create ${gluster_file} ${vol_create_opt}",
-    path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/:/usr/sbin/",
+    path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
     require => Exec["gluster peer probe"],
   }   
   
   exec { "gluster volume start":
     command => "gluster volume start ${gluster_file}",
     unless  => "[ \"`gluster volume info ${gluster_file} | egrep '^Status:'`\" = 'Status: Started' ]",
-    path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/:/usr/sbin/",
+    path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
     require => Exec["gluster volume create"],
   }
     
