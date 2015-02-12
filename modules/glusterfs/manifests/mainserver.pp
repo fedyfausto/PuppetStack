@@ -84,7 +84,7 @@ class glusterfs::mainserver {
       ### Firewalld ###
       exec { "enforcing mode":
         command => "sudo setenforce 0",
-        path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+        path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/:/usr/sbin/",
         notify  => Service['firewalld'],
       }
       service { 'firewalld':
