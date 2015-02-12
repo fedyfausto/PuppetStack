@@ -96,7 +96,7 @@ class haproxy::install ( $nodes_n ) {
       
       exec { 'enable':
         command => "systemctl enable haproxy.service",
-        path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/:/usr/sbin/",
+        path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
         require => Package['haproxy'],
       }
       
@@ -117,7 +117,7 @@ class haproxy::install ( $nodes_n ) {
       
       exec { 'config-file':
         command => 'haproxy -f /etc/haproxy/haproxy.cfg',
-        path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/:/usr/sbin/",
+        path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
         require => File['/etc/haproxy/haproxy.cfg'],
       }
       
@@ -147,7 +147,7 @@ class haproxy::install ( $nodes_n ) {
       }
 #      exec { 'restart haproxy':
 #        command => 'systemctl restart haproxy.service',
-#        path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+#       path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
 #        require => Exec['ha-firewall-cmd'],
 #      }
 
@@ -165,19 +165,19 @@ class haproxy::install ( $nodes_n ) {
       
 #      exec { 'restorecon':
 #        command => 'restorecon /etc/firewalld/services/haproxy.xml',
-#        path    => '/usr/local/bin/:/bin/:/sbin/:/usr/bin/',
+#       path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
 #        require => File['haproxy.xml'],
 #      }
       
 #      exec { 'add service':
 #        command => 'firewall-cmd --permanent --zone=public --add-service=haproxy',
-#        path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+#        path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
 #        require => Exec['restorecon'],
 #      }
       
 #      exec { 'reload firewall':
 #        command => 'firewall-cmd --reload',
-#        path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+#        path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
 #        require => Exec['add service'],
 #      }
     }
