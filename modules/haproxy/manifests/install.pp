@@ -96,7 +96,7 @@ class haproxy::install ( $nodes_n ) {
       
       exec { 'enable':
         command => "systemctl enable haproxy.service",
-        path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+        path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/:/usr/sbin/",
         require => Package['haproxy'],
       }
       
@@ -117,7 +117,7 @@ class haproxy::install ( $nodes_n ) {
       
       exec { 'config-file':
         command => 'haproxy -f /etc/haproxy/haproxy.cfg',
-        path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+        path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/:/usr/sbin/",
         require => File['/etc/haproxy/haproxy.cfg'],
       }
       
@@ -143,12 +143,13 @@ class haproxy::install ( $nodes_n ) {
       exec { 'ha-firewall-cmd':
         command     => '/usr/local/bin/ha_firewall-cmd.sh',
         refreshonly => true,
+        notify      => Service['haproxy'],
       }
-      exec { 'restart haproxy':
-        command => 'systemctl restart haproxy.service',
-        path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
-        require => Exec['ha-firewall-cmd'],
-      }
+#      exec { 'restart haproxy':
+#        command => 'systemctl restart haproxy.service',
+#        path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+#        require => Exec['ha-firewall-cmd'],
+#      }
 
 
       
