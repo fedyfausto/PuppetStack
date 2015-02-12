@@ -60,16 +60,17 @@ class glusterfs::mainserver {
       }
     }
     'RedHat': {
-      file { 'yum repository': 
-        path => '/etc/yum.repos.d',
-        ensure => 'file',
-        mode => '0644',
-        source => 'http://download.gluster.org/pub/gluster/glusterfs/LATEST/CentOS/glusterfs-epel.repo',
+      include wget
+      wget::fetch { "yum repository":
+        source      => 'http://download.gluster.org/pub/gluster/glusterfs/LATEST/CentOS/glusterfs-epel.repo',
+        destination => '/etc/yum.repos.d/glusterfs-epel.repo',
+        timeout     => 0,
+        verbose     => false,
       }
       package { ['glusterfs', 'glusterfs-fuse', 'glusterfs-server']: 
         ensure   => installed, 
         provider => 'yum',
-        require  => File['yum repository'],
+        require  => Wget::Fetch['yum repository'],
       }
       service { 'glusterd': 
         ensure     => running,
