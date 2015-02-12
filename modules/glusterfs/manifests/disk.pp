@@ -4,7 +4,8 @@ class glusterfs::disk {
   $mount_point = hiera('mount_point')
 
   package { 'xfsprogs':
-    ensure => installed,
+    ensure        => installed,
+    allow_virtual => false,
   }
 
   exec { "create the partition":
