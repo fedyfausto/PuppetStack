@@ -2,7 +2,7 @@ class galera::exec::master {
   if $osfamily == "RedHat" {
     exec { "enforcing mode":
       command => "sudo setenforce 0",
-      path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+      path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/:/usr/sbin/",
       notify  => Service['firewalld'],
     }
     service { 'firewalld':
@@ -27,7 +27,7 @@ class galera::exec::master {
    
   exec { "start galera cluster":
     command => "service mysql start --wsrep-new-cluster",
-    path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+    path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/:/usr/sbin/",
   }
   
   class { 'database':
@@ -64,7 +64,7 @@ class galera::exec::slave {
   
   exec { "participate galera cluster":
     command => "service mysql start",
-    path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+    path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/:/usr/sbin/",
   }
 } 
 
