@@ -18,7 +18,6 @@ class glusterfs::server {
         hasrestart => true,
         path       => '/etc/init.d',
         require    => Package['glusterfs-server','glusterfs-client','glusterfs-common'],
-        before     => Exec['gluster peer probe'],
       }
     }
     'RedHat': {
@@ -41,7 +40,6 @@ class glusterfs::server {
         hasrestart => true,
         provider   => systemd,
         require    => Package['glusterfs', 'glusterfs-fuse', 'glusterfs-server'],
-        before     => Exec['gluster peer probe'],
       }
       ### Firewalld ###
 
