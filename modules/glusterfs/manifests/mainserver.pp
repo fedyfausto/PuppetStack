@@ -56,7 +56,11 @@ class glusterfs::mainserver {
         hasrestart => true,
         path       => '/etc/init.d',
         require    => Package['glusterfs-server','glusterfs-client','glusterfs-common'],
-        before     => Exec['gluster peer probe'],
+      }
+      exec { "gluster peer probe":
+        command => $peer_probe,
+        path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        require => Service['glusterfs-server'],
       }
     }
     'RedHat': {
@@ -89,13 +93,12 @@ class glusterfs::mainserver {
       exec { 'gfs-firewall-cmd':
         command     => '/usr/local/bin/gfs_firewall-cmd.sh',
         refreshonly => true,
-        notify      => Service['firewalld'],
+        notify      => [Service['firewalld'],Service['glusterd']],
       }
       service { 'firewalld':
         provider => systemd,
         enable   => true,
         ensure   => running,
-        notify   => Service['glusterd'],
       }
       service { 'glusterd': 
         ensure     => running,
@@ -104,16 +107,13 @@ class glusterfs::mainserver {
         hasrestart => true,
         provider   => systemd,
         require    => Package['glusterfs', 'glusterfs-fuse', 'glusterfs-server'],
-        before     => Exec['gluster peer probe'],
       }
-
+      exec { "gluster peer probe":
+        command => $peer_probe,
+        path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        require => Service['glusterd'],
+      }
     }      
-  }
-
-  exec { "gluster peer probe":
-    command => $peer_probe,
-    path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
-   # require => Service['glusterfs-server'],
   }
 
   exec { "gluster volume create":
