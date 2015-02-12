@@ -49,7 +49,7 @@ class keepalived ($haproxy_nodes) {
 
   exec { "sysctl":
     command => "sysctl -p",
-    path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/:/usr/sbin/",
+    path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
     require => Package['keepalived'],
   }
 
@@ -90,7 +90,7 @@ class keepalived ($haproxy_nodes) {
     }
 #    exec { 'restart keepalived':
 #      command => 'systemctl restart keepalived.service',
-#      path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+#      path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
 #      require => Exec['firewall-cmd'],
 #    }
     
