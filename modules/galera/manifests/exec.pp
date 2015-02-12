@@ -1,8 +1,8 @@
 class galera::exec::master {
   if $osfamily == "RedHat" {
     exec { "enforcing mode":
-      command => "sudo setenforce 0",
-      path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/:/usr/sbin/",
+      command => "setenforce 0",
+       path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
       notify  => Service['firewalld'],
     }
     service { 'firewalld':
@@ -27,7 +27,7 @@ class galera::exec::master {
    
   exec { "start galera cluster":
     command => "service mysql start --wsrep-new-cluster",
-    path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/:/usr/sbin/",
+    path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
   }
   
   class { 'database':
@@ -38,8 +38,8 @@ class galera::exec::master {
 class galera::exec::slave {
   if $osfamily == "RedHat" {
     exec { "enforcing mode":
-      command => "sudo setenforce 0",
-      path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+      command => "setenforce 0",
+      path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
       notify  => Service['firewalld'],
     }
     service { 'firewalld':
@@ -64,7 +64,7 @@ class galera::exec::slave {
   
   exec { "participate galera cluster":
     command => "service mysql start",
-    path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/:/usr/sbin/",
+    path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
   }
 } 
 
