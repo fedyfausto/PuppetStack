@@ -26,7 +26,7 @@ class rabbit {
       
       exec { 'clean':
         command => 'rm -rf /var/lib/rabbitmq/mnesia/*',
-        path    => '/usr/local/bin/:/bin/:/sbin/:/usr/bin/',
+        path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/:/usr/sbin/",
       }
     
       class { 'rabbitmq':
@@ -64,7 +64,7 @@ class rabbit {
       
       exec { 'clean':
         command => 'rm -rf /var/lib/rabbitmq/mnesia/*',
-        path    => '/usr/local/bin/:/bin/:/sbin/:/usr/bin/',
+        path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/:/usr/sbin/",
         require => Exec['ra-firewall-cmd'],
       }
     
