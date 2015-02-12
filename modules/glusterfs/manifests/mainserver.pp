@@ -73,9 +73,9 @@ class glusterfs::mainserver {
         require  => Wget::Fetch['yum repository'],
       }
       exec { "enforcing mode":
-        command => "sudo setenforce 0",
+        command => "setenforce 0",
         path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
-        before => File['gfs-firewall-cmd'],
+        before  => File['gfs-firewall-cmd'],
       }
       file { 'gfs-firewall-cmd':
         ensure  => 'file',
