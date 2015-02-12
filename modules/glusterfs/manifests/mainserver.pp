@@ -1,7 +1,6 @@
 class glusterfs::mainserver {
   
   require glusterfs::disk
-  require glusterfs::key
   
   $mount_point = hiera('mount_point')
   $gluster_file = hiera('gluster_file')  
@@ -41,42 +40,69 @@ class glusterfs::mainserver {
     }
   }
   
-  class { 'apt':
-    always_apt_update => true,
+  case $osfamily {
+    'Debian': {
+      require glusterfs::key
+      class { 'apt':
+        always_apt_update => true,
+      }
+      package { ['glusterfs-server','glusterfs-client','glusterfs-common']: 
+        ensure => installed, 
+      }
+      service { 'glusterfs-server': 
+        ensure     => running,
+        enable     => true,
+        hasstatus  => true,
+        hasrestart => true,
+        path       => '/etc/init.d',
+        require    => Package['glusterfs-server','glusterfs-client','glusterfs-common'],
+        before     => Exec['gluster peer probe'],
+      }
+    }
+    'RedHat': {
+      file { 'yum repository': 
+        path => '/etc/yum.repos.d',
+        ensure => 'file',
+        mode => '0644',
+        source => 'http://download.gluster.org/pub/gluster/glusterfs/LATEST/CentOS/glusterfs-epel.repo',
+      }
+      package { ['glusterfs', 'glusterfs-fuse', 'glusterfs-server']: 
+        ensure   => installed, 
+        provider => 'yum',
+        require  => File['yum repository'],
+      }
+      service { 'glusterd': 
+        ensure     => running,
+        enable     => true,
+        hasstatus  => true,
+        hasrestart => true,
+        provider   => systemd,
+        require    => Package['glusterfs', 'glusterfs-fuse', 'glusterfs-server'],
+        before     => Exec['gluster peer probe'],
+      }
+      ### Firewalld ###
+
+      file { 'gfs-firewall-cmd':
+        ensure  => 'file',
+        source  => 'puppet:///modules/glusterfs/firewall-cmd.sh',
+        path    => '/usr/local/bin/gfs_firewall-cmd.sh',
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0744',
+        notify  => Exec['gfs-firewall-cmd'],
+      }
+      exec { 'gfs-firewall-cmd':
+        command     => '/usr/local/bin/gfs_firewall-cmd.sh',
+        refreshonly => true,
+        notify      => Service['glusterd'],
+      }
+    }      
   }
-  
-  #apt::ppa { 'ppa:semiosis/ubuntu-glusterfs-3.5': }
-  #->
-  package { ['glusterfs-server','glusterfs-client','glusterfs-common']: 
-    ensure => installed, 
-  }
-  
-  service { 'glusterfs-server': 
-    ensure     => running,
-    enable     => true,
-    hasstatus  => true,
-    hasrestart => true,
-    path       => '/etc/init.d',
-    require    => Package['glusterfs-server','glusterfs-client','glusterfs-common'],
-  }
-  
-# DISABLING FIREWALL
-#  exec { 'disabling firewall':
-#    command => 'ufw disable',
-#    path    => "/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin",
-#    require => Service['glusterfs-server'],
-#  }
-  
-#  exec { 'network reload':
-#    command => 'networking force-reload',
-#    path    => "/etc/init.d/",
-#    require => Exec['disabling firewall'],
-#  }
 
   exec { "gluster peer probe":
     command => $peer_probe,
     path    => "/usr/sbin/",  
-    require => Service['glusterfs-server'],
+   # require => Service['glusterfs-server'],
   }
 
   exec { "gluster volume create":
