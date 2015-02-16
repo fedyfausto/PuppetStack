@@ -84,11 +84,6 @@ class glusterfs::mainserver {
         provider   => systemd,
         require    => Package['glusterfs', 'glusterfs-fuse', 'glusterfs-server'],
       }
-      exec { "enforcing mode":
-        command => "setenforce 0",
-        path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
-        before  => File['gfs-firewall-cmd'],
-      }
       file { 'gfs-firewall-cmd':
         ensure  => 'file',
         source  => 'puppet:///modules/glusterfs/firewall-cmd.sh',
@@ -96,20 +91,18 @@ class glusterfs::mainserver {
         owner   => 'root',
         group   => 'root',
         mode    => '0744',
-        before  => Exec['gfs-firewall-cmd'],
+        notify  => Exec['gfs-firewall-cmd'],
+      }
+      exec { "enforcing mode":
+        command => "setenforce 0",
+        path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        before  => File['gfs-firewall-cmd'],
       }
       exec { 'gfs-firewall-cmd':
         command     => '/usr/local/bin/gfs_firewall-cmd.sh',
         refreshonly => true,
-        notify      => Service['firewalld'],
+        notify      => Service['glusterd'],
       }
-      
-      service { 'firewalld':
-        provider => systemd,
-        enable   => true,
-        ensure   => running,
-      }
-      
       exec { "gluster peer probe":
         command => $peer_probe,
         path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
