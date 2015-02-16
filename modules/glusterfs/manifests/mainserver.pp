@@ -76,6 +76,14 @@ class glusterfs::mainserver {
         provider => 'yum',
         require  => Wget::Fetch['yum repository'],
       }
+      service { 'glusterd': 
+        ensure     => running,
+        enable     => true,
+        hasstatus  => true,
+        hasrestart => true,
+        provider   => systemd,
+        require    => Package['glusterfs', 'glusterfs-fuse', 'glusterfs-server'],
+      }
       exec { "enforcing mode":
         command => "setenforce 0",
         path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
@@ -93,25 +101,20 @@ class glusterfs::mainserver {
       exec { 'gfs-firewall-cmd':
         command     => '/usr/local/bin/gfs_firewall-cmd.sh',
         refreshonly => true,
-        notify      => [Service['firewalld'],Service['glusterd']],
+        notify      => Service['glusterd'],
       }
-      service { 'firewalld':
-        provider => systemd,
-        enable   => true,
-        ensure   => running,
-      }
-      service { 'glusterd': 
-        ensure     => running,
-        enable     => true,
-        hasstatus  => true,
-        hasrestart => true,
-        provider   => systemd,
-        require    => Package['glusterfs', 'glusterfs-fuse', 'glusterfs-server'],
-      }
+      
+      #service { 'firewalld':
+      #  provider => systemd,
+      #  enable   => true,
+      #  ensure   => running,
+      #}
+      
       exec { "gluster peer probe":
         command => $peer_probe,
         path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
-        require => Service['glusterd'],
+        #require => Service['glusterd'],
+        require => Exec['gfs-firewall-cmd'],
       }
     }      
   }
