@@ -33,30 +33,6 @@ class glusterfs::server {
         provider => 'yum',
         require  => Wget::Fetch['yum repository'],
       }
-      exec { "enforcing mode":
-        command => "setenforce 0",
-        path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
-        before  => File['gfs-firewall-cmd'],
-      }
-      file { 'gfs-firewall-cmd':
-        ensure  => 'file',
-        source  => 'puppet:///modules/glusterfs/firewall-cmd.sh',
-        path    => '/usr/local/bin/gfs_firewall-cmd.sh',
-        owner   => 'root',
-        group   => 'root',
-        mode    => '0744',
-        before  => Exec['gfs-firewall-cmd'],
-      }
-      exec { 'gfs-firewall-cmd':
-        command     => '/usr/local/bin/gfs_firewall-cmd.sh',
-        refreshonly => true,
-        notify      => [Service['firewalld'],Service['glusterd']],
-      }
-      service { 'firewalld':
-        provider => systemd,
-        enable   => true,
-        ensure   => running,
-      }
       service { 'glusterd': 
         ensure     => running,
         enable     => true,
@@ -65,8 +41,30 @@ class glusterfs::server {
         provider   => systemd,
         require    => Package['glusterfs', 'glusterfs-fuse', 'glusterfs-server'],
       }
+      ### Firewalld ###
+
+      file { 'gfs-firewall-cmd':
+        ensure  => 'file',
+        source  => 'puppet:///modules/glusterfs/firewall-cmd.sh',
+        path    => '/usr/local/bin/gfs_firewall-cmd.sh',
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0744',
+        notify  => Exec['gfs-firewall-cmd'],
+      }
+      exec { "enforcing mode":
+        command => "setenforce 0",
+        path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        before  => File['gfs-firewall-cmd'],
+      }
+      exec { 'gfs-firewall-cmd':
+        command     => '/usr/local/bin/gfs_firewall-cmd.sh',
+        refreshonly => true,
+        notify      => Service['glusterd'],
+      }
     }      
   }
+  
 }
 
 include glusterfs::server
