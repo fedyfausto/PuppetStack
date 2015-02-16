@@ -101,7 +101,7 @@ class glusterfs::mainserver {
       exec { 'gfs-firewall-cmd':
         command     => '/usr/local/bin/gfs_firewall-cmd.sh',
         refreshonly => true,
-        notify      => Service['glusterd'],
+        #notify      => Service['glusterd'],
       }
       
       #service { 'firewalld':
@@ -114,6 +114,7 @@ class glusterfs::mainserver {
         command => $peer_probe,
         path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
         require => [Service['glusterd'],Exec['gfs-firewall-cmd']],
+        notify  => Service['glusterd'],
       }
     }      
   }
