@@ -113,7 +113,7 @@ class glusterfs::mainserver {
       exec { "gluster peer probe":
         command => $peer_probe,
         path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
-        require => [Service['glusterd'],Exec['gfs-firewall-cmd']],
+        require => Exec['gfs-firewall-cmd'],
         notify  => Service['glusterd'],
       }
     }      
