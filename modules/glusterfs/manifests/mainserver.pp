@@ -91,7 +91,6 @@ class glusterfs::mainserver {
         owner   => 'root',
         group   => 'root',
         mode    => '0744',
-        notify  => Exec['gfs-firewall-cmd'],
       }
       exec { "enforcing mode":
         command => "setenforce 0",
@@ -102,6 +101,7 @@ class glusterfs::mainserver {
         command     => '/usr/local/bin/gfs_firewall-cmd.sh',
         refreshonly => true,
         before      => Exec['gluster peer probe'],
+        require     => File['gfs-firewall-cmd'],
       }
       exec { "gluster peer probe":
         command => $peer_probe,
