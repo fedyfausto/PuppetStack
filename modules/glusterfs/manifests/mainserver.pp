@@ -101,14 +101,14 @@ class glusterfs::mainserver {
       exec { 'gfs-firewall-cmd':
         command     => '/usr/local/bin/gfs_firewall-cmd.sh',
         refreshonly => true,
-        #notify      => Service['glusterd'],
+        notify      => Service['firewalld'],
       }
       
-      #service { 'firewalld':
-      #  provider => systemd,
-      #  enable   => true,
-      #  ensure   => running,
-      #}
+      service { 'firewalld':
+        provider => systemd,
+        enable   => true,
+        ensure   => running,
+      }
       
       exec { "gluster peer probe":
         command => $peer_probe,
