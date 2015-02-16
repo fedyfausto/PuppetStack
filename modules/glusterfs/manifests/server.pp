@@ -50,7 +50,7 @@ class glusterfs::server {
         owner   => 'root',
         group   => 'root',
         mode    => '0744',
-        notify  => Exec['gfs-firewall-cmd'],
+        before  => Exec['gfs-firewall-cmd'],
       }
       exec { "enforcing mode":
         command => "setenforce 0",
