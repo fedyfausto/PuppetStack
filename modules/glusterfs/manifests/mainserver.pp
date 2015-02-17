@@ -99,7 +99,7 @@ class glusterfs::mainserver {
       }
       exec { 'gfs-firewall-cmd':
         command     => '/usr/local/bin/gfs_firewall-cmd.sh',
-        refreshonly => true,
+        #refreshonly => true,
         before      => Exec['gluster peer probe'],
         require     => File['gfs-firewall-cmd'],
       }
