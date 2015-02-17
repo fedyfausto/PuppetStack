@@ -28,8 +28,6 @@ What does work both in Ubuntu 12.04 and Centos 7:
   > HA of these load balancers through Keepalived
   > Openstack Users, DBs and Privileges entries
   > Rabbitmq cluster (3 to 5 nodes)
-
-What still need to be ported to CentOS 7:
   > GlusterFS cluster (2 to 5 nodes)
 
 What does work only in CentOS 7:
@@ -42,7 +40,6 @@ What should work better:
   > you tell me...  
 
 Next steps:
-  > RedHat-CentOS compatibility
   > Zabbix
   > Puppet Master
   > Pacemaker and Corosync
