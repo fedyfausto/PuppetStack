@@ -27,6 +27,7 @@ class glusterfs::server {
         destination => '/etc/yum.repos.d/glusterfs-epel.repo',
         timeout     => 0,
         verbose     => false,
+        require     => Exec['gfs-firewall-cmd'],
       }
       package { ['glusterfs', 'glusterfs-fuse', 'glusterfs-server']: 
         ensure   => installed, 
@@ -60,7 +61,7 @@ class glusterfs::server {
       exec { 'gfs-firewall-cmd':
         command     => '/usr/local/bin/gfs_firewall-cmd.sh',
         refreshonly => true,
-        notify      => Service['glusterd'],
+        #notify      => Service['glusterd'],
       }
     }      
   }
