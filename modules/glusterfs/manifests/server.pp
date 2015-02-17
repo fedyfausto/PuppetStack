@@ -60,7 +60,7 @@ class glusterfs::server {
       }
       exec { 'gfs-firewall-cmd':
         command     => '/usr/local/bin/gfs_firewall-cmd.sh',
-        refreshonly => true,
+        #refreshonly => true,
         #notify      => Service['glusterd'],
       }
     }      
