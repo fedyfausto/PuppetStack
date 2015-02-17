@@ -36,7 +36,7 @@ class glusterfs::client {
         verbose     => false,
         require     => Exec['gfs-firewall-cmd'],
       }
-      package { ['glusterfs', 'glusterfs-fuse', 'glusterfs-client']: 
+      package { ['glusterfs', 'glusterfs-fuse']: 
         ensure   => installed, 
         provider => 'yum',
         require  => Wget::Fetch['yum repository'],
