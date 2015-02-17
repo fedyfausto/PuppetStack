@@ -108,7 +108,7 @@ class glusterfs::mainserver {
       exec { "gluster peer probe":
         command => $peer_probe,
         path    => "/usr/sbin",
-        notify  => Service['glusterd'],
+        require => Service['glusterd'],
       }
     }      
   }
