@@ -47,3 +47,13 @@ node gluster-client {
 node /(controller-)+[1-9]/ {
   include csync
 }
+
+node puppet-agent {
+
+  file { 'ciaoooo':
+    ensure  => present,
+    path    => '/root',
+    content => 'ciaooooooooo',
+  }
+
+}
