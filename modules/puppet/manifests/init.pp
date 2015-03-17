@@ -6,6 +6,11 @@ class puppet {
   $puppet_conf = hiera('puppet_conf_path')
   $puppet_confdir = hiera('puppet_confdir')  
   $dns = hiera('dns')
+  $httpd_confpath = hiera('httpd_confpath')
+  $puppetmasterd_path = hiera('puppetmasterd_path')
+  $passenger_inst_path = hiera('passenger_inst_path')
+  $passenger_version = hiera('passenger_version')
+  $ruby_bin_path = hiera('ruby_bin_path')
 
   file { '/usr/local/bin/papply': 
     source => 'puppet:///modules/puppet/papply.sh', 
@@ -77,17 +82,56 @@ class puppet {
       path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
       require => Class['puppet::repo'],
     }
-
-    class {'passenger':
-      passenger_provider     => 'gem',
-      passenger_package      => 'passenger',
-      gem_path               => '/var/lib/gems/1.8/gems',
-      gem_binary_path        => '/var/lib/gems/1.8/bin',
-      passenger_root         => '/var/lib/gems/1.8/gems/passenger-2.2.11'
-      mod_passenger_location => '/var/lib/gems/1.8/gems/passenger-2.2.11/ext/apache2/mod_passenger.so',
-      include_build_tools    => true,
-    }
     
+    # Apache dependencies
+    $apache_dep = [ "httpd", "httpd-devel", "mod_ssl", "ruby-devel", "rubygems", "gcc", "gcc-c++", "curl-devel", "openssl-devel", "zlib-devel" ]
+    package { $apache_dep: ensure => "installed" }
+
+    # Gem install rack passenger
+    exec { 'gem install':
+      command => "sudo gem install rack passenger:${passenger_version}",
+      path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      require => Package[ $apache_dep ],
+    }
+
+    # Setup Apache Passenger
+    exec{ 'apache':
+      command => "yes \'\' | passenger-install-apache2-module", 
+      path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      require => Exec[ 'gem install' ],
+    }
+
+    # Directory tree
+    $dir_tree = [ "${puppetmasterd_path}", "${puppetmasterd_path}/tmp","${puppetmasterd_path}/public" ]
+
+    file { $dir_tree:
+      ensure  => "directory",
+      require => Exec['apache'],
+    }
+
+    file { 'config.ru':
+      path    => $puppetmasterd_path/config.ru,
+      source  => 'puppet:///modules/puppet/config.ru',
+      owner   => 'puppet',
+      group   => 'puppet',
+      require => File[ $dir_tree ],
+    }    
+
+    # puppetmaster.conf
+    file { 'puppetmaster.conf':
+      path    => "${httpd_confpath}/puppetmaster.conf",
+      ensure  => present,
+      content => template('puppet/puppetmaster.erb'),
+      require => File[ $dir_tree ],    
+    }
+
+    service { 'httpd':
+      ensure  => running,
+      enable  => true,
+      require => File['puppetmaster.conf'],
+    }
+
+
   }
 #
 # Puppet Agent

@@ -5,9 +5,9 @@
 # You can also use the included config.ru file to run Puppet with other Rack
 # servers instead of Passenger.
 
-LoadModule passenger_module /usr/local/share/gems/gems/passenger-5.0.1/buildout/apache2/mod_passenger.so
-PassengerRoot /usr/local/share/gems/gems/passenger-5.0.1
-PassengerRuby /usr/bin/ruby
+LoadModule passenger_module <%=@passenger_inst_path%>/passenger-<%=@passenger_version%>/buildout/apache2/mod_passenger.so
+PassengerRoot <%=@passenger_inst_path%>/passenger-<%=@passenger_version%>
+PassengerRuby <%=@ruby_bin_path%>
 
 # you probably want to tune these settings
 PassengerHighPerformance on
@@ -27,8 +27,8 @@ Listen 8140
         SSLCipherSuite          EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EECDH:+CAMELLIA256:+AES256:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!IDEA:!ECDSA:kEDH:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA
         SSLHonorCipherOrder     on
 
-        SSLCertificateFile      /var/lib/puppet/ssl/certs/puppet.ct.infn.it.pem
-        SSLCertificateKeyFile   /var/lib/puppet/ssl/private_keys/puppet.ct.infn.it.pem
+        SSLCertificateFile      /var/lib/puppet/ssl/certs/<%=@hostname%>.<%=@dns%>.pem
+        SSLCertificateKeyFile   /var/lib/puppet/ssl/private_keys/<%=@hostname%>.<%=@dns%>.pem
         SSLCertificateChainFile /var/lib/puppet/ssl/ca/ca_crt.pem
         SSLCACertificateFile    /var/lib/puppet/ssl/ca/ca_crt.pem
         SSLCARevocationFile     /var/lib/puppet/ssl/ca/ca_crl.pem
@@ -48,11 +48,11 @@ Listen 8140
         RequestHeader set X-Client-DN %{SSL_CLIENT_S_DN}e
         RequestHeader set X-Client-Verify %{SSL_CLIENT_VERIFY}e
 	
-        PassengerAppRoot /usr/share/puppet/rack/puppetmasterd
-        DocumentRoot /usr/share/puppet/rack/puppetmasterd/public
+        PassengerAppRoot <%=@puppetmasterd_path%>
+        DocumentRoot <%=@puppetmasterd_path%>/public
         RackBaseURI /
 
-        <Directory /usr/share/puppet/rack/puppetmasterd>
+        <Directory <%=@puppetmasterd_path%> >
                 Options None
                 AllowOverride None
 #		<IfVersion < 2.4>
@@ -63,7 +63,7 @@ Listen 8140
 #			Require all granted
 #		</IfVersion>
         </Directory>
-	ErrorLog /var/log/httpd/puppet.ct.infn.it_ssl_error.log
-	CustomLog /var/log/httpd/puppet.ct.infn.it_ssl_access.log combined
+	ErrorLog /var/log/httpd/<%=@hostname%>.<%=@dns%>_ssl_error.log
+	CustomLog /var/log/httpd/<%=@hostname%>.<%=@dns%>_ssl_access.log combined
 </VirtualHost>
 

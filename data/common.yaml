@@ -12,8 +12,13 @@ wildcard : "10.55.1.%"
 ### Puppet Master
 hst_puppet_m : "puppet"
 ip_puppet_m : "10.55.1.168"
+
 ### Apache Passenger
-passenger-version :"5.0.1"
+passenger_version :"5.0.4"
+passenger_inst_path : "/usr/local/share/gems/gems"
+ruby_bin_path : "/usr/bin/ruby"
+puppetmasterd_path : "/usr/share/puppet/rack/puppetmasterd"
+httpd_confpath : "/etc/httpd/conf.d"
 
 ###Puppet Agent for management use
 hst_puppet_a : "puppet-agent"
