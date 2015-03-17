@@ -4,13 +4,21 @@ cluster_cnf_path : "/etc/mysql/conf.d/cluster.cnf"    #Debian
 cluster_cnf_path2 : "/etc/my.cnf.d/server.cnf"        #RedHat
 debian_cnf_path : "/etc/mysql/debian.cnf"
 puppet_conf_path : "/etc/puppet/puppet.conf"
+puppet_confdir : "/etc/puppet"
 sshd_config : "/etc/ssh/sshd_config"
 dns : "ct.infn.it"
 wildcard : "10.55.1.%"
 
 ### Puppet Master
-hst_puppet : "puppet"
-ip_puppet : "10.55.1.168"
+hst_puppet_m : "puppet"
+ip_puppet_m : "10.55.1.168"
+### Apache Passenger
+passenger-version :"5.0.1"
+
+###Puppet Agent for management use
+hst_puppet_a : "puppet-agent"
+ip_puppet_a : "10.55.1.169"
+
 
 ### Users Configuration
 virt_usr_default_pwd : "galera" 

@@ -1,6 +1,10 @@
 include puppet
-#include ssh
-include hosts
+#
+# This module is useful due to puppet master architecture
+# include ssh
+# Hosts now included by puppet module
+# include hosts
+#
 include user::virtual
 include sudoers
 include user::sysadmins
