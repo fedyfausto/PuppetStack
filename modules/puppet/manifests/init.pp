@@ -110,7 +110,7 @@ class puppet {
     }
 
     file { 'config.ru':
-      path    => $puppetmasterd_path/config.ru,
+      path    => "${puppetmasterd_path}/config.ru",
       source  => 'puppet:///modules/puppet/config.ru',
       owner   => 'puppet',
       group   => 'puppet',

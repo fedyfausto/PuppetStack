@@ -25,7 +25,7 @@ class puppet::repo {
     'RedHat','CentOS' : {
       exec { "addrepo":
         command => "rpm -ivh http://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm",
-        path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        path    => "/usr/bin",
       }    
       package { 'puppet-server':
         ensure        => latest,

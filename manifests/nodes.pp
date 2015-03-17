@@ -1,14 +1,17 @@
 include puppet
 #
-# This module is useful due to puppet master architecture
+# This module is useless due to puppet master architecture
 # include ssh
 # Hosts now included by puppet module
 # include hosts
 #
+
 include user::virtual
 include sudoers
 include user::sysadmins
 include stdlib
+
+node default {}
 
 node galera-master {
   class { 'galera::master':
