@@ -1,0 +1,18 @@
+[main]
+    logdir = /var/log/puppet
+    vardir = /var/lib/puppet
+    ssldir = $vardir/ssl
+    rundir = /var/run/puppet
+    factpath = $vardir/lib/facter
+    server = puppet.<%=@dns%>
+
+    # To have Puppet follow manifest ordering as a fallback for 
+    # unrelated resources.
+    ordering = manifest
+
+[agent]
+    classfile = $vardir/classes.txt
+    localconfig = $vardir/localconfig
+    runinterval = 60
+    pluginsync = true
+
