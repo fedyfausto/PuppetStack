@@ -23,14 +23,35 @@ class puppet::repo {
         
     }
     'RedHat','CentOS' : {
-      exec { "addrepo":
-        command => "rpm -ivh http://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm",
-        path    => "/usr/bin",
-      }    
+
+#     exec { "addrepo":
+#       command => "rpm -ivh http://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm",
+#       path    => "/usr/bin",
+#     }
+
+      case $architecture {
+        'x86_64': {
+          yumrepo { 'puppet':
+            name     => 'PuppetLabs official yum repository',
+            baseurl  => 'http://yum.puppetlabs.com/el/7/products/x86_64/',
+            gpgkey   => 'http://yum.puppetlabs.com/RPM-GPG-KEY-puppetlabs',
+            gpgcheck => true,
+          }
+        }
+        'i686': {
+          yumrepo { 'puppet':
+            name     => 'PuppetLabs official yum repository',
+            baseurl  => 'http://yum.puppetlabs.com/el/7/products/i386/',
+            gpgkey   => 'http://yum.puppetlabs.com/RPM-GPG-KEY-puppetlabs',
+            gpgcheck => true,
+          }
+        }          
+      }
+
       package { 'puppet-server':
         ensure        => latest,
         allow_virtual => false,
-        require       => Exec['addrepo'],
+        require       => Yumrepo['puppet'],
       }
 
     }

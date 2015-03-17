@@ -66,16 +66,6 @@ class puppet {
       require => Class['puppet::repo'],
     }
 
-    package { 'ntp': 
-      ensure        => installed ,
-      allow_virtual => false,
-    }  
-    service { 'ntp':
-      ensure   => running,
-      enable   => true,
-     # provider => systemd,
-    }
-
     # Puppet Master Certificate
     exec { 'get the cert':
       command => "puppet cert --generate ${hostname}.${dns}",
@@ -84,7 +74,7 @@ class puppet {
     }
     
     # Apache dependencies
-    $apache_dep = [ "httpd", "httpd-devel", "mod_ssl", "ruby-devel", "rubygems", "gcc", "gcc-c++", "curl-devel", "openssl-devel", "zlib-devel" ]
+    $apache_dep = [ "httpd", "httpd-devel", "mod_ssl", "ruby-devel", "rubygems", "gcc", "gcc-c++", "libcurl-devel", "openssl-devel", "zlib-devel" ]
     package { $apache_dep: ensure => "installed" }
 
     # Gem install rack passenger
@@ -95,11 +85,25 @@ class puppet {
     }
 
     # Setup Apache Passenger
-    exec{ 'apache':
-      command => "yes \'\' | passenger-install-apache2-module", 
-      path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
-      require => Exec[ 'gem install' ],
+#    exec{ 'apache':
+#      command => "yes '' | /usr/local/bin/passenger-install-apache2-module", 
+#      path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+#      require => Exec[ 'gem install' ],
+#    }
+
+    file { 'apache.sh':
+      ensure  => 'file',
+      source  => 'puppet:///modules/puppet/apache.sh',
+      path    => '/usr/local/bin/apache.sh',
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0744',
+      notify  => Exec['apache'],
     }
+    exec { 'apache':
+      command     => '/usr/local/bin/apache.sh',
+    }
+
 
     # Directory tree
     $dir_tree = [ "${puppetmasterd_path}", "${puppetmasterd_path}/tmp","${puppetmasterd_path}/public" ]
