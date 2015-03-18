@@ -101,7 +101,8 @@ class puppet {
       notify  => Exec['apache'],
     }
     exec { 'apache':
-      command     => '/usr/local/bin/apache.sh',
+      command => '/usr/local/bin/apache.sh',
+      require => Exec['gem install'],
     }
 
 
