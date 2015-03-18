@@ -23,6 +23,12 @@ class puppet {
       enable   => true,
       ensure   => running,
     }
+
+    exec { 'setenforce':
+      command => 'setenforce 0',
+      path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      before  => File['firewall-cmd'],
+    }
     file { 'firewall-cmd':
       ensure  => 'file',
       source  => 'puppet:///modules/puppet/firewall-cmd.sh',
