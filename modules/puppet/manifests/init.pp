@@ -107,7 +107,7 @@ class puppet {
 
 
     # Directory tree
-    $dir_tree = [ "${puppetmasterd_path}", "${puppetmasterd_path}/puppetmasterd" "${puppetmasterd_path}/puppetmasterd/tmp","${puppetmasterd_path}/puppetmasterd/public" ]
+    $dir_tree = [ "${puppetmasterd_path}", "${puppetmasterd_path}/puppetmasterd", "${puppetmasterd_path}/puppetmasterd/tmp", "${puppetmasterd_path}/puppetmasterd/public" ]
 
     file { $dir_tree:
       ensure  => "directory",
