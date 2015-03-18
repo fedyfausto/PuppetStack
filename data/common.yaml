@@ -17,7 +17,7 @@ ip_puppet_m : "10.55.1.168"
 passenger_version : "5.0.4"
 passenger_inst_path : "/usr/local/share/gems/gems"
 ruby_bin_path : "/usr/bin/ruby"
-puppetmasterd_path : "/usr/share/puppet/rack/puppetmasterd"
+puppetmasterd_path : "/usr/share/puppet/rack"
 httpd_confpath : "/etc/httpd/conf.d"
 
 ###Puppet Agent for management use
