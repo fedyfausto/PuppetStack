@@ -48,11 +48,11 @@ Listen 8140
         RequestHeader set X-Client-DN %{SSL_CLIENT_S_DN}e
         RequestHeader set X-Client-Verify %{SSL_CLIENT_VERIFY}e
 	
-        PassengerAppRoot <%=@puppetmasterd_path%>
-        DocumentRoot <%=@puppetmasterd_path%>/public
+        PassengerAppRoot <%=@puppetmasterd_path%>/puppetmasterd
+        DocumentRoot <%=@puppetmasterd_path%>/puppetmasterd/public
         RackBaseURI /
 
-        <Directory <%=@puppetmasterd_path%> >
+        <Directory <%=@puppetmasterd_path%>/puppetmasterd >
                 Options None
                 AllowOverride None
 #		<IfVersion < 2.4>
