@@ -8,7 +8,6 @@ class puppet {
   $dns = hiera('dns')
   $httpd_confpath = hiera('httpd_confpath')
   $puppetmasterd_path = hiera('puppetmasterd_path')
-  $rack_path = hiera('rack_path')
   $passenger_inst_path = hiera('passenger_inst_path')
   $passenger_version = hiera('passenger_version')
   $ruby_bin_path = hiera('ruby_bin_path')
@@ -108,7 +107,7 @@ class puppet {
 
 
     # Directory tree
-    $dir_tree = [ "${puppetmasterd_path}", "${puppetmasterd_path}/tmp","${puppetmasterd_path}/public" ]
+    $dir_tree = [ "${puppetmasterd_path}", "${puppetmasterd_path}/puppetmasterd" "${puppetmasterd_path}/puppetmasterd/tmp","${puppetmasterd_path}/puppetmasterd/public" ]
 
     file { $dir_tree:
       ensure  => "directory",
@@ -116,7 +115,7 @@ class puppet {
     }
 
     file { 'config.ru':
-      path    => "${puppetmasterd_path}/config.ru",
+      path    => "${puppetmasterd_path}/puppetmasterd/config.ru",
       source  => 'puppet:///modules/puppet/config.ru',
       owner   => 'puppet',
       group   => 'puppet',
