@@ -8,6 +8,7 @@ class puppet {
   $dns = hiera('dns')
   $httpd_confpath = hiera('httpd_confpath')
   $puppetmasterd_path = hiera('puppetmasterd_path')
+  $rack_path = hiera('rack_path')
   $passenger_inst_path = hiera('passenger_inst_path')
   $passenger_version = hiera('passenger_version')
   $ruby_bin_path = hiera('ruby_bin_path')
