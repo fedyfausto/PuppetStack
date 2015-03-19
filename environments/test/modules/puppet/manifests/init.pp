@@ -11,11 +11,6 @@ class puppet {
   $passenger_inst_path = hiera('passenger_inst_path')
   $passenger_version = hiera('passenger_version')
   $ruby_bin_path = hiera('ruby_bin_path')
-
-  file { '/usr/local/bin/papply': 
-    source => 'puppet:///modules/puppet/papply.sh', 
-    mode   => '0755',
-  }
   
   if $osfamily == "RedHat" {
     service { 'firewalld':
@@ -91,11 +86,6 @@ class puppet {
     }
 
     # Setup Apache Passenger
-#    exec{ 'apache':
-#      command => "yes '' | /usr/local/bin/passenger-install-apache2-module", 
-#      path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
-#      require => Exec[ 'gem install' ],
-#    }
 
     file { 'apache.sh':
       ensure  => 'file',
@@ -161,8 +151,6 @@ class puppet {
     }      
   }
   
-
-
 
   if $osfamily == "Debian" {
     exec { 'remove-warning':

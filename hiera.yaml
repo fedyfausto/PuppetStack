@@ -4,4 +4,4 @@
 :backends:
     - yaml
 :yaml:
-    :datadir: '/root/prisma/data'
+    :datadir: '/etc/puppet/data'

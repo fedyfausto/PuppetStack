@@ -7,6 +7,11 @@ This project's aim is to deploy a working openstack environment in one shot.
 Of course it's a WORK IN PROGRESS and I really hope it will come to an end!
 ________________________________________________________________________________
 
+CHANGELOG:
+[19-03-2015] Switched to Puppet Master-Agent architecture. The standalone 
+             architecture is not recommended for production use.
+________________________________________________________________________________
+
 DISCLAIMER:
 
 [10-02-15]
@@ -20,7 +25,7 @@ on other debian-based distros but I am absolutely not sure and I cannot
 guarantee.
 ________________________________________________________________________________
   
-What does work both in Ubuntu 12.04 and Centos 7:
+What does work both in Centos 7:
   > Basic puppet settings
   > Hiera and librarian-puppet
   > Galera cluster of MariaDB database servers (3 to 5 nodes)
@@ -29,11 +34,11 @@ What does work both in Ubuntu 12.04 and Centos 7:
   > Openstack Users, DBs and Privileges entries
   > Rabbitmq cluster (3 to 5 nodes)
   > GlusterFS cluster (2 to 5 nodes)
-
-What does work only in CentOS 7:
-  > ..
+  > Puppet Master-Agent architecture with Apache Passenger
+  > Directory Environment   
 
 What should work better:
+  > Puppet Master should be in HA
   > ssh exec.pp should give the ssh id_rsa to a puppetmaster or 
     something similar and the id_rsa.pub to other nodes 
   > hiera variables are all in one single file
@@ -41,14 +46,13 @@ What should work better:
 
 Next steps:
   > Zabbix
-  > Puppet Master
   > Pacemaker and Corosync
   > OpenStack services
   > Keystone
   > ..
 ________________________________________________________________________________
 
-HOW-TO:
+PUPPET MASTER HOW-TO:
 
   1) Modify the /data/common.yaml file according to your needs.
   Here are some parameter to which you should pay attention:
@@ -68,25 +72,45 @@ HOW-TO:
       (2 to 5).
   
     Remember that if you change the number of hosts (galera_nodes, 
-    rabbit_nodes,..), you should provide at least an equivalent number of 
+    rabbit_nodes...), you should provide at least an equivalent number of 
     relative hostnames and IPs!
   
   2) Edit the /manifests/nodes.pp to meet your requirements:
      > change the hostnames if needed.
   
-  3) After you've completed the previous stages, go to the prisma/scripts/ 
-     folder and run the command that fits with your OS in order to apply your 
-     manifest (e.g. sh prisma/scripts/ubuntu_install.sh).
-  
-    This will download and install puppet, ruby and librarian-puppet and 
-    execute the custom puppet apply script. This script needs to be run 
-    just once.
-  
-    Please ignore the red warning (Warning: Setting templatedir 
-    is deprecated...). It is an Ubuntu matter.
-    It appears just once and then it is fixed by puppet.
+  3) After you've completed the previous stages, run this script in order to 
+    install the dependencies, copy files to their working directories and
+    install a production-ready web server (Apache Passenger) that will run
+    as Puppet Master:
+    
+    sh /root/prisma/scripts/centos_install.sh
+________________________________________________________________________________
 
-  4) Next time you wish to apply the manifest simply use the 'papply' command.
+PUPPET AGENTS HOW-TO:
+  
+  1) Update your /etc/hosts with at least these two lines:
+    10.55.1.168 	puppet.ct.infn.it	puppet
+    10.55.1.169 	puppet-agent.ct.infn.it	puppet-agent
+
+    The first line regards the Puppet Master. You should modify the IP address
+    and fqdn according to your setup. I recommend to do not change the 'puppet'
+    hostname.
+    The second line regards the particular (local) node you wish to configure
+    through the Puppet Master. Since you have already configured the PM, 
+    I assume PM hostnames are set up, thus PM knows everything about your nodes.
+    
+  2) Install Puppet on puppet agent nodes. Refer to this guide for CentOS: 
+    https://docs.puppetlabs.com/guides/install_puppet/install_el.html
+
+  3) Run this command in order to request a certificate from the PM and let it
+    apply the proper configuration:
+  
+    puppet agent -t --server puppet.ct.infn.it --environment test
+
+    Change the fqdn of the PM according to your need and the environment name.
+    Default project environment is 'test'. Production directory is present
+    because Puppet requires it, but it is empty (for now).
+  
 ________________________________________________________________________________
 
 HOW IT WORKS:
@@ -154,8 +178,26 @@ TROUBLESHOOTING:
       ports: TCP (24007:24047 - 111 - 38465:38467) UDP ( 111 ).
       To verify the status of your cluster: 'gluster volume status' 
       from any node.
-   
-   
+
+
+  Puppet Master:
+    > If you need to execute the initial script a second time, you MUST firstly:
+      1) stop the httpd service (systemctl stop httpd)
+      2) clean all current certificates from master (puppet cert clean <fqdn>)
+      3) remove the /var/lib/puppet/ssl directory from the agents
+      4) remove the /etc/httpd/conf.d/puppetmaster.conf from the master
+      5) remove all files from /etc/puppet/environments and /etc/puppet/modules
+      6) remove also hiera.yaml, PuppetFile and the data folder from /etc/puppet
+      7) git clone the repo and run the /scripts/centos_install.sh again
+
+  Puppet Agent:
+    > You can have problems attempting to receive the catalog if:
+      1) You forgot to properly edit the /etc/hosts file
+      2) You have old certificates. Remove /var/lib/puppet/ssl folder
+      3) You changed the environment without updating the 
+         /etc/puppet/puppet.conf with the correct 'environment' value
+      4) The server's fqdn in your puppet agent string is wrong
+      These problems are self-explicative. Correct them and everything will work 
 ________________________________________________________________________________
 
 If you have any question or suggestion, 

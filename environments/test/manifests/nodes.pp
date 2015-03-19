@@ -57,10 +57,10 @@ node /(controller-)+[1-9]/ {
 
 node puppet-agent {
 
-  file { 'ciaoooo':
+  file { 'agent_test':
     ensure  => present,
-    path    => '/root',
-    content => 'ciaooooooooo',
+    path    => '/root/AGENT_TEST',
+    content => 'Puppet Master Working Yo! :-)',
   }
 
 }
