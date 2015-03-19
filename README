@@ -25,7 +25,7 @@ on other debian-based distros but I am absolutely not sure and I cannot
 guarantee.
 ________________________________________________________________________________
   
-What does work both in Centos 7:
+What does work in Centos 7:
   > Basic puppet settings
   > Hiera and librarian-puppet
   > Galera cluster of MariaDB database servers (3 to 5 nodes)

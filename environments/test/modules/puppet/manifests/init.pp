@@ -76,7 +76,11 @@ class puppet {
     
     # Apache dependencies
     $apache_dep = [ "httpd", "httpd-devel", "mod_ssl", "ruby-devel", "rubygems", "gcc", "gcc-c++", "libcurl-devel", "openssl-devel", "zlib-devel" ]
-    package { $apache_dep: ensure => "installed" }
+
+    package { $apache_dep: 
+      ensure        => "installed", 
+      allow_virtual => false,
+    }
 
     # Gem install rack passenger
     exec { 'gem install':

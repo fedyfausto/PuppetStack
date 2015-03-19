@@ -12,6 +12,7 @@ yum -y install bzip2 autoconf automake libtool bison
 gem install librarian-puppet --no-ri --no-rdoc
 
 # Copy Project <-> Temporary Solution
+cp -rd ~/prisma prisma.save
 mv ~/prisma/environments/* /etc/puppet/environments/ && rm -rf ~/prisma/environments/
 cp -rd ~/prisma/* /etc/puppet/ && rm -rf ~/prisma/
 
