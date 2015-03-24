@@ -147,7 +147,7 @@ class haproxy::install ( $nodes_n ) {
       }
 #      exec { 'restart haproxy':
 #        command => 'systemctl restart haproxy.service',
-#       path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+#        path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
 #        require => Exec['ha-firewall-cmd'],
 #      }
 
@@ -165,7 +165,7 @@ class haproxy::install ( $nodes_n ) {
       
 #      exec { 'restorecon':
 #        command => 'restorecon /etc/firewalld/services/haproxy.xml',
-#       path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+#        path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
 #        require => File['haproxy.xml'],
 #      }
       

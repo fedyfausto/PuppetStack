@@ -95,7 +95,7 @@ PUPPET AGENTS HOW-TO:
     The first line regards the Puppet Master. You should modify the IP address
     and fqdn according to your setup. I recommend to do not change the 'puppet'
     hostname.
-    The second line regards the particular (local) node you wish to configure
+    The second line regards the particular (local) node you want to configure
     through the Puppet Master. Since you have already configured the PM, 
     I assume PM hostnames are set up, thus PM knows everything about your nodes.
     

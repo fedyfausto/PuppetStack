@@ -69,11 +69,11 @@ class keepalived ($haproxy_nodes) {
   }
   
   if $osfamily == "RedHat" {
-    service { 'firewalld':
-      provider => systemd,
-      enable   => true,
-      ensure   => running,
-    }
+#    service { 'firewalld':
+#      provider => systemd,
+#      enable   => true,
+#      ensure   => running,
+#    }
     file { 'firewall-cmd':
       ensure  => 'file',
       source  => 'puppet:///modules/keepalived/firewall-cmd.sh',
