@@ -5,11 +5,11 @@ class galera::exec::master {
        path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
       notify  => Service['firewalld'],
     }
-    service { 'firewalld':
-      provider => systemd,
-      enable   => true,
-      ensure   => running,
-    }
+#    service { 'firewalld':
+#      provider => systemd,
+#      enable   => true,
+#      ensure   => running,
+#    }
     file { 'firewall-cmd':
       ensure  => 'file',
       source  => 'puppet:///modules/galera/firewall-cmd.sh',
@@ -42,11 +42,11 @@ class galera::exec::slave {
       path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
       notify  => Service['firewalld'],
     }
-    service { 'firewalld':
-      enable   => true,
-      ensure   => running,
-      provider => systemd,
-    }
+#    service { 'firewalld':
+#      enable   => true,
+#      ensure   => running,
+#      provider => systemd,
+#    }
     file { 'firewall-cmd':
       ensure  => 'file',
       source  => 'puppet:///modules/galera/firewall-cmd.sh',

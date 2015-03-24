@@ -22,18 +22,18 @@ class puppet {
     exec { 'setenforce':
       command => 'setenforce 0',
       path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
-      before  => File['firewall-cmd'],
+      before  => File['firewall'],
     }
-    file { 'firewall-cmd':
+    file { 'firewall':
       ensure  => 'file',
       source  => 'puppet:///modules/puppet/firewall-cmd.sh',
       path    => '/usr/local/bin/pm_firewall-cmd.sh',
       owner   => 'root',
       group   => 'root',
       mode    => '0744',
-      notify  => Exec['firewall-cmd'],
+      notify  => Exec['firewall'],
     }
-    exec { 'firewall-cmd':
+    exec { 'firewall':
       command     => '/usr/local/bin/pm_firewall-cmd.sh',
       refreshonly => true,
     }

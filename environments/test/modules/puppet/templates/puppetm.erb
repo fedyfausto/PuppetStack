@@ -7,6 +7,7 @@
     dns_alt_names = puppet,puppet.<%=@dns%>
     environmentpath = $confdir/environments
     factpath = $vardir/lib/facter    
+    hiera_config = $confdir/hiera.yaml
     
     # To have Puppet follow manifest ordering as a fallback for
     # unrelated resources.
