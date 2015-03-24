@@ -150,9 +150,9 @@ class puppet {
       mode    => '0644',
       content => template('puppet/puppet.erb'),
     }
-    service { 'puppet':
-      ensure => running,
-    }      
+#    service { 'puppet':
+#      ensure => running,
+#    }      
   }
   
 
