@@ -2,8 +2,8 @@ class galera::exec::master {
   if $osfamily == "RedHat" {
     exec { "enforcing mode":
       command => "setenforce 0",
-       path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
-      notify  => Service['firewalld'],
+      path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+#      notify  => Service['firewalld'],
     }
 #    service { 'firewalld':
 #      provider => systemd,
@@ -40,7 +40,7 @@ class galera::exec::slave {
     exec { "enforcing mode":
       command => "setenforce 0",
       path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
-      notify  => Service['firewalld'],
+#      notify  => Service['firewalld'],
     }
 #    service { 'firewalld':
 #      enable   => true,
