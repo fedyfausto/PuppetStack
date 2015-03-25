@@ -29,7 +29,7 @@ ip_puppet_a : "10.55.1.169"
 virt_usr_default_pwd : "galera" 
 
 ### Galera Configuration
-galera_nodes : "4"		# 3 to 5
+galera_nodes : "3"		# 3 to 5
 #REDHAT - CENTOS
 ip_gal_m : "10.55.1.170"
 ip_gal_1 : "10.55.1.171"

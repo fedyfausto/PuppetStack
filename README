@@ -35,7 +35,7 @@ What does work in Centos 7:
   > Rabbitmq cluster (3 to 5 nodes)
   > GlusterFS cluster (2 to 5 nodes)
   > Puppet Master-Agent architecture with Apache Passenger
-  > Directory Environment   
+  > Directory Environments   
 
 What should work better:
   > Puppet Master should be in HA
@@ -132,10 +132,12 @@ HOW IT WORKS:
 
 > GlusterFS: In order to create a glusterfs remote storage cluster you should 
   firstly apply the manifest of the 'normal' servers (including the 
-  glusterfs::server module). Then you can apply the manifest of the main server
-  (including the glusterfs::mainserver module). The main server add the peers
-  to the cluster, create the volume and start it. Use the client module to 
-  mount the mount the GlusterFS volume.
+  glusterfs::server module, gluster-2 and gluster-3 in this test environment).
+  Then you can apply the manifest of the main server (including the 
+  glusterfs::mainserver module, gluster-1 in this test environment). The main 
+  server add the peers to the cluster, create the volume and start it. 
+  Use the client module to mount the mount the GlusterFS volume.
+  To test the status of your volume: gluster volume status
   
 ________________________________________________________________________________
 

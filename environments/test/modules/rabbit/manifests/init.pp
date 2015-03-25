@@ -3,6 +3,8 @@
 
 class rabbit {
 
+#  Package { allow_virtual => false }
+
   $rabbit_nodes = hiera('rabbit_nodes')
 
   case $rabbit_nodes {
