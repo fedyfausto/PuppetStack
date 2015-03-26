@@ -1,4 +1,3 @@
-include puppet
 #
 # This module is useless due to puppet master architecture
 # include ssh
@@ -6,10 +5,14 @@ include puppet
 # include hosts
 #
 
+include puppet
 include user::virtual
 include sudoers
 include user::sysadmins
 include stdlib
+
+# To globally deny virtual packages
+Package { allow_virtual => false }
 
 node default {}
 
@@ -55,12 +58,11 @@ node /(controller-)+[1-9]/ {
   include csync
 }
 
+# Test node
 node puppet-agent {
-
   file { 'agent_test':
     ensure  => present,
     path    => '/root/AGENT_TEST',
     content => 'Puppet Master Working Yo! :-)',
   }
-
 }

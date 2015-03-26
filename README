@@ -109,8 +109,7 @@ PUPPET AGENTS HOW-TO:
 
     Change the fqdn of the PM according to your need and the environment name.
     Default project environment is 'test'. Production directory is present
-    because Puppet requires it, but it is empty (for now).
-  
+    because Puppet requires it, but it is empty (for now).  
 ________________________________________________________________________________
 
 HOW IT WORKS:
@@ -138,7 +137,6 @@ HOW IT WORKS:
   server add the peers to the cluster, create the volume and start it. 
   Use the client module to mount the mount the GlusterFS volume.
   To test the status of your volume: gluster volume status
-  
 ________________________________________________________________________________
 
 TROUBLESHOOTING:
@@ -181,6 +179,7 @@ TROUBLESHOOTING:
       To verify the status of your cluster: 'gluster volume status' 
       from any node.
 
+--------------------------------------------------------------------------------
 
   Puppet Master:
     > If you need to execute the initial script a second time, you MUST firstly:
