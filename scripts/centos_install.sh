@@ -13,12 +13,17 @@ gem install librarian-puppet --no-ri --no-rdoc
 
 # Copy Project <-> Temporary Solution
 cp -rd ~/prisma prisma.save
-mv ~/prisma/environments/* /etc/puppet/environments/ && rm -rf ~/prisma/environments/
+mkdir /etc/puppet/environments/
+mv ~/prisma/environments/* /etc/puppet/environments/ 
+rm -rf ~/prisma/environments/
 cp -rd ~/prisma/* /etc/puppet/ && rm -rf ~/prisma/
 
 # Librarian Puppet install
 cd /etc/puppet/ && rm -rf /modules
-librarian-puppet install
+/usr/local/bin/librarian-puppet install
 
 # Puppet apply
 /usr/bin/puppet apply --modulepath /etc/puppet/environments/test/modules:/etc/puppet/modules /etc/puppet/environments/test/manifests/nodes.pp $*
+
+#Set permission
+chown puppet -R etc/puppet/environments/
