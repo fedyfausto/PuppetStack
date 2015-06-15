@@ -4,8 +4,8 @@ forge "https://forgeapi.puppetlabs.com"
 #di risoluzione.  A. Di Savia Puglisi
 
 mod "puppetlabs/stdlib"
-mod "puppetlabs/apt", "2.0.1"
+mod "puppetlabs/apt", "1.8.0"
 mod "garethr-erlang"
-mod "puppetlabs/rabbitmq"
+mod "puppetlabs/rabbitmq", "5.2.2"
 mod "maestrodev-wget"
 mod "puppetlabs/corosync"
