@@ -7,7 +7,7 @@
 
 include puppet
 include user::virtual
-include sudoers
+#include sudoers
 include user::sysadmins
 include stdlib
 
