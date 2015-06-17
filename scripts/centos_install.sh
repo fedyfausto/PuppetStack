@@ -26,4 +26,4 @@ cd /etc/puppet/ && rm -rf /modules
 /usr/bin/puppet apply --modulepath /etc/puppet/environments/test/modules:/etc/puppet/modules /etc/puppet/environments/test/manifests/nodes.pp $*
 
 #Set permission
-chown puppet -R etc/puppet/environments/
+chown puppet -R /etc/puppet/environments/
