@@ -84,7 +84,7 @@ class puppet {
 
     # Gem install rack passenger
     exec { 'gem install':
-      command => "sudo gem install rack passenger:${passenger_version}",
+      command => "gem install rack passenger:${passenger_version}",
       path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
       require => Package[ $apache_dep ],
     }
