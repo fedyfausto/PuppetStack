@@ -4,19 +4,20 @@ if [ $# -lt 1 ]; then
         exit 0
 fi
 master=$1
+# Wait for service mysqld to eventually finish
 sleep 60
 
 if [ $(/usr/bin/ps -ef | /usr/bin/grep -v /usr/bin/grep | /usr/bin/grep $service | /usr/bin/wc -l) -gt 0 ] 
 then
 	/usr/bin/echo "MySql running, nothing to do"
-	/user/bin/echo "TEST" > /root/prova.txt
 	exit 0
 fi
+# Take Cluster nodes ip from config file
 HOST_LIST=`/usr/bin/grep wsrep_cluster_address /etc/my.cnf.d/server.cnf | /usr/bin/awk -F\= '{gsub(/"/,"",$2);print $2}'`
 HOSTS_STRING=${HOST_LIST#gcomm://}
 HOST_LIST=(${HOSTS_STRING//,/ })
 
-
+# 1 if all nodes are pingable
 function all_online {
 	RETURN=0
 	for i in "${HOST_LIST[@]}"
@@ -39,7 +40,9 @@ while [ $(all_online $HOST_LIST) = 1 ]; do
 	/usr/bin/echo "Some cluster's nodes are still offline"
 	sleep 3
 done
+# If all nodes are online try to start Mysql
 /usr/sbin/service mysql start
+# If fails, try again or start the cluster (if the node is Master)
 if [ $(/usr/bin/ps -ef | /usr/bin/grep -v grep | /usr/bin/grep $service | /usr/bin/wc -l) -eq 0 ] 
 then
 	if [ $master -eq 1 ];then
