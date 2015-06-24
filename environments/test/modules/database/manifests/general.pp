@@ -1,7 +1,7 @@
 class database::general {
 
   $collation_server = hiera('collation_server')
-  $init_connect = hiera('collation_server')
+  $init_connect = hiera('init_connect')
   $character_set_server = hiera('character_set_server')
   
   case $osfamily {
