@@ -24,7 +24,7 @@ class galera::exec::master {
       refreshonly => true,
     }
   }
-	file { 'recovery_cluster':
+file { 'recovery_cluster':
       ensure  => 'file',
       source  => 'puppet:///modules/galera/recovery_cluster.sh',
       path    => '/root/recovery_cluster.sh',
@@ -32,11 +32,12 @@ class galera::exec::master {
       group   => 'root',
       mode    => '0744',
     }
-    
+
   exec { "set cronjob":
-    command => 'croncmd="/bin/bash /root/recover_cluster.sh 1";cronjob="@reboot $croncmd";( crontab -l | grep -v "$croncmd" ; echo "$cronjob" ) | crontab -',
+    command => '/bin/bash -c "( crontab -l | grep -v \"/bin/bash /root/recover_cluster.sh 1\" ; echo \"@reboot /bin/bash /root/recover_cluster.sh 1\" ) | crontab -"'
     path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
   }
+
    
   exec { "start galera cluster":
     command => "service mysql start --wsrep-new-cluster",
@@ -74,8 +75,7 @@ class galera::exec::slave {
       refreshonly => true,
     }
   }
-  
-	file { 'recovery_cluster':
+ file { 'recovery_cluster':
       ensure  => 'file',
       source  => 'puppet:///modules/galera/recovery_cluster.sh',
       path    => '/root/recovery_cluster.sh',
@@ -83,11 +83,12 @@ class galera::exec::slave {
       group   => 'root',
       mode    => '0744',
     }
-    
+
   exec { "set cronjob":
-    command => 'croncmd="/bin/bash /root/recover_cluster.sh 0";cronjob="@reboot $croncmd";( crontab -l | grep -v "$croncmd" ; echo "$cronjob" ) | crontab -',
+    command => '/bin/bash -c "( crontab -l | grep -v \"/bin/bash /root/recover_cluster.sh 0\" ; echo \"@reboot /bin/bash /root/recover_cluster.sh 0\" ) | crontab -"'
     path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
   }
+ 
 
   exec { "participate galera cluster":
     command => "service mysql start",
