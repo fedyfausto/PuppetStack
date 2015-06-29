@@ -6,6 +6,7 @@ class rabbit {
 #  Package { allow_virtual => false }
 
   $rabbit_nodes = hiera('rabbit_nodes')
+  $hostname=$hostname
 
   case $rabbit_nodes {
     '3': {
@@ -81,7 +82,11 @@ class rabbit {
         require	                 => Exec['clean'],
         package_provider         => 'yum',
         node_ip_address          => '127.0.0.1',
-      }
+        environment_variables   => {
+             'NODENAME'     => "rabbit@${hostname}",
+        }
+ 
+     }
       
     }
   }
