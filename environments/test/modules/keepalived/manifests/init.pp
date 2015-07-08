@@ -7,6 +7,8 @@ class keepalived ($haproxy_nodes) {
   $smtp_server = hiera('smtp_server')
   $ka_password = hiera('ka_password')
   $ip_hap_v = hiera('ip_hap_v')
+  $ip_hap_v_private = hiera('ip_hap_v_private')
+  $vip_interface_private = hiera('vip_interface_private')
   $vip_interface = hiera('vip_interface')
   $keepalived_cnf_path = hiera('keepalived_cnf_path')  
 

@@ -6,14 +6,12 @@ debian_cnf_path : "/etc/mysql/debian.cnf"
 puppet_conf_path : "/etc/puppet/puppet.conf"
 puppet_confdir : "/etc/puppet"
 sshd_config : "/etc/ssh/sshd_config"
-dns : "chainreds-lan"
-admin_token : "pippo"
-
-wildcard : "10.0.0.%"
+dns : "ct.infn.it"
+wildcard : "10.55.1.%"
 
 ### Puppet Master
 hst_puppet_m : "puppet"
-ip_puppet_m : "10.0.0.1"
+ip_puppet_m : "10.55.1.168"
 
 ### Apache Passenger
 passenger_version : "5.0.4"
@@ -33,10 +31,10 @@ virt_usr_default_pwd : "galera"
 ### Galera Configuration
 galera_nodes : "3"		# 3 to 5
 #REDHAT - CENTOS
-ip_gal_m : "10.0.0.2"
-ip_gal_1 : "10.0.0.3"
-ip_gal_2 : "10.0.0.4"
-ip_gal_3 : ""
+ip_gal_m : "10.55.1.170"
+ip_gal_1 : "10.55.1.171"
+ip_gal_2 : "10.55.1.172"
+ip_gal_3 : "10.55.1.175"
 ip_gal_4 : ""
 #UBUNTU
 #ip_gal_m : "10.55.1.150"
@@ -58,11 +56,10 @@ haproxy_stat_pwd : "password"
 #ip_hap_2 : "10.55.1.154"
 #ip_hap_3 : "10.55.1.160"
 #REDHAT
-ip_hap_1 : "10.0.0.5"
-ip_hap_2 : "10.0.0.6"
-ip_hap_3 : "10.0.0.7"
-ip_hap_v : "192.168.7.100"
-ip_hap_v_private : "10.0.0.100"
+ip_hap_1 : "10.55.1.173"
+ip_hap_2 : "10.55.1.174"
+ip_hap_3 : "10.55.1.176"
+ip_hap_v : "10.55.1.155"
 hst_hap_1 : "haproxy-1"
 hst_hap_2 : "haproxy-2"
 hst_hap_3 : "haproxy-3"
@@ -78,7 +75,6 @@ notification_email : "paperino@ct.infn.it"
 notification_email_from : "haproxy-noreply@ct.infn.it"
 keepalived_cnf_path : "/etc/keepalived/keepalived.conf"
 vip_interface : "eth0"
-vip_interface_private : "eth1"
 
 ### Database Configuration
 deb_my_cnf_path : "/etc/mysql/my.cnf"
@@ -95,9 +91,9 @@ rabbit_nodes : "3" 		# 3 to 5
 #ip_rab_2 : "10.55.1.158"
 #ip_rab_3 : "10.55.1.159"
 #REDHAT
-ip_rab_1 : "10.0.0.8"
-ip_rab_2 : "10.0.0.9"
-ip_rab_3 : "10.0.0.10"
+ip_rab_1 : "10.55.1.177"
+ip_rab_2 : "10.55.1.178"
+ip_rab_3 : "10.55.1.179"
 ip_rab_4 : ""
 ip_rab_5 : ""
 hst_rab_1 : "rabbit-1"
@@ -124,13 +120,9 @@ gluster_file : "gfile"
 gluster_nodes : "3"
 
 ### Controller Configuration
-controller_ips : ["10.0.0.11", "10.0.0.12", "10.0.0.13"]
-controller_hosts : ["controller-1", "controller-2", "controller-3"]
-
-
-ip_con_1 : "10.0.0.11"
-ip_con_2 : "10.0.0.12"
-ip_con_3 : "10.0.0.12"
+ip_con_1 : "10.55.1.165"
+ip_con_2 : "10.55.1.166"
+ip_con_3 : "10.55.1.167"
 ip_con_4 : ""
 ip_con_5 : ""
 hst_con_1 : "controller-1"
@@ -142,4 +134,3 @@ controller_nodes : "3"
 net_mcast : "226.94.1.1"
 mcast_port : "5405"
 net_ip : "10.55.1.0"
-

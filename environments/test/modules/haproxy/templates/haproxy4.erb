@@ -34,6 +34,25 @@ listen galera_cluster 0.0.0.0:3306
         server <%=@hst_gal_2%> <%=@ip_gal_2%>:3306 check weight 1
         server <%=@hst_gal_3%> <%=@ip_gal_3%>:3306 check weight 1
 
+listen keystone_admin_cluster <%=@ip_v_private%>:35357
+  balance  source
+  option  tcpka
+  option  httpchk
+  option  tcplog
+  <% @controller_host.each_with_index do |host, index| %>
+  server <%=host%> <%=@controller_ip[index]%>:35357 check inter 2000 rise 2 fall 5
+  <% end %>
+
+listen keystone_public_internal_cluster 0.0.0.0:5000
+  balance  source
+  option  tcpka
+  option  httpchk
+  option  tcplog
+  <% @controller_host.each_with_index do |host, index| %>
+  server <%=host%> <%=@controller_ip[index]%>:5000 check inter 2000 rise 2 fall 5
+  <% end %>
+
+  
 listen stats :8080
     stats uri /
     stats realm Strictly\ Private

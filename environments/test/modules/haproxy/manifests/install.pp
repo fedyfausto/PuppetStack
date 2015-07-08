@@ -1,7 +1,9 @@
 # nodes_n -> number of galera nodes
 
 class haproxy::install ( $nodes_n ) {
-  
+  $controller_ip = hiera('controller_ips')
+  $controller_host = hiera('controller_hosts')
+  $ip_v_private = hiera('ip_hap_v_private')
   case $nodes_n {
     '3': {
       $hap_tem = 'haproxy.erb'

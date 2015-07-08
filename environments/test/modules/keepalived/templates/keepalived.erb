@@ -29,4 +29,23 @@ vrrp_instance VIP_1 {
 	track_script {
 		haproxy
 	}
+
+vrrp_instance VIP_2 {
+        state MASTER
+        interface <%=@vip_interface_private%>
+        smtp_alert
+        virtual_router_id 50
+        priority <%=@priority%>
+        advert_int 1
+        authentication {
+                auth_type PASS
+                auth_pass <%=@ka_password%>
+        }
+	virtual_ipaddress {
+                <%=@ip_hap_v_private%> dev <%=@vip_interface_private%>
+        }
+	track_script {
+                haproxy
+        }
+
 }

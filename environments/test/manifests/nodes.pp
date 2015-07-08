@@ -55,7 +55,7 @@ node gluster-client {
 }
 
 node /(controller-)+[1-9]/ {
-  include csync
+ include mykeystone
 }
 
 # Test node
