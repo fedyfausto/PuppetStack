@@ -47,23 +47,38 @@ class mykeystone {
     		require => Package["memcached"],
 	}
 	# Create an openrc file
-	file { '/root/openrc':
+	file { '/root/admin-openrc':
   	ensure    => present,
   	owner     => 'root',
   	group     => 'root',
   	mode      => '0600',
-  	content   =>
-		"
+  	content   => "
+		export OS_PROJECT_DOMAIN_ID=default
+		export OS_USER_DOMAIN_ID=default
+		export OS_PROJECT_NAME=admin
 		export OS_TENANT_NAME=admin
-		export OS_TOKEN=pippp
 		export OS_USERNAME=admin
-		export OS_PASSWORD=OpenStack
-		export OS_URL=\"${ip_v}:5000/v2.0/\"
-		export OS_AUTH_STRATEGY=keystone
-		export SERVICE_TOKEN=pippo
-		export SERVICE_ENDPOINT=\"http://127.0.0.1:35357/v2/\"
+		export OS_PASSWORD=admin
+		export OS_AUTH_URL=http://${ip_v_private}:35357/v3		
 		"
 	}
+
+        file { '/root/demo-openrc':
+        ensure    => present,
+        owner     => 'root',
+        group     => 'root',
+        mode	  => '0600',
+        content   => "
+                export OS_PROJECT_DOMAIN_ID=default
+                export OS_USER_DOMAIN_ID=default
+                export OS_PROJECT_NAME=demo
+                export OS_TENANT_NAME=demo
+                export OS_USERNAME=demo
+                export OS_PASSWORD=demo
+                export OS_AUTH_URL=http://${ip_v_private}:35357/v3
+                "
+        }
+
 
        file { 'keystone.conf':
         path	=> '/etc/keystone/keystone.conf',
@@ -173,7 +188,7 @@ class mykeystone {
         	}
 
         exec { "Endpoint create":
-                command => "openstack endpoint create --os-token ${admin_token} --os-url http://127.0.0.1:35357/v2.0 --publicurl http://${ip_v}:5000/v2.0 --internalurl http://${ip_v}:5000/v2.0 --adminurl http://${ip_v_private}:35357/v2.0 --region RegionOne identity",
+                command => "openstack endpoint create --os-token ${admin_token} --os-url http://127.0.0.1:35357/v2.0 --publicurl http://${ip_v_private}:5000/v2.0 --internalurl http://${ip_v_private}:5000/v2.0 --adminurl http://${ip_v_private}:35357/v2.0 --region RegionOne identity",
                 path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
                	require => Exec["Service create"],
         }
@@ -291,6 +306,7 @@ class mykeystone {
 
 
 }
+
 
 
 
