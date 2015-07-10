@@ -23,7 +23,7 @@ cd /etc/puppet/ && rm -rf /modules
 /usr/local/bin/librarian-puppet install
 
 # Puppet apply
-/usr/bin/puppet apply --modulepath /etc/puppet/environments/test/modules:/etc/puppet/modules /etc/puppet/environments/test/manifests/nodes.pp $*
+/usr/bin/puppet apply --parser future --modulepath /etc/puppet/environments/test/modules:/etc/puppet/modules /etc/puppet/environments/test/manifests/nodes.pp $*
 
 #Set permission
 chown puppet -R /etc/puppet/environments/

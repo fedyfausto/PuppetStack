@@ -32,43 +32,20 @@ virt_usr_default_pwd : "galera"
 
 ### Galera Configuration
 galera_nodes : "3"		# 3 to 5
-#REDHAT - CENTOS
-ip_gal_m : "10.0.0.2"
-ip_gal_1 : "10.0.0.3"
-ip_gal_2 : "10.0.0.4"
-ip_gal_3 : ""
-ip_gal_4 : ""
-#UBUNTU
-#ip_gal_m : "10.55.1.150"
-#ip_gal_1 : "10.55.1.151"
-#ip_gal_2 : "10.55.1.152"
-#ip_gal_3 : "10.55.1.156"
-hst_gal_m : "galera-master"
-hst_gal_1 : "galera-1"
-hst_gal_2 : "galera-2"
-hst_gal_3 : "galera-3"
-hst_gal_4 : "galera-4"
+galera_ips : ["10.0.0.2", "10.0.0.3", "10.0.0.4"]
+galera_hosts : ["galera-master", "galera-1", "galera-2"]
+
 
 ### Haproxy Configuration
 haproxy_nodes : "3"  # 2 to 3
+haproxy_ips : ["10.0.0.5", "10.0.0.6", "10.0.0.7"]
+haproxy_hosts : ["haproxy-1", "haproxy-2", "haproxy-3"]
+haproxy_priority : ["100", "101", "102"]
+
 haproxy_cnf_path : "/etc/haproxy/haproxy.cfg"
 haproxy_stat_pwd : "password"
-#UBUNTU
-#ip_hap_1 : "10.55.1.153"
-#ip_hap_2 : "10.55.1.154"
-#ip_hap_3 : "10.55.1.160"
-#REDHAT
-ip_hap_1 : "10.0.0.5"
-ip_hap_2 : "10.0.0.6"
-ip_hap_3 : "10.0.0.7"
 ip_hap_v : "192.168.7.100"
 ip_hap_v_private : "10.0.0.100"
-hst_hap_1 : "haproxy-1"
-hst_hap_2 : "haproxy-2"
-hst_hap_3 : "haproxy-3"
-hap1_priority : "100"
-hap2_priority : "101"
-hap3_priority : "102"
 
 ### Keepalived Configuration
 ka_password : "password"
@@ -90,6 +67,10 @@ openstack_db_pwd : "OpenStack"
 
 ### RabbitMQ Configuration
 rabbit_nodes : "3" 		# 3 to 5
+rabbit_ips : ["10.0.0.8", "10.0.0.9", "10.0.0.10"]
+rabbit_hosts : ["rabbit-1", "rabbit-2", "rabbit-3"]
+
+
 #UBUNTU
 #ip_rab_1 : "10.55.1.157"
 #ip_rab_2 : "10.55.1.158"
@@ -126,7 +107,7 @@ gluster_nodes : "3"
 ### Controller Configuration
 controller_ips : ["10.0.0.11", "10.0.0.12", "10.0.0.13"]
 controller_hosts : ["controller-1", "controller-2", "controller-3"]
-
+glance_pass : "glancepass"
 
 ip_con_1 : "10.0.0.11"
 ip_con_2 : "10.0.0.12"
@@ -142,4 +123,3 @@ controller_nodes : "3"
 net_mcast : "226.94.1.1"
 mcast_port : "5405"
 net_ip : "10.55.1.0"
-
