@@ -3,30 +3,32 @@ class galera::clusterconfig ( $nodes_n ) {
   #$collation_server = hiera('collation_server')
   #$init_connect = hiera('collation_server')
   #$character_set_server = hiera('character_set_server')
-  
-  case $nodes_n {
-    '3':{
-      $ip1 = hiera('ip_gal_m')
-      $ip2 = hiera('ip_gal_1')
-      $ip3 = hiera('ip_gal_2')
-      $c_string = "\"gcomm://${ip1},${ip2},${ip3}\""
-    }
-    '4':{
-      $ip1 = hiera('ip_gal_m')
-      $ip2 = hiera('ip_gal_1')
-      $ip3 = hiera('ip_gal_2')
-      $ip4 = hiera('ip_gal_3')
-      $c_string = "\"gcomm://${ip1},${ip2},${ip3},${ip4}\""
-    }
-    '5':{
-      $ip1 = hiera('ip_gal_m')
-      $ip2 = hiera('ip_gal_1')
-      $ip3 = hiera('ip_gal_2')
-      $ip4 = hiera('ip_gal_3')
-      $ip5 = hiera('ip_gal_4')
-      $c_string = "\"gcomm://${ip1},${ip2},${ip3},${ip4},${ip5}\""
-    }
-  }
+   
+  $galera_ips = hiera('galera_ips')
+
+#  case $nodes_n {
+ #   '3':{
+  #    $ip1 = hiera('ip_gal_m')
+   #   $ip2 = hiera('ip_gal_1')
+    #  $ip3 = hiera('ip_gal_2')
+   #   $c_string = "\"gcomm://${ip1},${ip2},${ip3}\""
+   # }
+  #  '4':{
+  #    $ip1 = hiera('ip_gal_m')
+  #    $ip2 = hiera('ip_gal_1')
+  #    $ip3 = hiera('ip_gal_2')
+  #    $ip4 = hiera('ip_gal_3')
+  #    $c_string = "\"gcomm://${ip1},${ip2},${ip3},${ip4}\""
+  #  }
+  #  '5':{
+  #    $ip1 = hiera('ip_gal_m')
+  #    $ip2 = hiera('ip_gal_1')
+  #    $ip3 = hiera('ip_gal_2')
+  #    $ip4 = hiera('ip_gal_3')
+  #    $ip5 = hiera('ip_gal_4')
+  #    $c_string = "\"gcomm://${ip1},${ip2},${ip3},${ip4},${ip5}\""
+  #  }
+ # }
 
   service { 'mysql':
     enable  => true,

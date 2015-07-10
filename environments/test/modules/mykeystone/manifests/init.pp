@@ -6,6 +6,9 @@ class mykeystone {
 	$ip_db = hiera('ip_hap_v')
 	$ip_v = hiera('ip_hap_v')
 	$ip_v_private = hiera('ip_hap_v_private')
+	$rabbit_hosts = hiera('rabbit_hosts')
+
+ 	$glance_pass = hiera('glance_pass')
 
 		
         
@@ -59,7 +62,8 @@ class mykeystone {
 		export OS_TENANT_NAME=admin
 		export OS_USERNAME=admin
 		export OS_PASSWORD=admin
-		export OS_AUTH_URL=http://${ip_v_private}:35357/v3		
+		export OS_AUTH_URL=http://${ip_v_private}:35357/v3
+		export OS_IMAGE_API_VERSION=2		
 		"
 	}
 
@@ -76,6 +80,7 @@ class mykeystone {
                 export OS_USERNAME=demo
                 export OS_PASSWORD=demo
                 export OS_AUTH_URL=http://${ip_v_private}:35357/v3
+		export OS_IMAGE_API_VERSION=2
                 "
         }
 
@@ -146,6 +151,12 @@ class mykeystone {
                 
         }
 
+	exec { "firewall reload":
+                command => "firewall-cmd --reload",
+                path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+
+        }
+
 
 
 
@@ -160,7 +171,7 @@ class mykeystone {
 	if $hostname == 'controller-1' {
     		 
 		exec{"check_presence": 
-			command => "/usr/bin/test ! -e /root/configlock",
+			command => "/usr/bin/test ! -e /root/configlock_keystone",
 		}
 		
 
@@ -291,22 +302,22 @@ class mykeystone {
                 path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
                 require => Exec["User role create"],
         }
-               file { 'configlock':
-	        path    => '/root/configlock',
-       		ensure    => present,
-        	owner     => 'root',
-        	group     => 'root',
-        	mode	  => '0644',
-        	content   => "Delete this file if you want redo the keystone database",
-        }
-        
 
+
+
+                file { 'configlock':
+                path    => '/root/configlock_keystone',
+                ensure    => present,
+                owner     => 'root',
+                group     => 'root',
+                mode	  => '0644',
+                content   => "Delete this file if you want redo the keystone database",
+                }
 
 	}
 
 
 }
-
 
 
 

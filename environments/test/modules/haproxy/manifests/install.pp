@@ -4,41 +4,11 @@ class haproxy::install ( $nodes_n ) {
   $controller_ip = hiera('controller_ips')
   $controller_host = hiera('controller_hosts')
   $ip_v_private = hiera('ip_hap_v_private')
-  case $nodes_n {
-    '3': {
-      $hap_tem = 'haproxy.erb'
-      $ip_gal_m = hiera('ip_gal_m')
-      $ip_gal_1 = hiera('ip_gal_1')
-      $ip_gal_2 = hiera('ip_gal_2')
-      $hst_gal_m = hiera('hst_gal_m')
-      $hst_gal_1 = hiera('hst_gal_1')
-      $hst_gal_2 = hiera('hst_gal_2')
-    }
-    '4': {
-      $hap_tem = 'haproxy4.erb'
-      $ip_gal_m = hiera('ip_gal_m')
-      $ip_gal_1 = hiera('ip_gal_1')
-      $ip_gal_2 = hiera('ip_gal_2')
-      $ip_gal_3 = hiera('ip_gal_3')
-      $hst_gal_m = hiera('hst_gal_m')
-      $hst_gal_1 = hiera('hst_gal_1')
-      $hst_gal_2 = hiera('hst_gal_2')
-      $hst_gal_3 = hiera('hst_gal_3')
-    }
-    '5': {
-      $hap_tem = 'haproxy5.erb'
-      $ip_gal_m = hiera('ip_gal_m')
-      $ip_gal_1 = hiera('ip_gal_1')
-      $ip_gal_2 = hiera('ip_gal_2')
-      $ip_gal_3 = hiera('ip_gal_3')
-      $ip_gal_4 = hiera('ip_gal_4')
-      $hst_gal_m = hiera('hst_gal_m')
-      $hst_gal_1 = hiera('hst_gal_1')
-      $hst_gal_2 = hiera('hst_gal_2')
-      $hst_gal_3 = hiera('hst_gal_3')
-      $hst_gal_4 = hiera('hst_gal_4')
-    }
-  }
+	$hap_tem = 'haproxy.erb'
+	$galera_ips = hiera('galera_ips')
+	$galera_hosts = hiera('galera_hosts')
+
+
   case $osfamily {
     'Debian': {
       package { 'mariadb-client': ensure => installed }

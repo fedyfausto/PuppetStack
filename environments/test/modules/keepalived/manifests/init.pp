@@ -11,32 +11,9 @@ class keepalived ($haproxy_nodes) {
   $vip_interface_private = hiera('vip_interface_private')
   $vip_interface = hiera('vip_interface')
   $keepalived_cnf_path = hiera('keepalived_cnf_path')  
+  $haproxy_priority = hiera('haproxy_priority')
+  $haproxy_hosts = hiera('haproxy_hosts')
 
-  case $haproxy_nodes {
-    '2': {
-      case $hostname {
-        hiera('hst_hap_1'): {
-          $priority = hiera('hap1_priority')
-        }
-        hiera('hst_hap_2'): {
-          $priority = hiera('hap2_priority')
-        }
-      }
-    }
-    '3': {
-      case $hostname {
-        hiera('hst_hap_1'): {
-          $priority = hiera('hap1_priority')
-        }
-        hiera('hst_hap_2'): {
-          $priority = hiera('hap2_priority')
-        }
-        hiera('hst_hap_3'): {
-          $priority = hiera('hap3_priority')
-        }
-      }  
-    }
-  }
 
   package { 'keepalived': 
     ensure        => installed ,

@@ -5,6 +5,8 @@ firewall-cmd --permanent --zone=public --add-port=8080/tcp
 
 firewall-cmd --permanent --zone=public --add-port=5000/tcp
 firewall-cmd --permanent --zone=public --add-port=35357/tcp
+firewall-cmd --permanent --zone=public --add-port=9292/tcp
+firewall-cmd --permanent --zone=public --add-port=9191/tcp
 
 
 #firewall-cmd --permanent --zone=public --add-port=8/tcp

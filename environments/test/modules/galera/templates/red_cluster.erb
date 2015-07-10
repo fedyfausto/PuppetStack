@@ -7,7 +7,7 @@ default_storage_engine=innoDB
 innodb_autoinc_lock_mode=2
 wsrep_provider=/usr/lib<%=@if64%>/galera/libgalera_smm.so
 wsrep_cluster_name="test_cluster"
-wsrep_cluster_address=<%=@c_string%>
+wsrep_cluster_address="gcomm://<%=@galera_ips.join(",")%>"
 wsrep_sst_method=rsync
 wsrep_node_address=<%= @ipaddress %>
 wsrep_node_name=<%= @hostname %>

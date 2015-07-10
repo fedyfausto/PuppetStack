@@ -17,7 +17,7 @@ vrrp_instance VIP_1 {
 	interface <%=@vip_interface%>
 	smtp_alert
 	virtual_router_id 50
-	priority <%=@priority%>
+	priority <% @haproxy_hosts.each_with_index do |host, index| if @hostname == host %><%=haproxy_priority[index]%><% end end %>
 	advert_int 1
 	authentication {
 		auth_type PASS

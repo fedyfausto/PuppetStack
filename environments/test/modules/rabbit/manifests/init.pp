@@ -7,18 +7,18 @@ class rabbit {
 
   $rabbit_nodes = hiera('rabbit_nodes')
   $hostname=$hostname
-
-  case $rabbit_nodes {
-    '3': {
-      $cluster_nodes = [hiera('hst_rab_1'), hiera('hst_rab_2'), hiera('hst_rab_3')]
-    }
-    '4': {
-      $cluster_nodes = [hiera('hst_rab_1'), hiera('hst_rab_2'), hiera('hst_rab_3'), hiera('hst_rab_4')]
-    }
-    '5': {
-      $cluster_nodes = [hiera('hst_rab_1'), hiera('hst_rab_2'), hiera('hst_rab_3'), hiera('hst_rab_4'), hiera('hst_rab_5')]
-    }
-  }
+ $cluster_nodes = hiera('rabbit_hosts')
+  #case $rabbit_nodes {
+  #  '3': {
+  #    $cluster_nodes = [hiera('hst_rab_1'), hiera('hst_rab_2'), hiera('hst_rab_3')]
+  #  }
+  #  '4': {
+  #    $cluster_nodes = [hiera('hst_rab_1'), hiera('hst_rab_2'), hiera('hst_rab_3'), hiera('hst_rab_4')]
+  #  }
+  #  '5': {
+  #    $cluster_nodes = [hiera('hst_rab_1'), hiera('hst_rab_2'), hiera('hst_rab_3'), hiera('hst_rab_4'), hiera('hst_rab_5')]
+  #  }
+  #}
   case $osfamily {
     'Debian': {
       include erlang

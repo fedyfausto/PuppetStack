@@ -1345,7 +1345,7 @@ servers = localhost:11211
 
 # RabbitMQ HA cluster host:port pairs. (list value)
 # Deprecated group/name - [DEFAULT]/rabbit_hosts
-#rabbit_hosts = $rabbit_host:$rabbit_port
+rabbit_hosts = <%=@rabbit_hosts.map{|element| element +":5672"}.join(",")%>
 
 # Connect over SSL for RabbitMQ. (boolean value)
 # Deprecated group/name - [DEFAULT]/rabbit_use_ssl

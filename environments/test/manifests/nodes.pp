@@ -56,6 +56,7 @@ node gluster-client {
 
 node /(controller-)+[1-9]/ {
  include mykeystone
+ include myglance
 }
 
 # Test node
