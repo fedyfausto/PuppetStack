@@ -34,7 +34,7 @@ file { 'recovery_cluster':
     }
 
   exec { "set cronjob":
-    command => '/bin/bash -c "( crontab -l | grep -v \"/bin/bash /root/recover_cluster.sh 1\" ; echo \"@reboot /bin/bash /root/recover_cluster.sh 1\" ) | crontab -"',
+    command => '/bin/bash -c "( crontab -l | grep -v \"/bin/bash /root/recovery_cluster.sh 1\" ; echo \"@reboot /bin/bash /root/recovery_cluster.sh 1\" ) | crontab -"',
     path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
   }
 
@@ -85,7 +85,7 @@ class galera::exec::slave {
     }
 
   exec { "set cronjob":
-    command => '/bin/bash -c "( crontab -l | grep -v \"/bin/bash /root/recover_cluster.sh 0\" ; echo \"@reboot /bin/bash /root/recover_cluster.sh 0\" ) | crontab -"',
+    command => '/bin/bash -c "( crontab -l | grep -v \"/bin/bash /root/recovery_cluster.sh 0\" ; echo \"@reboot /bin/bash /root/recovery_cluster.sh 0\" ) | crontab -"',
     path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
   }
  
