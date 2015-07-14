@@ -7,7 +7,7 @@ class haproxy::install ( $nodes_n ) {
 	$hap_tem = 'haproxy.erb'
 	$galera_ips = hiera('galera_ips')
 	$galera_hosts = hiera('galera_hosts')
-
+  $monitor_openstack = hiera('haproxy_monitor_openstack')
 
   case $osfamily {
     'Debian': {

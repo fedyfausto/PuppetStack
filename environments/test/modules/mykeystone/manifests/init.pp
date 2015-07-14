@@ -7,12 +7,17 @@ class mykeystone {
 	$ip_v = hiera('ip_hap_v')
 	$ip_v_private = hiera('ip_hap_v_private')
 	$rabbit_hosts = hiera('rabbit_hosts')
-
+	$db_root_password = hiera('db_root_password')
  	$glance_pass = hiera('glance_pass')
 
-		
-        
-        notify{"Sono - ${hostname}" : }
+
+          yumrepo { 'mariadb keystone':
+            #name     => 'MariaDB',
+            baseurl  => 'http://yum.mariadb.org/10.0/centos7-amd64',
+            gpgkey   => 'https://yum.mariadb.org/RPM-GPG-KEY-MariaDB',
+            gpgcheck => true,
+          }
+
 
 	package { 'yum-plugin-priorities':
         	ensure        => present,
@@ -41,8 +46,15 @@ class mykeystone {
 
         }
 
+
 	$enhancers = [ "openstack-keystone", "httpd", "mod_wsgi", "python-openstackclient", "memcached", "python-memcached" ]
 	package { $enhancers: ensure => "installed" }
+
+      package {'MariaDB-client keystone':
+        ensure        => installed,
+        allow_virtual => false,
+        provider      => yum,
+      }
 
 	service { "memcached":
     		ensure  => "running",
@@ -166,7 +178,6 @@ class mykeystone {
                 require => Exec["chmod"],
         }
 
-	
 
 	if $hostname == 'controller-1' {
     		 
@@ -178,6 +189,40 @@ class mykeystone {
 		notify { "Il file non esiste":
 			require => Exec["check_presence"],
         }
+  	exec { "clear keystone user":
+    		command => "mysql -u root -h ${ip_db} -p${db_root_password} -e \"DELETE FROM mysql.user WHERE User = \'keystone\';\" ",
+    		path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+		require => Exec["check_presence"],
+  	}
+
+	exec { "select keystone user":
+                command => "mysql -u root -h ${ip_db} -p${db_root_password} -e \"SELECT User, Host FROM mysql.user;\" ",
+                path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+                require => Exec["check_presence"],
+        }
+
+  	exec { "drop openstack keystone":
+    		command => "mysql -u root -h ${ip_db} -p${db_root_password} -e \"USE mysql; DROP DATABASE IF EXISTS keystone;\" ",
+    		path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+   		require => Exec["check_presence"],
+		}
+  	#exec { "user keystone":
+    	#	command => "mysql -u root -h ${ip_db} -p${db_root_password} -e \"INSERT INTO mysql.user (Host,User) values (\'%\',\'keystone\'); FLUSH PRIVILEGES;\" ",  
+    	#	path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+    	#	require => Exec["clear keystone user"],
+  	#}
+
+  	exec { "db keystone":
+    		command => "mysql -u root -h ${ip_db} -p${db_root_password} -e \"CREATE DATABASE keystone;\" ",
+    		path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+    		require => Exec["drop openstack keystone"],
+ 	}
+  	exec { "keystone privileges":
+    		command => "mysql -u root -h ${ip_db} -p${db_root_password} -e \"GRANT ALL PRIVILEGES ON keystone.* TO \'keystone\'@\'%\' IDENTIFIED BY \'${openstack_db_pwd}\' WITH GRANT OPTION; FLUSH PRIVILEGES;\" ",
+    		path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+    		#require => [ Exec["user keystone"], Exec["db keystone"] ],
+    		require => Exec["db keystone"],
+  }
 
         exec { "populate_db":
                 command => "su -s /bin/sh -c 'keystone-manage db_sync' keystone",

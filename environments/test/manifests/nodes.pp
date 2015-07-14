@@ -57,7 +57,15 @@ node gluster-client {
 node /(controller-)+[1-9]/ {
  include mykeystone
  include myglance
+ include mycontrollernova
 }
+
+node /(compute-)+[1-9]/ {
+ include mynova
+ #include myglance
+ #include mycontrollernova
+}
+
 
 # Test node
 node puppet-agent {

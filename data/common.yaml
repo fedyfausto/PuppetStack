@@ -34,9 +34,10 @@ virt_usr_default_pwd : "galera"
 galera_nodes : "3"		# 3 to 5
 galera_ips : ["10.0.0.2", "10.0.0.3", "10.0.0.4"]
 galera_hosts : ["galera-master", "galera-1", "galera-2"]
-
+db_root_password : "password"
 
 ### Haproxy Configuration
+haproxy_monitor_openstack : "true"
 haproxy_nodes : "3"  # 2 to 3
 haproxy_ips : ["10.0.0.5", "10.0.0.6", "10.0.0.7"]
 haproxy_hosts : ["haproxy-1", "haproxy-2", "haproxy-3"]
@@ -86,6 +87,7 @@ hst_rab_2 : "rabbit-2"
 hst_rab_3 : "rabbit-3"
 hst_rab_4 : "rabbit-4"
 hst_rab_5 : "rabbit-5"
+rab_def_usr : "openstack"
 rab_def_pwd : "password"
 
 ### GlusterFS Configuration
@@ -107,7 +109,7 @@ gluster_nodes : "3"
 ### Controller Configuration
 controller_ips : ["10.0.0.11", "10.0.0.12", "10.0.0.13"]
 controller_hosts : ["controller-1", "controller-2", "controller-3"]
-glance_pass : "glancepass"
+nova_pass : "novapass"
 
 ip_con_1 : "10.0.0.11"
 ip_con_2 : "10.0.0.12"
@@ -123,3 +125,14 @@ controller_nodes : "3"
 net_mcast : "226.94.1.1"
 mcast_port : "5405"
 net_ip : "10.55.1.0"
+
+### Compute Configuration
+compute_ips : ["10.0.0.14"]
+compute_hosts : ["compute-1"]
+
+### Glance
+glance_pass : "glancepass"
+ip_storage_images : "192.168.7.20"
+remote_image_dir : "/var/imageshare"
+glance_image_dir : "/var/imageshare"
+

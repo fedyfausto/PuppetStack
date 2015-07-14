@@ -25,6 +25,10 @@ class hosts {
   class {'hosts::controller':
     dns => $dns,
   }
+  class {'hosts::compute':
+    dns => $dns,
+  }
+
 }
 
 include hosts
