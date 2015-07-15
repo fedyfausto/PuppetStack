@@ -1,0 +1,27 @@
+admin_token : "pippo"
+
+
+### Controller Configuration
+controller_ips : ["10.0.0.11", "10.0.0.12", "10.0.0.13"]
+controller_hosts : ["controller-1", "controller-2", "controller-3"]
+nova_pass : "novapass"
+
+management_inteface : "eth1"
+tunnel_transfer : "eth1"
+external_inteface : "eth2"
+storage_interface : "ethX"
+
+net_mcast : "226.94.1.1"
+mcast_port : "5405"
+net_ip : "10.55.1.0"
+
+### Compute Configuration
+compute_ips : ["10.0.0.14"]
+compute_hosts : ["compute-1"]
+
+### Glance
+glance_pass : "glancepass"
+ip_storage_images : "192.168.7.20"
+remote_image_dir : "/var/imageshare"
+glance_image_dir : "/var/imageshare"
+
