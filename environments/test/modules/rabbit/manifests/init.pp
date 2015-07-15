@@ -84,6 +84,12 @@ class rabbit {
     }
   }
   
+      exec { 'ha_query':
+        command => 'rabbitmqctl set_policy ha-all \'^(?!amq\.).*\' \'{"ha-mode": "all"}\'',
+        path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/:/usr/sbin/",
+        require => Exec['ra-firewall-cmd'],
+      }
 
 
 }
+
