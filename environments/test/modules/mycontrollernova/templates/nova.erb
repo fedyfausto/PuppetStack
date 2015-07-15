@@ -1927,7 +1927,7 @@ vncserver_proxyclient_address=<%=@ip_eth1%>
 
 # The SQLAlchemy connection string to use to connect to the
 # Nova API database. (string value)
-connection=mysql://nova:nova@localhost/nova
+connection = mysql://nova:<%=@openstack_db_pwd%>@<%=@ip_db%>/nova
 
 # If True, SQLite uses synchronous mode. (boolean value)
 #sqlite_synchronous=true
@@ -2545,14 +2545,21 @@ host=<%=@ip_v%>
 #
 
 # Complete public Identity API endpoint. (string value)
-auth_uri=http://<%=@ip_v%>:5000
-auth_url = http://<%=@ip_v%>:35357
-auth_plugin = password
-project_domain_id = default
-user_domain_id = default
-project_name = service
-username = nova
-password = <%=@nova_pass%>
+auth_uri = http://<%=@ip_v%>:5000/v2.0
+identity_uri = http://<%=@ip_v_private%>:35357
+admin_tenant_name = service
+admin_user = nova
+admin_password = <%=@nova_pass%>
+
+#auth_uri=http://<%=@ip_v%>:5000
+#auth_url = http://<%=@ip_v%>:35357
+#auth_plugin = password
+#project_domain_id = default
+#user_domain_id = default
+#project_name = service
+#admin_tenant_name = service
+#username = nova
+#password = <%=@nova_pass%>
 
 # API version of the admin Identity API endpoint. (string value)
 #auth_version=v2.0

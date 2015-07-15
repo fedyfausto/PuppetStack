@@ -1,5 +1,6 @@
 :hierarchy:
     - "%{hostname}"
+    - openstack
     - common
 :backends:
     - yaml

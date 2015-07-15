@@ -55,6 +55,7 @@ node gluster-client {
 }
 
 node /(controller-)+[1-9]/ {
+ include galeraclient
  include mykeystone
  include myglance
  include mycontrollernova
@@ -62,8 +63,6 @@ node /(controller-)+[1-9]/ {
 
 node /(compute-)+[1-9]/ {
  include mynova
- #include myglance
- #include mycontrollernova
 }
 
 

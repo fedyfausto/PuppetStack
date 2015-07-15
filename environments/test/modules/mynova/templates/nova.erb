@@ -1371,7 +1371,7 @@ auth_strategy=keystone
 
 # Print more verbose output (set logging level to INFO instead of default
 # WARNING level). (boolean value)
-verbose=True
+verbose=true
 
 # The name of a logging configuration file. This file is appended to any
 # existing logging configuration files. For details about logging configuration
@@ -1816,7 +1816,7 @@ verbose=True
 
 # Location of VNC console proxy, in the form
 # "http://127.0.0.1:6080/vnc_auto.html" (string value)
-novncproxy_base_url=http://<%=@ip_v%>:6080/vnc_auto.html
+novncproxy_base_url=http://<%=@ip_v_private%>:6080/vnc_auto.html
 
 # Location of nova xvp VNC console proxy, in the form
 # "http://127.0.0.1:6081/console" (string value)
@@ -1831,7 +1831,7 @@ vncserver_listen=0.0.0.0
 vncserver_proxyclient_address=<%=@ip_eth1%>
 
 # Enable VNC related features (boolean value)
-vnc_enabled=True
+vnc_enabled=true
 
 # Keymap for VNC (string value)
 #vnc_keymap=en-us
@@ -2330,7 +2330,7 @@ vnc_enabled=True
 #
 
 # Default glance hostname or IP address (string value)
-host=<%=@ip_v%>
+host=<%=@ip_v_private%>
 
 # Default glance port (integer value)
 #port=9292
@@ -2544,8 +2544,8 @@ host=<%=@ip_v%>
 #
 
 # Complete public Identity API endpoint. (string value)
-auth_uri=http://<%=@ip_v%>:5000
-auth_url = http://<%=@ip_v%>:35357
+auth_uri=http://<%=@ip_v_private%>:5000
+auth_url = http://<%=@ip_v_private%>:35357
 auth_plugin = password
 project_domain_id = default
 user_domain_id = default
@@ -2722,12 +2722,12 @@ password = <%=@nova_pass%>
 
 # Libvirt domain type (valid options are: kvm, lxc, qemu, uml,
 # xen and parallels) (string value)
-<%=test%>
-<% value=`egrep -c '(vmx|svm)' /proc/cpuinfo` %>
-<% if value != "0" %>
+<% if @nova_virtualization == "0" %>
 virt_type=qemu
-<% end %>
-#virt_type=kvm
+<% else%>
+virt_type=kvm
+<% end%>
+
 
 # Override the default libvirt URI (which is dependent on
 # virt_type) (string value)
@@ -3795,7 +3795,7 @@ virt_type=qemu
 # Defaults to environment variable OSLO_LOCK_PATH. If external locks are used,
 # a lock path must be set. (string value)
 # Deprecated group;name - DEFAULT;lock_path
-lock_path=/var/lib/nova/tmp
+#lock_path=/var/lib/nova/tmp
 
 
 [oslo_messaging_amqp]
@@ -3986,7 +3986,7 @@ rabbit_password=<%=@rabbit_pass%>
 
 # The RabbitMQ virtual host. (string value)
 # Deprecated group;name - DEFAULT;rabbit_virtual_host
-#rabbit_virtual_host=/
+rabbit_virtual_host=/
 
 # How frequently to retry connecting with RabbitMQ. (integer value)
 #rabbit_retry_interval=1
@@ -4004,7 +4004,7 @@ rabbit_password=<%=@rabbit_pass%>
 # Use HA queues in RabbitMQ (x-ha-policy: all). If you change this option, you
 # must wipe the RabbitMQ database. (boolean value)
 # Deprecated group;name - DEFAULT;rabbit_ha_queues
-#rabbit_ha_queues=false
+rabbit_ha_queues=true
 
 # Number of seconds after which the Rabbit broker is considered down if
 # heartbeat's keep-alive fails (0 disable the heartbeat). (integer value)

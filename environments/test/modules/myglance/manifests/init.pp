@@ -17,18 +17,6 @@ class myglance {
 	package { $enhancers: ensure => "installed" }
 notify{"PPP" : }
 
-          yumrepo { 'mariadb glance':
-#            name     => 'MariaDB',
-            baseurl  => 'http://yum.mariadb.org/10.0/centos7-amd64',
-            gpgkey   => 'https://yum.mariadb.org/RPM-GPG-KEY-MariaDB',
-            gpgcheck => true,
-          }
-
-      package {'MariaDB-client glance':
-        ensure        => installed,
-        allow_virtual => false,
-        provider      => yum,
-      }
 
       package {'nfs-utils':
         ensure        => installed,
@@ -51,19 +39,28 @@ notify{"PPP" : }
                 enable  => "true",
         }
 
-        exec { "mount remote image directory":
-                command => "mount -t nfs ${ip_storage_images}:${remote_image_dir} ${glance_image_dir}",
-                path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
-        }
+#        exec { "mount remote image directory":
+#                command => "mount -t nfs ${ip_storage_images}:${remote_image_dir} ${glance_image_dir}",
+#                path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+#        }
 
-	fstab { 'Another test fstab entry':
-  		source => ' ${ip_storage_images}:${remote_image_dir}',
-  		dest   => '${glance_image_dir}',
-  		type   => 'nfs',
-  		opts   => 'defaults',
-  		dump   => 0,
-  		passno => 0,
-	}
+#	fstab { 'Another test fstab entry':
+#  		source => ' ${ip_storage_images}:${remote_image_dir}',
+#  		dest   => '${glance_image_dir}',
+#  		type   => 'nfs',
+#  		opts   => 'defaults',
+#  		dump   => 0,
+#  		passno => 0,
+#	}
+
+	mount { "Mount remote partition":
+		name   => "${glance_image_dir}",
+                ensure => mounted,
+                device => "${ip_storage_images}:${remote_image_dir}",
+                atboot => true,
+                fstype => "nfs",
+                options => "defaults",
+        }             
 
 
        file { 'glance-api.conf':

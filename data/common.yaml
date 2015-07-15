@@ -7,9 +7,7 @@ puppet_conf_path : "/etc/puppet/puppet.conf"
 puppet_confdir : "/etc/puppet"
 sshd_config : "/etc/ssh/sshd_config"
 dns : "chainreds-lan"
-admin_token : "pippo"
 
-wildcard : "10.0.0.%"
 
 ### Puppet Master
 hst_puppet_m : "puppet"
@@ -34,6 +32,7 @@ virt_usr_default_pwd : "galera"
 galera_nodes : "3"		# 3 to 5
 galera_ips : ["10.0.0.2", "10.0.0.3", "10.0.0.4"]
 galera_hosts : ["galera-master", "galera-1", "galera-2"]
+wildcard : "10.0.0.%"
 db_root_password : "password"
 
 ### Haproxy Configuration
@@ -67,26 +66,9 @@ character_set_server : "utf8"
 openstack_db_pwd : "OpenStack"
 
 ### RabbitMQ Configuration
-rabbit_nodes : "3" 		# 3 to 5
 rabbit_ips : ["10.0.0.8", "10.0.0.9", "10.0.0.10"]
 rabbit_hosts : ["rabbit-1", "rabbit-2", "rabbit-3"]
 
-
-#UBUNTU
-#ip_rab_1 : "10.55.1.157"
-#ip_rab_2 : "10.55.1.158"
-#ip_rab_3 : "10.55.1.159"
-#REDHAT
-ip_rab_1 : "10.0.0.8"
-ip_rab_2 : "10.0.0.9"
-ip_rab_3 : "10.0.0.10"
-ip_rab_4 : ""
-ip_rab_5 : ""
-hst_rab_1 : "rabbit-1"
-hst_rab_2 : "rabbit-2"
-hst_rab_3 : "rabbit-3"
-hst_rab_4 : "rabbit-4"
-hst_rab_5 : "rabbit-5"
 rab_def_usr : "openstack"
 rab_def_pwd : "password"
 
@@ -105,34 +87,4 @@ hst_glu_4 : "gluster-4"
 hst_glu_5 : "gluster-5"
 gluster_file : "gfile"
 gluster_nodes : "3"
-
-### Controller Configuration
-controller_ips : ["10.0.0.11", "10.0.0.12", "10.0.0.13"]
-controller_hosts : ["controller-1", "controller-2", "controller-3"]
-nova_pass : "novapass"
-
-ip_con_1 : "10.0.0.11"
-ip_con_2 : "10.0.0.12"
-ip_con_3 : "10.0.0.12"
-ip_con_4 : ""
-ip_con_5 : ""
-hst_con_1 : "controller-1"
-hst_con_2 : "controller-2"
-hst_con_3 : "controller-3"
-hst_con_4 : "controller-4"
-hst_con_5 : "controller-5"
-controller_nodes : "3"
-net_mcast : "226.94.1.1"
-mcast_port : "5405"
-net_ip : "10.55.1.0"
-
-### Compute Configuration
-compute_ips : ["10.0.0.14"]
-compute_hosts : ["compute-1"]
-
-### Glance
-glance_pass : "glancepass"
-ip_storage_images : "192.168.7.20"
-remote_image_dir : "/var/imageshare"
-glance_image_dir : "/var/imageshare"
 

@@ -11,13 +11,6 @@ class mykeystone {
  	$glance_pass = hiera('glance_pass')
 
 
-          yumrepo { 'mariadb keystone':
-            #name     => 'MariaDB',
-            baseurl  => 'http://yum.mariadb.org/10.0/centos7-amd64',
-            gpgkey   => 'https://yum.mariadb.org/RPM-GPG-KEY-MariaDB',
-            gpgcheck => true,
-          }
-
 
 	package { 'yum-plugin-priorities':
         	ensure        => present,
@@ -50,11 +43,6 @@ class mykeystone {
 	$enhancers = [ "openstack-keystone", "httpd", "mod_wsgi", "python-openstackclient", "memcached", "python-memcached" ]
 	package { $enhancers: ensure => "installed" }
 
-      package {'MariaDB-client keystone':
-        ensure        => installed,
-        allow_virtual => false,
-        provider      => yum,
-      }
 
 	service { "memcached":
     		ensure  => "running",

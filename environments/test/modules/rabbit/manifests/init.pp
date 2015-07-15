@@ -5,23 +5,11 @@ class rabbit {
 
 #  Package { allow_virtual => false }
 
-  $rabbit_nodes = hiera('rabbit_nodes')
   $hostname=$hostname
  $cluster_nodes = hiera('rabbit_hosts')
  $default_user = hiera('rab_def_usr')
  $default_pass = hiera('rab_def_pwd')
 
-  #case $rabbit_nodes {
-  #  '3': {
-  #    $cluster_nodes = [hiera('hst_rab_1'), hiera('hst_rab_2'), hiera('hst_rab_3')]
-  #  }
-  #  '4': {
-  #    $cluster_nodes = [hiera('hst_rab_1'), hiera('hst_rab_2'), hiera('hst_rab_3'), hiera('hst_rab_4')]
-  #  }
-  #  '5': {
-  #    $cluster_nodes = [hiera('hst_rab_1'), hiera('hst_rab_2'), hiera('hst_rab_3'), hiera('hst_rab_4'), hiera('hst_rab_5')]
-  #  }
-  #}
   case $osfamily {
     'Debian': {
       include erlang
@@ -84,7 +72,7 @@ class rabbit {
         tcp_keepalive	           => true,
         require	                 => Exec['clean'],
         package_provider         => 'yum',
-        node_ip_address          => '127.0.0.1',
+        #node_ip_address          => '127.0.0.1',
 	default_user		=> "${default_user}",
 	default_pass            => "${default_pass}",
         environment_variables   => {

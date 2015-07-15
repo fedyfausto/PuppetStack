@@ -1,4 +1,4 @@
-# Install Nova on Controller
+# Install Nova on Compute
 class mynova {
       	
 	$admin_token = hiera('admin_token')
@@ -10,8 +10,9 @@ class mynova {
 	$rabbit_user = hiera('rab_def_usr')
  	$rabbit_pass = hiera('rab_def_pwd')
  	$nova_pass = hiera('nova_pass')
+	$management_inteface = hiera('management_inteface')
 	$db_root_password = hiera('db_root_password')
-	$ip_eth1 = $ipaddress_eth1
+	$ip_eth1 = inline_template("<%= scope.lookupvar('::ipaddress_${management_inteface}') -%>")
 
 	package { 'yum-plugin-priorities':
                 ensure        => present,
@@ -61,16 +62,21 @@ class mynova {
 #	exec { "firewall reload nova":
 #                command => "firewall-cmd --reload",
 #                path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
-
+#
 #        }
 
 
 
 
-#        service { "openstack-nova-api":
-#                ensure  => "running",
-#               	enable  => "true",
-#        }
+        service { "libvirtd":
+                ensure  => "running",
+               	enable  => "true",
+        }
+
+        service { "openstack-nova-compute":
+                ensure  => "running",
+                enable  => "true",
+        }
 
 
 }

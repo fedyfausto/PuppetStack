@@ -11,24 +11,12 @@ class mycontrollernova {
  	$rabbit_pass = hiera('rab_def_pwd')
  	$nova_pass = hiera('nova_pass')
 	$db_root_password = hiera('db_root_password')
-	$ip_eth1 = $ipaddress_eth1
+	$management_inteface = hiera('management_inteface')
+	$ip_eth1 = inline_template("<%= scope.lookupvar('::ipaddress_${management_inteface}') -%>")
 
         $enhancers = [ "openstack-nova-api", "openstack-nova-cert", "openstack-nova-conductor", "openstack-nova-console", "openstack-nova-novncproxy", "openstack-nova-scheduler", "python-novaclient" ]
         package { $enhancers: ensure => "installed" }
 		
-          yumrepo { 'mariadb nova':
-#            name     => 'MariaDB',
-            baseurl  => 'http://yum.mariadb.org/10.0/centos7-amd64',
-            gpgkey   => 'https://yum.mariadb.org/RPM-GPG-KEY-MariaDB',
-            gpgcheck => true,
-          }
-
-      package {'MariaDB-client nova':
-        ensure        => installed,
-        allow_virtual => false,
-        provider      => yum,
-      }
-        
 
        file { 'nova.conf':
         path	=> '/etc/nova/nova.conf',
