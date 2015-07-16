@@ -1816,7 +1816,7 @@ verbose=True
 
 # Location of VNC console proxy, in the form
 # "http://127.0.0.1:6080/vnc_auto.html" (string value)
-#novncproxy_base_url=http://127.0.0.1:6080/vnc_auto.html
+novncproxy_base_url=http://<%=@ip_v%>:6080/vnc_auto.html
 
 # Location of nova xvp VNC console proxy, in the form
 # "http://127.0.0.1:6081/console" (string value)
@@ -1824,15 +1824,14 @@ verbose=True
 
 # IP address on which instance vncservers should listen
 # (string value)
-vncserver_listen=<%=@ip_eth1%>
-
+vncserver_listen=0.0.0.0
 
 # The address to which proxy clients (like nova-xvpvncproxy)
 # should connect (string value)
 vncserver_proxyclient_address=<%=@ip_eth1%>
 
 # Enable VNC related features (boolean value)
-#vnc_enabled=true
+vnc_enabled=True
 
 # Keymap for VNC (string value)
 #vnc_keymap=en-us
@@ -1927,7 +1926,7 @@ vncserver_proxyclient_address=<%=@ip_eth1%>
 
 # The SQLAlchemy connection string to use to connect to the
 # Nova API database. (string value)
-connection = mysql://nova:<%=@openstack_db_pwd%>@<%=@ip_db%>/nova
+#connection=mysql://nova:nova@localhost/nova
 
 # If True, SQLite uses synchronous mode. (boolean value)
 #sqlite_synchronous=true
@@ -2210,7 +2209,7 @@ connection = mysql://nova:<%=@openstack_db_pwd%>@<%=@ip_db%>/nova
 # Deprecated group;name - DEFAULT;sql_connection
 # Deprecated group;name - [DATABASE]/sql_connection
 # Deprecated group;name - [sql]/connection
-connection=mysql://nova:<%=@openstack_db_pwd%>@<%=@ip_db%>/nova
+#connection=<None>
 
 # The SQLAlchemy connection string to use to connect to the slave database.
 # (string value)
@@ -2331,19 +2330,19 @@ connection=mysql://nova:<%=@openstack_db_pwd%>@<%=@ip_db%>/nova
 #
 
 # Default glance hostname or IP address (string value)
-host=<%=@ip_v_private%>
+host=<%=@ip_v%>
 
 # Default glance port (integer value)
 #port=9292
 
 # Default protocol to use when connecting to glance. Set to
 # https for SSL. (string value)
-protocol=http
+#protocol=http
 
 # A list of the glance api servers available to nova. Prefix
 # with https:// for ssl-based glance api servers.
 # ([hostname|ip]:port) (list value)
-#api_servers=<%=@ip_v_private%>:9292
+#api_servers=<None>
 
 # Allow to perform insecure SSL (https) requests to glance
 # (boolean value)
@@ -2545,19 +2544,19 @@ protocol=http
 #
 
 # Complete public Identity API endpoint. (string value)
-auth_uri = http://<%=@ip_v%>:5000/v2.0
+auth_uri = http://<%=@ip_v_private%>:5000/v2
 identity_uri = http://<%=@ip_v_private%>:35357
 admin_tenant_name = service
 admin_user = nova
 admin_password = <%=@nova_pass%>
 
+
 #auth_uri=http://<%=@ip_v%>:5000
-#auth_url = http://<%=@ip_v%>:35357
+auth_url = http://<%=@ip_v_private%>:35357/v3
 #auth_plugin = password
 #project_domain_id = default
 #user_domain_id = default
 #project_name = service
-#admin_tenant_name = service
 #username = nova
 #password = <%=@nova_pass%>
 
@@ -2693,9 +2692,7 @@ admin_password = <%=@nova_pass%>
 
 # Complete admin Identity API endpoint. This should specify the unversioned
 # root endpoint e.g. https://localhost:35357/ (string value)
-#identity_uri=http://<%=@ip_v%>:35357/
-
-
+#identity_uri=<None>
 
 # This option is deprecated and may be removed in a future release. Single
 # shared secret with the Keystone configuration used for bootstrapping a
@@ -2732,7 +2729,11 @@ admin_password = <%=@nova_pass%>
 
 # Libvirt domain type (valid options are: kvm, lxc, qemu, uml,
 # xen and parallels) (string value)
-#virt_type=kvm
+<% if @nova_virtualization == "0" %>
+virt_type=qemu
+<% else%>
+virt_type=kvm
+<% end%>
 
 # Override the default libvirt URI (which is dependent on
 # virt_type) (string value)
@@ -3099,7 +3100,7 @@ admin_password = <%=@nova_pass%>
 # context. DEPRECATED: specify an auth_plugin and appropriate
 # credentials instead. If an auth_plugin is specified strategy
 # will be ignored. (string value)
-auth_strategy=keystone
+#auth_strategy=keystone
 
 # Name of Integration Bridge used by Open vSwitch (string
 # value)
@@ -4022,6 +4023,5 @@ rabbit_password=<%=@rabbit_pass%>
 # Deprecated, use rpc_backend=kombu+memory or rpc_backend=fake (boolean value)
 # Deprecated group;name - DEFAULT;fake_rabbit
 #fake_rabbit=false
-
 
 

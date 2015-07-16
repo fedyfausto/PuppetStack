@@ -8,13 +8,14 @@
 include puppet
 include user::virtual
 #include sudoers
-include user::sysadmins
+#include user::sysadmins
 include stdlib
+include myselinux
 
 # To globally deny virtual packages
 Package { allow_virtual => false }
 
-node default {}
+node default { }
 
 node galera-master {
   class { 'galera::master':
@@ -62,8 +63,10 @@ node /(controller-)+[1-9]/ {
 }
 
 node /(compute-)+[1-9]/ {
+	  notify{"Configurazione del compute" : }
  include mynova
 }
+
 
 
 # Test node

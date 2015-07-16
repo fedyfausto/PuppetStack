@@ -9,6 +9,8 @@ class myglance {
         $db_root_password = hiera('db_root_password')
 	$glance_pass = hiera('glance_pass')
 	$rabbit_hosts = hiera('rabbit_hosts')
+        $rabbit_user = hiera('rab_def_usr')
+        $rabbit_pass = hiera('rab_def_pwd')
 	$ip_storage_images = hiera('ip_storage_images')
 	$remote_image_dir = hiera('remote_image_dir')
 	$glance_image_dir = hiera('glance_image_dir')
@@ -154,7 +156,7 @@ notify{"PPP" : }
                 require => Exec["check_presence_glance"],
         }
                 exec { "Glance endpoint":
-                command => "openstack endpoint create --publicurl http://${ip_v_private}:9292 --internalurl http://${ip_v_private}:9292 --adminurl http://{ip_v_private}:9292 --region RegionOne image --os-token ${admin_token} --os-url http://127.0.0.1:35357/v2.0",
+                command => "openstack endpoint create --publicurl http://${ip_v_private}:9292 --internalurl http://${ip_v_private}:9292 --adminurl http://${ip_v_private}:9292 --region RegionOne image --os-token ${admin_token} --os-url http://127.0.0.1:35357/v2.0",
                 path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
                 require => Exec["check_presence_glance"],
         }

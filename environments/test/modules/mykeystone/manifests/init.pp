@@ -7,6 +7,8 @@ class mykeystone {
 	$ip_v = hiera('ip_hap_v')
 	$ip_v_private = hiera('ip_hap_v_private')
 	$rabbit_hosts = hiera('rabbit_hosts')
+        $rabbit_user = hiera('rab_def_usr')
+        $rabbit_pass = hiera('rab_def_pwd')
 	$db_root_password = hiera('db_root_password')
  	$glance_pass = hiera('glance_pass')
 
@@ -49,7 +51,8 @@ class mykeystone {
     		enable  => "true",
     		require => Package["memcached"],
 	}
-	# Create an openrc file
+
+# Create an openrc file
 	file { '/root/admin-openrc':
   	ensure    => present,
   	owner     => 'root',
