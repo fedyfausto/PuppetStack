@@ -55,14 +55,14 @@ node gluster-client {
   include glusterfs::client
 }
 
-node /(controller-)+[1-9]/ {
+node /(controller-)+[0-9]/ {
  include galeraclient
  include mykeystone
  include myglance
  include mycontrollernova
 }
 
-node /(compute-)+[1-9]/ {
+node /(compute-)+[0-9]/ {
 	  notify{"Configurazione del compute" : }
  include mynova
 }
