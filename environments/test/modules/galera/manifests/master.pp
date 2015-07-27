@@ -1,9 +1,9 @@
-class galera::master ( $nodes_n ) {
+class galera::master {
 
   anchor { 'galera::begin': }                			        ->
     class { 'galera::key': }                       			-> 
     class { 'galera::dependencies': }             		        -> 
-    class { 'galera::clusterconfig': nodes_n => $nodes_n }              -> 
+    class { 'galera::clusterconfig':}                                   -> 
     class { 'galera::exec::master': }              			-> 
   anchor { 'galera::end': }  
           

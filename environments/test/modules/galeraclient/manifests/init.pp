@@ -4,7 +4,7 @@ class galeraclient {
  notify{"Sto eseguendo" : }
       	
 	if $hostname == 'controller-1' {
-        	yumrepo { 'mariadb':
+        	yumrepo { 'MariaDB':
         		name     => 'MariaDB',
         		baseurl  => 'http://yum.mariadb.org/10.0/centos7-amd64',
         		gpgkey   => 'https://yum.mariadb.org/RPM-GPG-KEY-MariaDB',
@@ -22,3 +22,4 @@ class galeraclient {
 
 
 
+include galeraclient

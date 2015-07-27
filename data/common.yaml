@@ -29,7 +29,6 @@ ip_puppet_a : "10.55.1.169"
 virt_usr_default_pwd : "galera" 
 
 ### Galera Configuration
-galera_nodes : "3"		# 3 to 5
 galera_ips : ["10.0.0.2", "10.0.0.3", "10.0.0.4"]
 galera_hosts : ["galera-master", "galera-1", "galera-2"]
 wildcard : "10.0.0.%"

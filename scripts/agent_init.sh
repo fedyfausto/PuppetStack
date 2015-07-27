@@ -56,7 +56,7 @@ if [ "$masterIP" != "" -a "$masterFQDN" != "" ]; then
 					exit 1;
 				fi
 
-
+				puppet config set ordering manifest;
 				puppet agent -t --server $masterHOST.$masterFQDN --environment test --certname $agentHOST.$agentFQDN;
 				echo "----Installazione Riuscita----";
 			else

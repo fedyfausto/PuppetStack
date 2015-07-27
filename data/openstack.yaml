@@ -9,19 +9,27 @@ nova_pass : "novapass"
 management_inteface : "eth1"
 tunnel_transfer : "eth1"
 external_inteface : "eth2"
-storage_interface : "ethX"
+storage_interface : "eth1"
 
 net_mcast : "226.94.1.1"
 mcast_port : "5405"
 net_ip : "10.55.1.0"
 
+metadata_secret : "secret"
+
 ### Compute Configuration
-compute_ips : ["10.0.0.14"]
-compute_hosts : ["compute-1"]
+compute_ips : ["10.0.0.14", "10.0.0.16"]
+compute_hosts : ["compute-1", "compute-2"]
 
 ### Glance
 glance_pass : "glancepass"
 ip_storage_images : "192.168.7.20"
 remote_image_dir : "/var/imageshare"
 glance_image_dir : "/var/imageshare"
+
+### Neutron
+neutron_pass : "neutronpass"
+
+neutron_ips : ["10.0.0.17" ]
+neutron_hosts : ["neutron-1"]
 

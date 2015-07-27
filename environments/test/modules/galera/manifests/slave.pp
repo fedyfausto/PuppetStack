@@ -1,9 +1,9 @@
-class galera::slave ( $nodes_n ) {
+class galera::slave {
 
   anchor { 'galera::begin': }                      			->
     class { 'galera::key': }                       			-> 
     class { 'galera::dependencies': }              			-> 
-    class { 'galera::clusterconfig': nodes_n => $nodes_n }             	-> 
+    class { 'galera::clusterconfig':}                           	-> 
     class { 'galera::exec::slave': }              		        -> 
   anchor { 'galera::end': }  
           

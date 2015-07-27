@@ -237,12 +237,17 @@ notification_driver = noop
 rabbit_hosts = <%=@rabbit_hosts.map{|element| element +":5672"}.join(",")%>
 #rabbit_port=5672
 #rabbit_use_ssl=false
-#rabbit_userid=guest
-#rabbit_password=guest
+rabbit_userid=<%=@rabbit_user%>
+rabbit_password=<%=@rabbit_pass%>
 #rabbit_virtual_host=/
 #rabbit_notification_exchange=glance
 #rabbit_notification_topic=notifications
-#rabbit_durable_queues=False
+rabbit_durable_queues=True
+rabbit_retry_interval = 1
+rabbit_retry_backoff = 2
+rabbit_max_retries = 0
+rabbit_ha_queues = true
+
 
 # Configuration options if sending notifications via Qpid (these are
 # the defaults)

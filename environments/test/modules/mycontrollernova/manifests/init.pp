@@ -10,9 +10,12 @@ class mycontrollernova {
 	$rabbit_user = hiera('rab_def_usr')
  	$rabbit_pass = hiera('rab_def_pwd')
  	$nova_pass = hiera('nova_pass')
+	$neutron_pass = hiera('neutron_pass')
 	$db_root_password = hiera('db_root_password')
+	$controllers = hiera('controller_hosts')
 	$management_inteface = hiera('management_inteface')
 	$ip_eth1 = inline_template("<%= scope.lookupvar('::ipaddress_${management_inteface}') -%>")
+	$metadata_secret = hiera('metadata_secret')
 
         $enhancers = [ "openstack-nova-api", "openstack-nova-cert", "openstack-nova-conductor", "openstack-nova-console", "openstack-nova-novncproxy", "openstack-nova-scheduler", "python-novaclient" ]
         package { $enhancers: ensure => "installed" }
@@ -59,8 +62,7 @@ class mycontrollernova {
 
 
 
-	if $hostname == 'controller-1' {
-    		 
+	if $hostname == $controllers[0]  {    		 
 		exec{"check_presence_nova": 
 			command => "/usr/bin/test ! -e /root/configlock_nova",
 		}
@@ -180,3 +182,4 @@ class mycontrollernova {
 
 
 
+include mycontrollernova

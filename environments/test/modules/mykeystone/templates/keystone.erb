@@ -1302,7 +1302,8 @@ servers = localhost:11211
 
 # Use durable queues in AMQP. (boolean value)
 # Deprecated group/name - [DEFAULT]/rabbit_durable_queues
-#amqp_durable_queues = false
+#amqp_durable_queues = true
+rabbit_durable_queues=true
 
 # Auto-delete queues in AMQP. (boolean value)
 # Deprecated group/name - [DEFAULT]/amqp_auto_delete
@@ -1353,11 +1354,11 @@ rabbit_hosts = <%=@rabbit_hosts.map{|element| element +":5672"}.join(",")%>
 
 # The RabbitMQ userid. (string value)
 # Deprecated group/name - [DEFAULT]/rabbit_userid
-#rabbit_userid = guest
+rabbit_userid = <%=@rabbit_user%>
 
 # The RabbitMQ password. (string value)
 # Deprecated group/name - [DEFAULT]/rabbit_password
-#rabbit_password = guest
+rabbit_password = <%=@rabbit_pass%>
 
 # The RabbitMQ login method. (string value)
 # Deprecated group/name - [DEFAULT]/rabbit_login_method
@@ -1368,22 +1369,22 @@ rabbit_hosts = <%=@rabbit_hosts.map{|element| element +":5672"}.join(",")%>
 #rabbit_virtual_host = /
 
 # How frequently to retry connecting with RabbitMQ. (integer value)
-#rabbit_retry_interval = 1
+rabbit_retry_interval = 1
 
 # How long to backoff for between retries when connecting to RabbitMQ. (integer
 # value)
 # Deprecated group/name - [DEFAULT]/rabbit_retry_backoff
-#rabbit_retry_backoff = 2
+rabbit_retry_backoff = 2
 
 # Maximum number of RabbitMQ connection retries. Default is 0 (infinite retry
 # count). (integer value)
 # Deprecated group/name - [DEFAULT]/rabbit_max_retries
-#rabbit_max_retries = 0
+rabbit_max_retries = 0
 
 # Use HA queues in RabbitMQ (x-ha-policy: all). If you change this option, you
 # must wipe the RabbitMQ database. (boolean value)
 # Deprecated group/name - [DEFAULT]/rabbit_ha_queues
-#rabbit_ha_queues = false
+rabbit_ha_queues = true
 
 # Number of seconds after which the Rabbit broker is considered down if
 # heartbeat's keep-alive fails (0 disable the heartbeat). (integer value)

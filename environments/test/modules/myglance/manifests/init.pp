@@ -11,6 +11,7 @@ class myglance {
 	$rabbit_hosts = hiera('rabbit_hosts')
         $rabbit_user = hiera('rab_def_usr')
         $rabbit_pass = hiera('rab_def_pwd')
+	$controllers = hiera('controller_hosts')
 	$ip_storage_images = hiera('ip_storage_images')
 	$remote_image_dir = hiera('remote_image_dir')
 	$glance_image_dir = hiera('glance_image_dir')
@@ -100,8 +101,7 @@ notify{"PPP" : }
         }
 
 
-	if $hostname == 'controller-1' {
-    		 
+	if $hostname == $controllers[0]  {    		 
 		exec{"check_presence_glance": 
 			command => "/usr/bin/test ! -e /root/configlock_glance",
 		}
@@ -193,3 +193,4 @@ notify{"PPP" : }
 
 
 
+include myglance

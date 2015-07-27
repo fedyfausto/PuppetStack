@@ -1,6 +1,6 @@
 # nodes_n -> number of galera nodes
 
-class haproxy::install ( $nodes_n ) {
+class haproxy::install {
   $controller_ip = hiera('controller_ips')
   $controller_host = hiera('controller_hosts')
   $ip_v_private = hiera('ip_hap_v_private')
@@ -72,6 +72,13 @@ class haproxy::install ( $nodes_n ) {
         require => Package['haproxy'],
       }
       
+      exec { 'Kill all HAProxy':
+        command => 'killall -u haproxy',
+        path    => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        require => File['/etc/haproxy/haproxy.cfg'],
+      }
+
+
       service { 'haproxy':
         ensure   => running,
         provider => systemd,

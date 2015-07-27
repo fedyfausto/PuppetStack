@@ -10,38 +10,82 @@ include user::virtual
 #include sudoers
 #include user::sysadmins
 include stdlib
-include myselinux
+require myselinux
+
+$controllers = hiera('controller_hosts')
+$computes = hiera('compute_hosts')
+$galeras = hiera('galera_hosts')
+$haproxies = hiera('haproxy_hosts')
+$rabbits = hiera('rabbit_hosts')
+$neutrons = hiera('neutron_hosts')
 
 # To globally deny virtual packages
 Package { allow_virtual => false }
 
 node default { }
 
-node galera-master {
-  class { 'galera::master':
-    nodes_n => hiera('galera_nodes'),
+if ($hostname in $galeras) {
+        if $hostname == $galeras[0]  {
+		class { 'galera::master': }
+        } else {
+		class { 'galera::slave': }
+	}
+}
+
+if ($hostname in $haproxies) {
+  $haproxy_nodes = $haproxies.size
+  class { 'haproxy': }
+  class { 'keepalived': 
+     haproxy_nodes =>  $haproxy_nodes,
   }
+
 }
 
-node /(galera-)+[0-9]/ {
-  class { 'galera::slave':
-    nodes_n => hiera('galera_nodes'),
-  }
-}
-
-node /(haproxy-)+[0-9]/ {
-  class { 'haproxy':
-    nodes_n  => hiera('galera_nodes'),
-  }
-  class { 'keepalived':
-    haproxy_nodes => hiera('haproxy_nodes'),
-  }  
+if ($hostname in $rabbits) {
+	include rabbit
 }
 
 
-node /(rabbit-)+[0-9]/ {
-  include rabbit    
+
+if ($hostname in $controllers) {
+                class { 'ntp': }                                                
+                class { 'galeraclient': }                                       
+                class { 'openstackrepo': }                                      
+                class { 'myhttpdmemcachedinstall': }                            
+                class { 'mykeystone': }           	  	  	  	
+                class { 'myglance': }                     	  	  	
+                class { 'mycontrollernova': }                             	
+                class { 'mycontrollerneutron': }                          	
+                class { 'mydashboard': }                  	          	
+	
+
+
+	#include ntp -> include galeraclient
+	#notify{"Devo eseguire NTP" : }
+	#include ntp 
+	#notify{"Finisco di eseguire NTP" : }
+ 	#include galeraclient 
+ 	#include openstackrepo 
+	#include myhttpdmemcachedinstall 
+ 	#include mykeystone 
+ 	#include myglance 
+ 	#include mycontrollernova 
+ 	#include mycontrollerneutron 
+	#include mydashboard 
 }
+
+if ($hostname in $computes) {
+	include ntp
+	include openstackrepo
+	include mynova
+}
+
+if ($hostname in $neutrons) {
+	include ntp
+	include openstackrepo
+        include myneutron
+}
+
 
 node gluster-1 {
   include glusterfs::mainserver
@@ -55,17 +99,7 @@ node gluster-client {
   include glusterfs::client
 }
 
-node /(controller-)+[0-9]/ {
- include galeraclient
- include mykeystone
- include myglance
- include mycontrollernova
-}
 
-node /(compute-)+[0-9]/ {
-	  notify{"Configurazione del compute" : }
- include mynova
-}
 
 
 

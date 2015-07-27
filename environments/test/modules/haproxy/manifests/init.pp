@@ -1,8 +1,8 @@
-class haproxy ( $nodes_n ) {
+class haproxy {
 
   anchor { 'haproxy::begin': }                             ->
     class { 'haproxy::key': }                              -> 
-    class { 'haproxy::install': nodes_n => $nodes_n }      -> 
+    class { 'haproxy::install': }                          -> 
   anchor { 'haproxy::end': }  
           
 }

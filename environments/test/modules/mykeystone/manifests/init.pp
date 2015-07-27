@@ -9,48 +9,15 @@ class mykeystone {
 	$rabbit_hosts = hiera('rabbit_hosts')
         $rabbit_user = hiera('rab_def_usr')
         $rabbit_pass = hiera('rab_def_pwd')
+	$controllers = hiera('controller_hosts')
 	$db_root_password = hiera('db_root_password')
  	$glance_pass = hiera('glance_pass')
 
 
-
-	package { 'yum-plugin-priorities':
-        	ensure        => present,
-        	allow_virtual => false,
-      	}
-     	package { 'epel':
-        	ensure        => present,
-		source	=> "http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm",
-		provider => rpm,
-        	allow_virtual => false,
-		require       => Package['yum-plugin-priorities'],
-      	}
-
-	package { 'kilo':
-		ensure        => present,
-       		source	=> "http://rdo.fedorapeople.org/openstack-kilo/rdo-release-kilo.rpm",
-        	provider => rpm,
-        	allow_virtual => false,
-        	require       => Package['epel'],
-      	}
-
-	package { 'openstack-selinux':
-                ensure        => present,
-                allow_virtual => false,
-		require       => Package['epel'],
-
-        }
-
-
-	$enhancers = [ "openstack-keystone", "httpd", "mod_wsgi", "python-openstackclient", "memcached", "python-memcached" ]
+	$enhancers = [ "openstack-keystone", "python-openstackclient" ]
 	package { $enhancers: ensure => "installed" }
 
 
-	service { "memcached":
-    		ensure  => "running",
-    		enable  => "true",
-    		require => Package["memcached"],
-	}
 
 # Create an openrc file
 	file { '/root/admin-openrc':
@@ -161,17 +128,21 @@ class mykeystone {
         }
 
 
+	exec { "Service httpd restart":
+                command => "service httpd restart",
+                path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
 
+        }
 
-        service { "httpd":
-                ensure  => "running",
-                enable  => "true",
-                require => Exec["chmod"],
+	exec { "Service httpd restart 2":
+                command => "service httpd restart",
+                path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+
         }
 
 
-	if $hostname == 'controller-1' {
-    		 
+
+	if $hostname == $controllers[0]  {    		 
 		exec{"check_presence": 
 			command => "/usr/bin/test ! -e /root/configlock_keystone",
 		}
@@ -351,9 +322,8 @@ class mykeystone {
                 }
 
 	}
-
-
 }
 
 
 
+include mykeystone
