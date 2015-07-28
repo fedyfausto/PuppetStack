@@ -1,6 +1,6 @@
 # Install neutron
 class myneutron {
-      	
+	require ::disablefirewall
         $admin_token = hiera('admin_token')
         $openstack_db_pwd = hiera('openstack_db_pwd')
         $ip_db = hiera('ip_hap_v')
@@ -153,6 +153,14 @@ class myneutron {
                 enable  => "true",
         }
 
+        file { 'ifcg-External':
+                path    => "/etc/sysconfig/network-scripts/ifcfg-${external_interface}",
+                ensure    => present,
+                owner     => 'root',
+                group     => 'root',
+                mode     => '0644',
+                content   => template("myneutron/ifcfg-interface"),
+        }
 
 
 

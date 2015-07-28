@@ -48,42 +48,33 @@ if ($hostname in $rabbits) {
 
 
 if ($hostname in $controllers) {
-                class { 'ntp': }                                                
-                class { 'galeraclient': }                                       
-                class { 'openstackrepo': }                                      
-                class { 'myhttpdmemcachedinstall': }                            
-                class { 'mykeystone': }           	  	  	  	
-                class { 'myglance': }                     	  	  	
-                class { 'mycontrollernova': }                             	
-                class { 'mycontrollerneutron': }                          	
-                class { 'mydashboard': }                  	          	
-	
-
-
-	#include ntp -> include galeraclient
-	#notify{"Devo eseguire NTP" : }
-	#include ntp 
-	#notify{"Finisco di eseguire NTP" : }
- 	#include galeraclient 
- 	#include openstackrepo 
-	#include myhttpdmemcachedinstall 
- 	#include mykeystone 
- 	#include myglance 
- 	#include mycontrollernova 
- 	#include mycontrollerneutron 
-	#include mydashboard 
+	class { 'ntp': }                                                
+        class { 'galeraclient': }                                       
+        class { 'openstackrepo': }                                      
+        class { 'myhttpdmemcachedinstall': }                            
+        class { 'mykeystone': }           	  	  	  	
+        class { 'myglance': }                     	  	  	
+        class { 'mycontrollernova': }                             	
+        class { 'mycontrollerneutron': }                          	
+        class { 'mydashboard': }                  	          	
 }
 
 if ($hostname in $computes) {
-	include ntp
-	include openstackrepo
-	include mynova
+#	class { '::firewalld2iptables':  }
+
+	class { 'ntp': }
+        class { 'openstackrepo': }
+        class { 'mynova': }
+
 }
 
 if ($hostname in $neutrons) {
-	include ntp
-	include openstackrepo
-        include myneutron
+        class { 'ntp': }
+        class { 'openstackrepo': }
+	class { 'myneutron': }
+#	include ntp
+#	include openstackrepo
+#        include myneutron
 }
 
 

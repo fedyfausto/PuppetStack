@@ -9,6 +9,7 @@ class mycontrollernova {
 	$rabbit_hosts = hiera('rabbit_hosts')
 	$rabbit_user = hiera('rab_def_usr')
  	$rabbit_pass = hiera('rab_def_pwd')
+	$controller_hosts = hiera('controller_hosts')
  	$nova_pass = hiera('nova_pass')
 	$neutron_pass = hiera('neutron_pass')
 	$db_root_password = hiera('db_root_password')
@@ -37,6 +38,12 @@ class mycontrollernova {
 
         }
 
+	exec { "open port 11211":
+                command => "firewall-cmd --permanent --add-port=11211/tcp",
+                path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+
+        }
+
 
 	exec { "open port 8774":
                 command => "firewall-cmd --permanent --add-port=8774/tcp",
@@ -49,6 +56,11 @@ class mycontrollernova {
 
         }
 
+	exec { "open port 6080":
+                command => "firewall-cmd --permanent --add-port=6080/tcp",
+                path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+
+        }
 
 
 

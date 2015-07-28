@@ -1,0 +1,5 @@
+DEVICE="<%=@external_interface%>"
+BOOTPROTO=none
+ONBOOT="yes"
+TYPE="Ethernet"
+

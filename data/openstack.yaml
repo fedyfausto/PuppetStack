@@ -18,8 +18,8 @@ net_ip : "10.55.1.0"
 metadata_secret : "secret"
 
 ### Compute Configuration
-compute_ips : ["10.0.0.14", "10.0.0.16"]
-compute_hosts : ["compute-1", "compute-2"]
+compute_ips : ["10.0.0.14", "10.0.0.15", "10.0.0.16"]
+compute_hosts : ["compute-1", "compute-2", "compute-3"]
 
 ### Glance
 glance_pass : "glancepass"

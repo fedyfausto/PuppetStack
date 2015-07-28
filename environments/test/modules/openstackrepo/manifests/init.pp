@@ -28,6 +28,8 @@ class openstackrepo {
 		require       => Package['epel'],
 
         }
+#firewall-cmd --zone=public --remove-interface=eth1
+#firewall-cmd --zone=trusted --add-interface=eth1
 }
 
 

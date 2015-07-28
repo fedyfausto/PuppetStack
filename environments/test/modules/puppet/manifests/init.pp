@@ -13,11 +13,11 @@ class puppet {
   $ruby_bin_path = hiera('ruby_bin_path')
   
   if $osfamily == "RedHat" {
-    service { 'firewalld':
-      provider => systemd,
-      enable   => true,
-      ensure   => running,
-    }
+    #service { 'firewalld':
+    #  provider => systemd,
+    #  enable   => true,
+    #  ensure   => running,
+    #}
 
     exec { 'setenforce':
       command => 'setenforce 0',

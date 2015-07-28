@@ -1877,7 +1877,7 @@ vncserver_proxyclient_address=<%=@ip_eth1%>
 #
 
 # Memcached servers or None for in process cache. (list value)
-#memcached_servers=<None>
+memcached_servers=<%=@controller_hosts.map{|element| element +":11211"}.join(",")%>
 
 
 #

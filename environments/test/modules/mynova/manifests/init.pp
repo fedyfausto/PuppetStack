@@ -1,6 +1,6 @@
 # Install Nova on Compute
 class mynova {
-      	
+	require ::disablefirewall     	
 	$admin_token = hiera('admin_token')
 	$openstack_db_pwd = hiera('openstack_db_pwd')
 	$ip_db = hiera('ip_hap_v')
@@ -18,7 +18,7 @@ class mynova {
         $local_ip = inline_template("<%= scope.lookupvar('::ipaddress_${tunnel_transfer}') -%>")
 
 
-        $enhancers = [ "openstack-nova-compute", "sysfsutils", "openstack-neutron", "openstack-neutron-ml2", "openstack-neutron-openvswitch" ]
+        $enhancers = [ "openstack-nova-compute", "sysfsutils", "openstack-neutron", "openstack-neutron-ml2", "openstack-neutron-openvswitch", "libvirt-daemon-driver-lxc.x86_64" ]
         package { $enhancers: ensure => "installed" }
 		
 
@@ -34,24 +34,22 @@ class mynova {
         }
 	
 
-	exec { "open vnc ports":
-                command => "firewall-cmd --permanent --add-port=5900-5999/tcp",
-                path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+#	exec { "open vnc ports":
+#                command => "firewall-cmd --permanent --add-port=5900-5999/tcp",
+#                path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+#        }
 
-        }
 
-
-	exec { "firewall reload nova vnc":
-                command => "firewall-cmd --reload",
-                path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
-
-        }
+#	exec { "firewall reload nova vnc":
+#                command => "firewall-cmd --reload",
+#                path    => "/usr/local/bin/:/bin/:/sbin/:/usr/bin/",
+#        }
 
 
        sysctl::value { "net.ipv4.conf.all.rp_filter": value => "0"}
-        sysctl::value { "net.ipv4.conf.default.rp_filter": value => "0"}
+       sysctl::value { "net.ipv4.conf.default.rp_filter": value => "0"}
        sysctl::value { "net.bridge.bridge-nf-call-iptables": value => "1"}
-        sysctl::value { "net.bridge.bridge-nf-call-ip6tables": value => "1"}
+       sysctl::value { "net.bridge.bridge-nf-call-ip6tables": value => "1"}
 
        file { 'neutron.conf':
         	path    => '/etc/neutron/neutron.conf',
