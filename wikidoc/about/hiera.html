@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Openstack Puppet Project - Hiera</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<!-- Loading Bootstrap -->
+		<link href="../css/vendor/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="../css/font-awesome.min.css">
+
+		<!-- Loading Flat UI -->
+		<link href="../css/flat-ui.css" rel="stylesheet">
+
+		<link rel="shortcut icon" href="../img/favicon.ico">
+
+		<!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+		<!--[if lt IE 9]>
+<script src="js/vendor/html5shiv.js"></script>
+<script src="js/vendor/respond.min.js"></script>
+<![endif]-->
+	</head>
+	<body style="padding-top:75px;" >
+
+		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-01">
+						<span class="sr-only">Toggle navigation</span>
+					</button>
+					<a class="navbar-brand" href="#"><img src="../img/swift-explorer_logo_256.png" width="25"> Openstack Puppet</a>
+				</div>
+				<div class="collapse navbar-collapse" id="navbar-collapse-01">
+					<ul class="nav navbar-nav navbar-left">
+						<li><a href="../index.html"><span class="fui-home"></span> Home</a></li>
+						<li><a href="#" data-toggle="modal" data-target="#setup-modal"><span class="fui-gear"></span> Setup</a></li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Tech Notes <b class="caret"></b></a>
+							<span class="dropdown-arrow"></span>
+							<ul class="dropdown-menu">
+								<li><a href="../about/puppet.html">Puppet</a></li>
+								<li><a href="../about/hiera.html">Hiera and Librarian</a></li>
+								<li class="divider"></li>
+								<li><a href="../about/galera.html">Galera Cluster</a></li>
+								<li><a href="../about/haproxy.html">HA Proxy</a></li>
+								<li><a href="../about/keepalived.html">KeepAlived</a></li>
+								<li><a href="../about/rabbitmq.html">RabbitMQ</a></li>
+								<li class="divider"></li>
+
+								<li><a href="../about/openstack.html">OpenStack</a></li>
+
+							</ul>
+						</li>
+					</ul>
+				</div><!-- /.navbar-collapse -->
+			</div>
+		</nav>
+
+		<div class="container">
+			<div class="row">
+
+				<div class="col-md-12">
+					<section id="hiera">
+						<h4>Hiera</h4>
+						<p>Hiera is a key/value lookup tool for configuration data, built to make Puppet better and let you set node-specific data without repeating yourself." [Puppetlabs]</p>
+						<p>PThe hierarchical structure is defined inside the hiera.yaml file and you can find it inside the main project folder. It points to the data folder containing a certain number of yaml file that belong to the hierarchical structure defined in the hiera.yaml file.</p>
+					</section><!--end of #web-design-->
+					<hr>
+						<section id="libraian">
+						<h4>Librarian</h4>
+						<p>The librarian Puppetfile allows defining module dependencies from several sources with version control, having a file that defines your dependencies: the Puppetfile.
+The Puppetfile is placed in the main project directory.</p>
+					</section><!--end of #web-design-->
+
+					
+			
+
+				</div>
+
+			</div><!--end of .row-->
+		</div><!--end of .container-->
+
+
+		<footer>
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-7" style="color:#2c3e50;">
+						<h3 class="footer-title">Credits</h3>
+
+						<div class="row demo-tiles">
+							<div class="col-xs-4">
+								<div class="tile">
+									<p>Dr. Grillo Gabriele</p>
+									<div class="btn-group">
+										<a class="btn btn-danger palette-midnight-blue" target="_blank" href="https://www.linkedin.com/profile/view?id=220102481"><i class="fa fa-linkedin"></i></a>
+										<a class="btn btn-danger palette-silver" target="_blank" href="https://github.com/Eleirbag89"><i class="fa fa-github"></i></a>
+										<a class="btn btn-danger" href="mailto:gabry.grillo@alice.it"><i class="fa fa-envelope-o"></i></a>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-xs-4">
+								<div class="tile">
+									<p>Dr. Santoro Federico F.</p>
+									<div class="btn-group">
+										<a class="btn btn-danger palette-midnight-blue" target="_blank" href="https://it.linkedin.com/in/fedyfausto"><i class="fa fa-linkedin"></i></a>
+										<a class="btn btn-danger palette-silver" target="_blank" href="https://github.com/fedyfausto"><i class="fa fa-github"></i></a>
+										<a class="btn btn-danger palette-belize-hole" target="_blank" href="https://www.facebook.com/fedyfausto"><i class="fa fa-facebook"></i></a>
+										<a class="btn btn-danger" href="mailto:fedyfausto@hotmail.com"><i class="fa fa-envelope-o"></i></a>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-xs-4">
+								<div class="tile tile-hot">
+									<p>Dr. Di Savia Alberto</p>
+									<div class="btn-group">
+										<a class="btn btn-danger palette-midnight-blue" target="_blank" href="https://www.linkedin.com/profile/view?id=152821960"><i class="fa fa-linkedin"></i></a>
+										<a class="btn btn-danger palette-silver" target="_blank" href="https://github.com/alberto88a"><i class="fa fa-github"></i></a>
+										<a class="btn btn-danger" href="mailto:disalberto@gmail.com"><i class="fa fa-envelope-o"></i></a>
+									</div>
+								</div>
+
+							</div>
+						</div>
+
+					</div> <!-- /col-xs-7 -->
+
+					<div class="col-xs-5">
+						<div class="footer-banner">
+							<h3 class="footer-title">Support</h3>
+							<p>For any question or suggestion, please feel free to contact us.</p>
+							<ul>
+								<li><a href="https://github.com/Eleirbag89/prisma" target="_blank">Github</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+
+		<div class="modal fade" id="setup-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="myModalLabel">What do you want to install?</h4>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-xs-6">
+								<div class="demo-download">
+									<center><img style="max-width:150px;" src="../img/KPxeaxI1.png" class="img-responsive img-circle"></center>
+
+								</div>
+								<h6 class="text-center">Galera Cluster</h6>
+								<p class="text-center">Useful if you want to have a cluster of Database.</p>
+								<a role="button" href="install_galera.html" class="btn btn-lg btn-danger btn-block">Install Galera Cluster</a>
+
+							</div>
+							<div class="col-xs-6">
+								<div class="demo-download">
+									<center><img style="max-width:150px;" src="../img/openstack-logo-copy.png" class="img-responsive img-circle"></center>
+								</div>
+								<h6 class="text-center">Complete OpenStack</h6>
+								<p class="text-center">It allows installing OpenStack . Also includes Galera Cluster .</p>
+								<a role="button" href="install_openstack.html" class="btn btn-lg btn-danger btn-block">Install OpenStack</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
+		<script src="../js/vendor/jquery.min.js"></script>
+		<!-- Include all compiled plugins (below), or include individual files as needed -->
+		<script src="../js/vendor/video.js"></script>
+		<script src="../js/flat-ui.min.js"></script>
+		<script>
+			$(document).ready(function() {
+
+				/*
+				var bottomReferenceBox = $('footer');
+
+				//calculate the bottom position
+				var bottomOffLine = $(document).height() - bottomReferenceBox.offset().top - bottomReferenceBox.outerHeight();
+				$('#nav').affix({
+					offset: { 
+						top:70,
+						bottom: ($('footer').outerHeight(true)+40)
+					}
+				});*/
+
+				if (!!$('#nav').offset()) { // make sure ".sticky" element exists
+
+					var stickyTop = $('#nav').offset().top; // returns number 
+					var bottomOffLine = $(document).height() - 680;
+					var blocked=false;
+
+					$(window).scroll(function(){ // scroll event
+
+						var windowTop = $(window).scrollTop(); // returns number 
+
+						if(windowTop < bottomOffLine){
+							//$('#nav').css({ position: 'fixed', top: 0 });
+							blocked = false;
+
+
+							if (stickyTop < windowTop){
+								$('#nav').css({ position: 'fixed', top: '70px' });
+							}
+
+							else {
+								$('#nav').css('position','static');
+							}
+						}
+						else{
+
+							$('#nav').removeAttr('style');
+							$('#nav').css({ position: 'fixed'});
+							$('#nav').css({bottom: '230px' });
+
+						}
+
+					});
+
+				}
+			});
+		</script>
+
+	</body>
+</html>
