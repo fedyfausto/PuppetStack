@@ -70,8 +70,9 @@
 								<li><a href="#haproxy">HA Proxy Nodes</a></li>
 								<li><a href="#rabbit">RabbitMQ Nodes</a></li>
 								<li><a href="#controller">OpenStack Controller Nodes</a></li>
-								<li><a href="#compute">OpenStack Compute Node</a></li>
-								
+								<li><a href="#compute">OpenStack Compute Nodes</a></li>
+								<li><a href="#neutron">OpenStack Neutron Node</a></li>
+
 								<li><a href="#manualsetup">Manual Setup</a></li>
 
 
@@ -133,7 +134,8 @@
 							<li>3 HA Proxy Nodes</li>
 							<li>3 Rabbit-MQ Nodes</li>
 							<li>3 OpenStack Controller Nodes</li>
-							<li>1 OpenStack Compute Nodes</li>
+							<li>3 OpenStack Compute Nodes</li>
+							<li>1 OpenStack Neutron Node</li>
 							<li>1 Storage Node for OpenStack VM images</li>
 						</ul>
 						<img src="../img/struttura-opensta-puppet.png" class="img-responsive"><br>
@@ -290,18 +292,24 @@
 								<small>This is the name of Network Interface for OpenStack services:</small>
 								<pre>management_inteface : "eth1"</pre>
 							</li>
+							
+							<li>
+								<h6>OpenStack External Network Interface</h6>
+								<small>This is the name of Network Interface for OpenStack Neutron:</small>
+								<pre>management_inteface : "eth2"</pre>
+							</li>
 
 
 							<li>
 								<h6>OpenStack Compute nodes IPs</h6>
 								<small>This is a list of all IP addresses of OpenStack Compute nodes:</small>
-								<pre>compute_ips : ["10.0.0.14"]</pre>
+								<pre>compute_ips : ["10.0.0.14","10.0.0.15","10.0.0.16"]</pre>
 							</li>
 
 							<li>
 								<h6>OpenStack Compute nodes Hostnames</h6>
 								<small>This is a list of all hostnames of OpenStack Compute nodes:</small>
-								<pre>compute_hosts : ["compute-1"]</pre>
+								<pre>compute_hosts : ["compute-1","compute-2","compute-3"]</pre>
 							</li>
 
 							<li>
@@ -330,6 +338,25 @@
 								<small>This is the local folder where point to the Remote Folder Glance Images (without final slash):</small>
 								<pre>glance_image_dir : "/var/imageshare"</pre>
 							</li>
+							
+							
+							<li>
+								<h6>OpenStack Neutron user Password</h6>
+								<small>This is the OpenStack Neutron user Password for services:</small>
+								<pre>neutron_pass : "neutronpass"</pre>
+							</li>
+							
+							<li>
+								<h6>OpenStack Neutron node IP</h6>
+								<small>This is the IP address of OpenStack Neutron node:</small>
+								<pre>neutron_ips : ["10.0.0.17"]</pre>
+							</li>
+
+							<li>
+								<h6>OpenStack Neutron node Hostname</h6>
+								<small>This is the hostname of OpenStack Neutron node:</small>
+								<pre>neutron_hosts : ["neutron-1"]</pre>
+							</li>
 
 						</ul>
 						<p>At this point we have completed the general configuration of our structure . Before proceeding make sure that the hostname of the Puppet Master is <code>puppet</code> :</p>
@@ -345,7 +372,7 @@
 						<h4>Puppet Agents</h4>
 						<p>Once configured the Puppet Master, this will be used to auto configure all nodes related to our structure.</p>
 						<p>It's necessary that each node is present Puppet Agent Configuration File and run as root :</p>
-						<pre># sudo -i<br># wget https://raw.githubusercontent.com/Eleirbag89/prisma/prisma2/scripts/agent_init.sh</pre>
+						<pre># sudo -i<br># wget https://raw.githubusercontent.com/Eleirbag89/prisma/gh-pages/scripts/agent_init.sh</pre>
 					</section>
 					<hr>
 
@@ -420,7 +447,7 @@
 					<hr>
 
 					<section id="compute">
-						<h4>Openstack Compute Node</h4>
+						<h4>Openstack Compute Nodes</h4>
 						<p>Use OpenStack Compute to host and manage cloud computing systems. OpenStack Compute is a major part of an Infrastructure-as-a-Service (IaaS) system. The main modules are implemented in Python.</p>
 						<p>Then we proceed to the installation on every OpenStack Compute node:</p>
 						<pre># sudo -i<br># sh agent_init.sh</pre>
@@ -429,9 +456,22 @@
 </pre>
 
 					</section>
-					
-					
-					
+
+					<hr>
+
+					<section id="neutron">
+						<h4>Openstack Neutron Node</h4>
+						<p>Neutron is an OpenStack project to provide "networking as a service" between interface devices (e.g., vNICs) managed by other Openstack services (e.g., nova).</p>
+						<p>Then we proceed to the installation on OpenStack Neutron node:</p>
+						<pre># sudo -i<br># sh agent_init.sh</pre>
+						<p>During the installation will be required of the information that shall match those included previously in common.yaml:</p>
+						<pre>-----Inizializzazione nodo di Puppet Agent-----<br>Inserisci l'indirizzo IP del Puppet Master:10.0.0.1<br>Inserisci l'Hostname del Puppet Master [default puppet]:<br>Inserisci l'FQDN del Puppet Master:chainreds-lan<br>Inserisci l'indirizzo IP di questo Nodo:10.0.0.17<br>Inserisci l'Hostname di questo Nodo:neutron-1<br>Inserisci l'FQDN di questo Nodo [default chainreds-lan] :<br>Inserisci il nome dell'interfaccia di rete [default eth1]:
+</pre>
+
+					</section>
+
+
+
 					<hr>
 
 					<section id="manualsetup">
@@ -444,13 +484,13 @@
 						<p>Install Puppet on puppet agent nodes with commands:</p>
 						<pre># rpm -ivh https://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm<br># sudo yum install puppet</pre>
 						<p>Run this command in order to request a certificate from the Puppet Master and let it apply the proper configuration:</p>
-						<pre># puppet agent -t --server puppet.fqdn --environment test --certname puppet-agent.fqdn</pre>
+						<pre># puppet config set ordering manifest;<br># puppet agent -t --server puppet.fqdn --environment test --certname puppet-agent.fqdn</pre>
 
 					</section>
 
 
-					
-					
+
+
 
 					<hr>
 
@@ -464,6 +504,9 @@
 							<strong>Username: </strong><code>haproxy</code><br>
 							<strong>Password: </strong><code>password</code>
 						</div>
+						
+						<p>You can also log on to the Horizon Dashboard by going to <code>http://192.168.7.100/dashboard/</code> and login with <code>demo</code> or <code>admin</code> account.</p>
+						<img class="img-responsive" src="../img/opscreen.png">
 					</section>
 					<hr>
 					<section id="addmorenodes">
