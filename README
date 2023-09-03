@@ -1,7 +1,7 @@
 ________________________________________________________________________________
 
 Prisma Puppet Project - Beginning Date: 10/11/2014
-@Author: Alberto Di Savia Puglisi
+@Author: Gabriele Grisso, Federico Fausto Santoro, Alberto Di Savia Puglisi
 
 This project's aim is to deploy a working openstack environment in one shot.
 Of course it's a WORK IN PROGRESS and I really hope it will come to an end!
